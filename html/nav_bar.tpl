@@ -6,6 +6,7 @@
       <ul class="dropdown menu" data-dropdown-menu>
         <li>
           <a href="index.html#subscriptionWeex">Docs</a>
+          <!--
           <ul class="menu vertical">
             <li><a href="index.html#subscriptionWeex">Tautorial</a></li>          
             <li><a href="index.html#subscriptionWeex">Syntax</a></li>
@@ -15,6 +16,7 @@
             <li><a href="index.html#subscriptionWeex">Demo</a></li>
             <li><a href="index.html#subscriptionWeex">Service & Tools</a></li>
           </ul>
+          -->
         </li>
         <li  >      
           <script>
