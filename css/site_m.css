@@ -1,0 +1,203 @@
+.header-background {
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: url("../img/nav_background.jpg") no-repeat;
+  background-position: 0px 0px;
+  -webkit-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  height: 220px;
+  z-index: 10; }
+
+.header-content {
+  position: relative;
+  z-index: 10; }
+  .header-content .icons {
+    position: relative;
+    top: 10px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto; }
+    .header-content .icons .baichuan {
+      height: 15px;
+      display: inline-block; }
+      .header-content .icons .baichuan .text {
+        font-size: 12px;
+        color: #999999;
+        position: relative;
+        top: -2px; }
+    .header-content .icons .github {
+      float: right;
+      display: inline-block;
+      height: 15px;
+      text-decoration: none;
+      color: white; }
+      .header-content .icons .github img {
+        height: 12px;
+        width: 12px; }
+      .header-content .icons .github .text {
+        font-size: 12px;
+        position: relative;
+        top: -2px; }
+  .header-content .logo-index {
+    position: relative;
+    top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    background: url("../img/weex_logo_252.png") no-repeat;
+    height: 28px;
+    width: 126px;
+    background-size: 126px 28px; }
+  .header-content .desc {
+    margin-right: 20px;
+    margin-left: 20px;
+    position: relative;
+    top: 70px;
+    text-align: center;
+    color: #ffffff;
+    letter-spacing: 0.5px; }
+  .header-content .entrance {
+    position: relative;
+    top: 90px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+    background: #0055dd;
+    border-radius: 2px;
+    width: 100px;
+    height: 24px;
+    line-height: 24px; }
+    .header-content .entrance a {
+      position: relative;
+      top: -2px;
+      text-decoration: none;
+      font-size: 12px;
+      color: white; }
+
+.feature-wrap {
+  z-index: 0;
+  position: relative;
+  top: 70px;
+  background: #f5f5f5;
+  width: 100%;
+  padding-top: 5px;
+  color: #333333; }
+  .feature-wrap .feature {
+    margin-top: 40px; }
+    .feature-wrap .feature h4 {
+      margin-top: 5px;
+      margin-bottom: 5px; }
+  .feature-wrap .feature:nth-child(3) {
+    padding-bottom: 40px; }
+  .feature-wrap .feature img {
+    width: 70px;
+    height: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+  .feature-wrap .title {
+    text-align: center; }
+  .feature-wrap .desc {
+    text-align: center;
+    margin-right: 20px;
+    margin-left: 20px; }
+
+.high-light {
+  position: relative;
+  top: 100px;
+  text-align: center; }
+  .high-light .title h2 {
+    font-size: 22px;
+    margin-top: 1px;
+    margin-bottom: 1px; }
+  .high-light h4 {
+    font-size: 15px;
+    margin-bottom: 1px; }
+  .high-light p {
+    margin-top: 1px; }
+
+.subscription {
+  padding-top: 1px;
+  padding-bottom: 30px;
+  background: #f5f5f5;
+  position: relative;
+  top: 120px;
+  text-align: center; }
+  .subscription h4 {
+    margin-bottom: 10px; }
+  .subscription .text {
+    text-align: left;
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: 18px; }
+  .subscription form {
+    margin-top: 30px; }
+  .subscription input.txt {
+    display: block;
+    border: 1px solid #dddddd;
+    margin-top: 7px;
+    width: 300px;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 28px;
+    width: 300px;
+    background: #ffffff; }
+    .subscription input.txt.no-option {
+      margin-top: 12px; }
+    .subscription input.txt:focus {
+      border: 1px solid #dddddd;
+      background-color: white;
+      outline: none;
+      box-shadow: none;
+      transition: none; }
+  .subscription .btn {
+    text-align: center;
+    color: #0055dd;
+    border: 1px solid #0055dd;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    border-radius: 2px;
+    width: 90px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px; }
+    .subscription .btn input {
+      position: relative;
+      left: -4px;
+      background-color: transparent;
+      border-color: transparent;
+      width: 90px;
+      height: 30px; }
+
+.footer {
+  background: #3d4751;
+  position: relative;
+  top: 120px;
+  text-align: center;
+  font-size: 10px;
+  padding-bottom: 10px; }
+  .footer .copy-right {
+    color: grey;
+    padding-top: 12px; }
+    .footer .copy-right p {
+      margin-bottom: 1px;
+      margin-top: 1px; }
+    .footer .copy-right a {
+      color: white;
+      text-decoration: none; }
+    .footer .copy-right .baichuan-icon {
+      width: 11px;
+      height: 11px; }
+
+.go-desktop {
+  margin-top: 10px; }
+  .go-desktop a {
+    color: white;
+    text-decoration: none; }
+
+/*# sourceMappingURL=site_m.css.map */

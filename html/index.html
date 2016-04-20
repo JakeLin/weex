@@ -1,0 +1,198 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>    
+      <%= common_head  %>
+      <script src="js/vendor/mobile-detect.min.js"></script>      
+
+      <script>
+       var md = new MobileDetect(window.navigator.userAgent);
+       if (  (md.mobile() != null)  &&  (md.tablet() != "iPad")  &&  ( location.search.indexOf("force_desktop") == -1  )  ){
+           location = "index_m.html"
+       }
+           
+      </script>
+  </head>     
+  <body>
+      <div class="nav-background" >
+      </div>
+      <div class="header" >
+          <%= nav_bar %>
+      </div>
+      <div class="slogan-area">
+          <div class="slogan">
+              <div class="logo-index"></div>
+              <div class="desc">A framework for building Mobile cross-platform UI</div>
+          </div>              
+      </div>
+      <div class="entrance">
+          <div><a href="#subscriptionWeex"> Getting Started</a></div>
+          <div> <a href="#subscriptionWeex">Apply for access</a></div>          
+      </div>
+      <div class="clear"></div>
+
+      <div class="row features">
+          <div class="small-4 columns">
+              <img src="img/feature1@3x.png" />
+              <div class="feature">Lightweight</div>
+              <div class="list-wrap">
+                  low footprint , simple syntax , and easy to use
+              </div>
+          </div>
+          <div class="small-4 columns">
+              <img src="img/feature2@3x.png">
+              <div class="feature">Extendable</div>
+              <div class="list-wrap" style="max-width:300px">
+                  abundant build-in components , extendable apis , various events                  
+              </div>
+          </div>
+          <div class="small-4 columns">
+              <img src="img/feature3@3x.png">
+              <div class="feature">High Performance</div>              
+              <div class="list-wrap" >
+                  load fast , render fast , better experience                    
+              </div>
+          </div>          
+      </div>
+
+      <div class="white-bg">
+      <div class="wrap">
+      <h4 class="text-center">Cross-Platform & Native Speed</h4>
+
+      <div class="high-light">
+          <div>
+              <h5>Write Once Run Everywhere </h5>
+              <p>100% code reuse across support platforms<br/>
+                  keep better consistent interface,<br/>
+                  save more costs in development
+              </p>
+          </div>
+          <div>
+              <h5>Native Speed in Native Platform</h5>
+              <p>weex render code in native widget in Android&iOS<br/>
+              preserve the quality of user experience on critical platform</p>
+          </div>
+      </div>
+      <div class="clear"></div>
+
+      <div class="code-show">
+      
+          <div class="code">
+              <!--  weex source
+<template>
+  <div class="container">
+    <div class="logoContainer">
+      <image class="logo" src="http://t.cn/Rq9bcDm"></image>
+      <text class="desc">A framework for building Mobile cross-platform UI</text>
+    </div>
+    <div class="textContainer">
+        <text class="text">Hello weex</text>
+    </div>
+  </div>
+</template>
+
+
+<style>
+  .logoContainer {
+    width: 750px;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0054DC;
+  }
+  .logo {
+    width: 378;
+    height: 84;
+  }
+  .desc {
+    margin-top: 40px;
+    font-size: 24px;
+    color: #ccc;
+  }
+  .textContainer {
+    width: 750px;
+    padding-top: 200px;
+    align-items: center;
+    justify-content: center;
+  }
+  .text {
+    font-size: 48px;
+  }
+</style>              
+          -->
+              <pre style='color:#000000;'><span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>template</span><span style='color:#a65700; '>></span>
+  <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"container"</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"logoContainer"</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>image</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"logo"</span><span style='color:#274796; '> </span><span style='color:#074726; '>src</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"http://t.cn/Rq9bcDm"</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>image</span><span style='color:#a65700; '>></span>
+      <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>text</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"desc"</span><span style='color:#a65700; '>></span>
+A framework for building Mobile cross-platform UI
+     <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>text</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"textContainer"</span><span style='color:#a65700; '>></span>
+        <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>text</span><span style='color:#274796; '> </span><span style='color:#074726; '>class</span><span style='color:#808030; '>=</span><span style='color:#0000e6; '>"text"</span><span style='color:#a65700; '>></span>Hello weex<span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>text</span><span style='color:#a65700; '>></span>
+    <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#a65700; '>></span>
+  <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>div</span><span style='color:#a65700; '>></span>
+  <span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>template</span><span style='color:#a65700; '>></span>
+  <span style='color:#a65700; '>&lt;</span><span style='color:#800000; font-weight:bold; '>style</span><span style='color:#a65700; '>></span>
+  <span style='color:#808030; '>.</span>logoContainer <span style='color:#800080; '>{</span>
+    <span style='color:#bb7977; font-weight:bold; '>width</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>750</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span><span style='color:#bb7977; font-weight:bold; '>height</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>500</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span>
+    <span style='color:#bb7977; font-weight:bold; '>align-items</span><span style='color:#808030; '>:</span> <span style='color:#074726; '>center</span><span style='color:#800080; '>;</span><span style='color:#008484; '>justify-content</span><span style='color:#808030; '>:</span> <span style='color:#074726; '>center</span><span style='color:#800080; '>;</span>
+    <span style='color:#bb7977; font-weight:bold; '>background-color</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>#</span><span style='color:#008000; '>0054DC</span><span style='color:#800080; '>;</span>
+  <span style='color:#800080; '>}</span>
+  <span style='color:#808030; '>.</span>logo <span style='color:#800080; '>{</span>
+    <span style='color:#bb7977; font-weight:bold; '>width</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>378</span><span style='color:#800080; '>;</span><span style='color:#bb7977; font-weight:bold; '>height</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>84</span><span style='color:#800080; '>;</span>
+  <span style='color:#800080; '>}</span>
+  <span style='color:#808030; '>.</span>desc <span style='color:#800080; '>{</span><span style='color:#bb7977; font-weight:bold; '>margin-top</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>40</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span><span style='color:#bb7977; font-weight:bold; '>font-size</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>24</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span><span style='color:#bb7977; font-weight:bold; '>color</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>#</span><span style='color:#008000; '>ccc</span><span style='color:#800080; '>;</span><span style='color:#800080; '>}</span>
+  <span style='color:#808030; '>.</span>textContainer <span style='color:#800080; '>{</span>
+    <span style='color:#bb7977; font-weight:bold; '>width</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>750</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span><span style='color:#bb7977; font-weight:bold; '>padding-top</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>200</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span>
+    <span style='color:#bb7977; font-weight:bold; '>align-items</span><span style='color:#808030; '>:</span> <span style='color:#074726; '>center</span><span style='color:#800080; '>;</span><span style='color:#008484; '>justify-content</span><span style='color:#808030; '>:</span> <span style='color:#074726; '>center</span><span style='color:#800080; '>;</span>
+  <span style='color:#800080; '>}</span><span style='color:#808030; '>.</span>text <span style='color:#800080; '>{</span><span style='color:#bb7977; font-weight:bold; '>font-size</span><span style='color:#808030; '>:</span> <span style='color:#008c00; '>48</span><span style='color:#006600; '>px</span><span style='color:#800080; '>;</span><span style='color:#800080; '>}</span>
+<span style='color:#a65700; '>&lt;/</span><span style='color:#800000; font-weight:bold; '>style</span><span style='color:#a65700; '>></span>
+</pre>
+          </div>
+
+          <div class="show">
+              <img src="img/weex_show.png" alt="weex show" />
+          </div>
+
+      </div> <!-- code-show -->
+      </div>
+      </div><!-- white-bg -->
+      
+      <div class="clear"></div>
+
+      <div class="subscription" id="subscriptionWeex">
+          <div class="title">
+              Stay connected with Weex
+          </div>
+          <div class="text">
+              Welcome to subscribe our newsletter , we hope that let you access weex code repository as soon as possible .  Beyond that , please do not hesitate to give us a message , our email address is <a href="mailto:weex@service.alibaba.com">weex@service.alibaba.com</a>
+          </div>
+          <form action="//github.us13.list-manage.com/subscribe/post?u=9610bf35f4740c86aef7d5cae&amp;id=5f67d6c015" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>          
+          <div class="input no-option">
+              <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Fill your e-mail address..."/>
+          </div>
+          <div class="input">
+              <input type="text" value="" name="GITHUB" class="" id="mce-GITHUB" placeholder="Github ID (Option)"/>
+          </div>
+          <div class="input">
+              <input type="text" value="" name="MMERGE3" class="company" id="mce-MMERGE3" placeholder="Company or Organization (Option)"/>
+          </div>
+          <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_9610bf35f4740c86aef7d5cae_5f67d6c015" tabindex="-1" value=""></div>          
+          
+          <div class="btn">
+              <input type="submit" value="Subscribe me" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+          </div>
+          </form>
+      </div>
+      
+      <div class="clear"></div>
+
+      <div class="getting-started">
+          <a class="btn" href="#subscriptionWeex">Getting Started</a>          
+      </div>
+      <%= footer  %>
+  </body>
+  <%= footer_resource %>
+  <script src='js/index.js' ></script>
+</html>
