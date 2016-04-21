@@ -249,6 +249,14 @@ body {
     /* font-family: HelveticaNeue-Light */ }
     .subscription .text a {
       color: #0055DD; }
+  .subscription p {
+    margin-top: 30px;
+    margin-bottom: 1px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 12px;
+    width: 550px; }
   .subscription .input {
     margin-top: 15px;
     background: #ffffff;
