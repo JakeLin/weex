@@ -204,7 +204,7 @@
  */
 package com.taobao.weex.utils;
 
-import com.uc.support.annotation.NonNull;
+import android.mini.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import java.util.LinkedHashMap;

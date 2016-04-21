@@ -206,9 +206,9 @@ package com.taobao.weex.ui.component;
 
 import android.content.Context;
 import android.graphics.PointF;
-import com.uc.support.annotation.Nullable;
-import com.uc.support.v4.view.ViewPager;
-import com.uc.support.v7.widget.RecyclerView;
+import android.mini.support.annotation.Nullable;
+import android.mini.support.v4.view.ViewPager;
+import android.mini.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;

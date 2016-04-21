@@ -204,7 +204,7 @@
  */
 package com.taobao.weex.ui.view;
 
-import com.uc.support.v4.view.PagerAdapter;
+import android.mini.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
