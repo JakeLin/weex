@@ -17,7 +17,13 @@
         {name: 'listBasic', title: 'List (Basic)'},
         {name: 'listDemo', title: 'List (Advanced)'},
         {name: 'sliderDemo', title: 'Slider'},
+        // Animation
         {name: 'animation', title: 'Animation'},
+        {name: 'anim-zombie', title: 'anim-zombie'},
+        {name: 'anim-xinfengshang', title: 'anim-xinfengshang'},
+        {name: 'anim-christmas', title: 'anim-christmas'},
+        {name: 'anim-618', title: 'anim-618'},
+        // 
         {name: 'modal', title: 'Modal'},
         {name: 'videoDemo', title: 'Video'},
         {name: 'calculator', title: 'Calculator'},

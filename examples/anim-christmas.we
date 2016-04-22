@@ -1,0 +1,194 @@
+<template>
+    <container class="root">
+        <container class="stage" style="width:{{stage.width}};height:{{stage.height}};transform:{{stage.transform}};" onclick="stop">
+          <container repeat="{{list}}" append="tree">
+            <container class="anim" style="width:{{width}};height:{{height}};transform:{{transform}};transform-origin:{{transformOrigin}};opacity:{{alpha}};">
+              <image class="animImage" style="left:-{{imageX}};top:-{{imageY}};width:{{imageWidth}};height: {{imageHeight}}" src="{{imageURL}}"></image>
+            </container>
+          </container>
+        </container>
+    </container>
+</template>
+<style>
+    .stage{
+        transform-origin: 0% 0%;
+        position: relative;
+        background-color:#000;
+        overflow: hidden;
+    }
+    .anim{
+        position: absolute;
+        left: 0px;
+        top:0px;
+        overflow: hidden;
+    }
+
+    .animImage{
+        position:absolute;
+        left:0;
+        top:0;
+    }
+</style>
+<!-- <script src="anim.js"></script> -->
+<script>
+var anim0 = {"image":{"url":"http://gtms03.alicdn.com/tps/i3/TB1qrRMMXXXXXbtXpXXAwR.FpXX-1024-1024.png","width":1024,"height":1024},"layers":[{"name":"action","frames":[{"tween":false,"duration":86,"elem":null}]},{"name":"man","frames":[{"tween":false,"duration":13,"elem":null,"image":null},{"tween":true,"duration":10,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":46.5,"originY":76.5,"x":108.5,"y":507.5,"alpha":100},"image":"man"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"man"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 5"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 6"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 7"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 8"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 9"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 10"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 11"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 12"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 13"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 14"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 15"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 16"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 17"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.48199824289124,"originY":76.50540223446549,"x":108.5,"y":281.5,"alpha":100},"image":"Symbol 18"},{"tween":true,"duration":15,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.89597390273343,"originY":153.28001941249053,"x":107.85,"y":358.25,"alpha":100},"image":"Symbol 19"},{"tween":true,"duration":15,"elem":{"scaleX":0.9999237060546875,"scaleY":0.9999237060546875,"rotation":19.740829467773438,"originX":46.77475991841007,"originY":153.34699520048494,"x":107.8,"y":358.2,"alpha":100},"image":"Symbol 19"},{"tween":true,"duration":17,"elem":{"scaleX":0.999908447265625,"scaleY":0.999908447265625,"rotation":-21.257171630859375,"originX":46.94591893110281,"originY":153.27439115071215,"x":107.8,"y":358.3,"alpha":100},"image":"Symbol 19"},{"tween":false,"duration":1,"elem":{"scaleX":0.9999847412109375,"scaleY":0.9999847412109375,"rotation":0.8060150146484375,"originX":46.89597390273343,"originY":153.28001941249053,"x":107.85,"y":358.25,"alpha":100},"image":"Symbol 19"}]},{"name":"title","frames":[{"tween":false,"duration":56,"elem":null,"image":null},{"tween":true,"duration":9,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":158.5,"originY":71.49999999999999,"x":324.95,"y":-63.7,"alpha":100},"image":"title"},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":0.5500030517578125,"rotation":360,"originX":158.5,"originY":71.50000000000001,"x":324.95,"y":136.3,"alpha":100},"image":"title"},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":0.399993896484375,"rotation":360,"originX":158.5,"originY":71.50109102006563,"x":324.95,"y":136.3,"alpha":100},"image":"title"},{"tween":true,"duration":3,"elem":{"scaleX":1,"scaleY":1,"rotation":360,"originX":158.5,"originY":71.50000000000001,"x":324.95,"y":136.3,"alpha":100},"image":"title"},{"tween":true,"duration":5,"elem":{"scaleX":0.5999755859375,"scaleY":1,"rotation":360,"originX":158.5064496439471,"originY":71.50000000000001,"x":324.95,"y":136.3,"alpha":100},"image":"title"},{"tween":false,"duration":5,"elem":{"scaleX":1,"scaleY":1,"rotation":360,"originX":158.5,"originY":71.50000000000001,"x":324.95,"y":136.3,"alpha":100},"image":"title"}]},{"name":"snowfoot","frames":[{"tween":false,"duration":21,"elem":null,"image":null},{"tween":true,"duration":3,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":65,"originY":10,"x":112.5,"y":431.3,"alpha":100},"image":"snowfoot"},{"tween":false,"duration":62,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":65,"originY":10,"x":112.5,"y":351.3,"alpha":100},"image":"snowfoot"}]},{"name":"btn","frames":[{"tween":false,"duration":71,"elem":null,"image":null},{"tween":true,"duration":10,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":253,"originY":169,"x":266.95,"y":220.3,"alpha":0},"image":"btn"},{"tween":false,"duration":5,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":253,"originY":169,"x":266.95,"y":220.3,"alpha":100},"image":"btn"}]},{"name":"gift0","frames":[{"tween":false,"duration":38,"elem":null,"image":null},{"tween":true,"duration":3,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":17,"originY":19.000000000000014,"x":82.95,"y":141.3,"alpha":0},"image":"gift0"},{"tween":false,"duration":45,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":17,"originY":19.000000000000014,"x":82.95,"y":141.3,"alpha":100},"image":"gift0"}]},{"name":"gift1","frames":[{"tween":false,"duration":34,"elem":null,"image":null},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":14.5,"originY":14,"x":122,"y":181.3,"alpha":0},"image":"gift1"},{"tween":false,"duration":48,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":14.5,"originY":14,"x":122,"y":181.3,"alpha":100},"image":"gift1"}]},{"name":"gift2","frames":[{"tween":false,"duration":30,"elem":null,"image":null},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":12.5,"originY":15.5,"x":59,"y":200.3,"alpha":0},"image":"gift2"},{"tween":false,"duration":52,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":12.5,"originY":15.5,"x":59,"y":200.3,"alpha":100},"image":"gift2"}]},{"name":"gift3","frames":[{"tween":false,"duration":26,"elem":null,"image":null},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":13,"originY":15.5,"x":43,"y":256.3,"alpha":0},"image":"gift3"},{"tween":false,"duration":56,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":13,"originY":15.5,"x":43,"y":256.3,"alpha":100},"image":"gift3"}]},{"name":"gift4","frames":[{"tween":false,"duration":22,"elem":null,"image":null},{"tween":true,"duration":4,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":14,"originY":17.5,"x":164,"y":265.8,"alpha":0},"image":"gift4"},{"tween":false,"duration":60,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":14,"originY":17.5,"x":164,"y":265.8,"alpha":100},"image":"gift4"}]},{"name":"tree","frames":[{"tween":true,"duration":12,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":101,"originY":134,"x":101,"y":539.1,"alpha":100},"image":"anim-tree"},{"tween":false,"duration":74,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":101,"originY":134,"x":101,"y":219.1,"alpha":100},"image":"anim-tree"}]},{"name":"bg","frames":[{"tween":false,"duration":43,"elem":null,"image":null},{"tween":true,"duration":17,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":202.5,"originY":115,"x":-257.55,"y":246,"alpha":100},"image":"anim-bg"},{"tween":false,"duration":26,"elem":{"scaleX":1,"scaleY":1,"rotation":0,"originX":202.5,"originY":115,"x":299.95,"y":246.3,"alpha":100},"image":"anim-bg"}]}],"stage":{"width":550,"height":400,"fps":24},"actions":{"move":0},"texture":{"Symbol 10":{"x":0,"y":0,"w":93,"h":153},"Symbol 11":{"x":96,"y":0,"w":93,"h":153},"Symbol 12":{"x":192,"y":0,"w":93,"h":153},"Symbol 13":{"x":288,"y":0,"w":93,"h":153},"Symbol 14":{"x":384,"y":0,"w":93,"h":153},"Symbol 15":{"x":480,"y":0,"w":93,"h":153},"Symbol 16":{"x":576,"y":0,"w":93,"h":153},"Symbol 17":{"x":672,"y":0,"w":93,"h":153},"Symbol 18":{"x":768,"y":0,"w":93,"h":153},"Symbol 19":{"x":864,"y":0,"w":93,"h":153},"Symbol 5":{"x":0,"y":156,"w":93,"h":153},"Symbol 6":{"x":96,"y":156,"w":93,"h":153},"Symbol 7":{"x":192,"y":156,"w":93,"h":153},"Symbol 8":{"x":288,"y":156,"w":93,"h":153},"Symbol 9":{"x":384,"y":156,"w":93,"h":153},"anim-bg":{"x":480,"y":156,"w":405,"h":230},"anim-tree":{"x":0,"y":389,"w":202,"h":268},"btn":{"x":205,"y":389,"w":506,"h":338},"gift0":{"x":714,"y":389,"w":34,"h":38},"gift1":{"x":751,"y":389,"w":29,"h":28},"gift2":{"x":783,"y":389,"w":25,"h":31},"gift3":{"x":811,"y":389,"w":26,"h":31},"gift4":{"x":840,"y":389,"w":28,"h":35},"man":{"x":871,"y":389,"w":93,"h":153},"snowfoot":{"x":0,"y":730,"w":130,"h":20},"title":{"x":133,"y":730,"w":317,"h":143}}}
+
+module.exports = {
+  data:{
+    animData:anim0,
+    frame:0,
+    stage:{
+        width:0,
+        height:0
+    },
+    list: []
+  },
+  methods: {
+    stop:function(){
+        this._isStop = !this._isStop;
+    },
+    anim: function () {
+        var self = this;
+        var animData = self.animData;
+        var layers = animData.layers;
+        var texture = animData.texture;
+
+        self.stage.width = animData.stage.width;
+        self.stage.height = animData.stage.height;
+        self.stage.transform = 'translate(' + 750 + ', 0) scale(' + 750/animData.stage.height + ') rotate(90deg)';
+
+        layers.forEach(function(layer, index){
+            self.list.unshift({
+                index:index,
+                width:0,
+                height:0,
+                transform:'',
+                imageX:0,
+                imageY:0,
+                alpha:1,
+                transformOrigin:'0 0',
+                imageWidth:animData.image.width,
+                imageHeight:animData.image.height,
+                imageURL:animData.image.url,
+                name:layer.name
+            });
+        });
+
+        var totalFrame = 0;
+        var frame = 0;
+        var parseData = function(){
+            layers.forEach(function(layer){
+                var frames = layer.frames;
+                var realFrames = layer.realFrames = [];
+                var preFrame;
+
+                var parsePreFrame = function(preFrame, frame){
+                    if(preFrame){
+                        var duration = preFrame.duration;
+                        if(duration > 1){
+                            for(var i = 1;i < duration;i ++){
+                                if(preFrame.tween){
+                                    var f = {
+                                        elem:{},
+                                        image:preFrame.image
+                                    };
+                                    var delta = i/duration;
+                                    var preElem = preFrame.elem;
+                                    var elem = frame.elem;
+
+                                    if(elem && preElem){
+                                        for(var p in preElem){
+                                            var v = preElem[p] + (elem[p] - preElem[p]) * delta;
+                                            f.elem[p] = v;
+                                        }
+                                    }
+                                    realFrames.push(f);
+                                }
+                                else{
+                                    realFrames.push(preFrame);
+                                }
+                            }
+                        }
+                    }
+                };
+                frames.forEach(function(frame){
+                    if(preFrame){
+                        parsePreFrame(preFrame, frame);
+                    }
+                    realFrames.push(frame);
+                    preFrame = frame;
+                });
+                if(preFrame){
+                    preFrame.tween = false;
+                    parsePreFrame(preFrame, null);
+                }
+                totalFrame = Math.max(realFrames.length, totalFrame);
+            });
+        };
+
+        parseData();
+
+        var render = function(num){
+            self.frame = num;
+            self.list.forEach(function(item){
+                var layer = layers[item.index];
+                var frames = layer.realFrames;
+                var frame = frames[num];
+                if(frame){
+                    var image = texture[frame.image];
+                    var data = frame.elem;
+                    if(image && data){
+                        item.imageX = image.x;
+                        item.imageY = image.y;
+                        item.width = image.w;
+                        item.height = image.h;
+
+                        if(data.alpha <= 0){
+                            item.alpha = 0;
+                            return;
+                        }
+
+                        item.transformOrigin = data.originX + "px " + data.originY + "px";
+                        item.alpha = data.alpha * 0.01;
+
+                        item.transform = ''
+                            + "translate(" + (data.x - data.originX) + "px," + (data.y - data.originY) + "px) "
+                            + "rotate(" + data.rotation + "deg) "
+                            + "scale(" + data.scaleX + "," + data.scaleY + ")"
+                    }
+                    else{
+                        item.alpha = 0;
+                    }
+                }
+                else{
+                    item.alpha = 0;
+                }
+            });
+        };
+
+        var duration = 1000/animData.stage.fps;
+        var loop = function(){
+            if(!self._isStop){
+                render(frame);
+                frame ++;
+                if(frame >= totalFrame){
+                    frame = 0;
+                }
+            }
+            setTimeout(function(){
+                loop();
+                self._app.refreshData(self);
+            }, duration);
+        };
+
+        frame = 0;
+        render(frame);
+        loop();
+    },
+    ready: function () {
+        var self = this;
+        self.anim();
+    }
+  }
+};
+</script>
