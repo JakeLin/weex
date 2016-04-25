@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Veex Example</title>
+    <script src="./dist.js"></script>
+    <script src="../h5-render/dist/index.js"></script>
+  </head>
+  <body>
+
+    <div id="weex"></div>
+    <div id="app"></div>
+
+    <script>
+      (function () {
+        function getUrlParam (key) {
+          var reg = new RegExp('[?|&]' + key + '=([^&]+)')
+          var match = location.search.match(reg)
+          return match && match[1]
+        }
+
+        var loader = getUrlParam('loader') || 'xhr'
+        var page = getUrlParam('page') || 'demo.js'
+
+        // jsonp callback name should be specified or be the default
+        // value 'weexJsonpCallback' if the 'jsonp' loader is used.
+        var JSONP_CALLBACK_NAME = 'weexJsonpCallback'
+
+        window.weex.init({
+          jsonpCallback: JSONP_CALLBACK_NAME,
+          appId: page,
+          loader: loader,
+          source: page,
+          rootId: 'weex'
+        })
+      })()
+    </script>
+  </body>
+</html>
