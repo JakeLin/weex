@@ -131,8 +131,43 @@ global.refreshInstance = function refreshInstance(instanceId, data) {
 }
 
 global.callJS = function callJS(instanceId, tasks) {
-  // handle events and callbacks
-  console.log('callJS', instanceId, tasks)
+  const methodConfig = globalMethodConfig[instanceId] || {}
+
+  tasks.forEach(task => {
+    const args = task.args
+
+    if (task.method === 'fireEvent') {
+      const nodeId = args[0]
+      const type = args[1]
+      const e = args[2] || {}
+      const node = methodConfig.events[nodeId]
+      const context = node.context
+      const handlers = node.handlers[type]
+
+      e.type = type
+      e.target = node.el
+      e.timestamp = Date.now()
+
+      handlers.forEach(handle => {
+        handle.call(context, e)
+      })
+    }
+
+    if (task.method === 'callback') {
+      const callbackId = args[0]
+      const data = args[1]
+      const ifKeepAlive = args[2]
+      const callback = methodConfig.callbacks[callbackId]
+
+      if (typeof callback === 'function') {
+        callback(data) // data is already a object, @see: lib/framework.js
+
+        if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
+          methodConfig.callbacks[callbackId] = undefined
+        }
+      }
+    }
+  })
 }
 
 global.getRoot = function getRoot(instanceId) {
