@@ -13,7 +13,7 @@ Vue.component('foo', {
   ]
 })
 
-new Vue({
+return new Vue({
   el: 'scroller',
   data: {x: 1, y: 2, z: 'foo'},
   methods: {foo: function (e) {

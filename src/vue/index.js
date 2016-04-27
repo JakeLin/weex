@@ -56,6 +56,7 @@ function overrideVue(Vue) {
 Vue = overrideVue(Vue)
 
 const globalMethodConfig = {}
+const globalInstance = {}
 
 global.createInstance = function createInstance(
   instanceId, appCode, config /* {bundleUrl, debug} */, data) {
@@ -89,7 +90,9 @@ global.createInstance = function createInstance(
     args: [{'ref': '_root', type: 'list', attr: {}, style: {}}]}])
 
   const start = new Function('Vue', '__weex_require_module__', appCode)
-  start(Vue, requireNativeModule)
+  const subVue = Vue.extend({})
+  const instance = start(subVue, requireNativeModule)
+  globalInstance[instanceId] = instance
 }
 
 function normalize(v, config) {
@@ -121,13 +124,22 @@ function normalize(v, config) {
 }
 
 global.destroyInstance = function destroyInstance(instanceId) {
-  // destroy weex instance
-  console.log('destroyInstance', instanceId)
+  const instance = globalInstance[instanceId]
+  delete globalInstance[instanceId]
+  delete globalMethodConfig[instanceId]
+  instance.$destroy()
 }
 
 global.refreshInstance = function refreshInstance(instanceId, data) {
-  // refresh weex instance
-  console.log('refreshInstance', instanceId)
+  const instance = globalInstance[instanceId]
+  for (const key in data) {
+    Vue.set(instance, key, data[key])
+  }
+}
+
+global.getRoot = function getRoot(instanceId) {
+  const instance = globalInstance[instanceId]
+  return 'getRoot', instance.$el.toJSON()
 }
 
 global.callJS = function callJS(instanceId, tasks) {
@@ -168,11 +180,6 @@ global.callJS = function callJS(instanceId, tasks) {
       }
     }
   })
-}
-
-global.getRoot = function getRoot(instanceId) {
-  // return root virtual dom node
-  console.log('getRoot', window.body)
 }
 
 const nativeModules = {}
