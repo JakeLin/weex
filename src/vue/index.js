@@ -1,6 +1,5 @@
 // todo:
 // - register components
-// - register modules
 // - fire event
 // - callback
 // - append="tree|node"
@@ -8,6 +7,7 @@
 // - get root dom
 
 var Vue = require('vue-next')
+var Node = global.WeexNode
 
 function overrideVue(Vue) {
   // override init and inject vuex init procedure
@@ -34,7 +34,6 @@ function overrideVue(Vue) {
       const dataOption = options.data
       const data = typeof dataOption === 'function' ? dataOption() : dataOption
       options.data = Object.assign(data, externalData)
-      console.log(options.data)
     }
 
     if (!options.globalConfig &&
@@ -51,15 +50,63 @@ Vue = overrideVue(Vue)
 global.createInstance = function createInstance(
   instanceId, appCode, config /* {bundleUrl, debug} */, data) {
 
+  global.__TMP_WEEX_INSTANCE_ID__ = instanceId
+  global.__TMP_WEEX_INSTANCE_CONFIG__ = config
+  global.__TMP_WEEX_INSTANCE_DATA__ = data
+
+  const methodConfig = {callbacks: [], uid: 1}
+  function requireNativeModule(name) {
+    const nativeModule = nativeModules[name] || []
+    const output = {}
+    for (const methodName in nativeModule) {
+      const defaultArgs = nativeModule[methodName]
+      output[methodName] = (...args) => {
+        const finalArgs = []
+        defaultArgs.forEach((arg, index) => {
+          const value = args[index]
+          finalArgs[index] = normalize(value, methodConfig)
+        })
+        callNative(instanceId, [{module: name, method: methodName, args: finalArgs}])
+      }
+    }
+    return output
+  }
+
+
   // create weex instance
   callNative(instanceId, [{module: 'dom', method: 'createBody',
     args: [{'ref': '_root', type: 'list', attr: {}, style: {}}]}])
 
-  const start = new Function('Vue', appCode)
-  global.__TMP_WEEX_INSTANCE_ID__ = instanceId
-  global.__TMP_WEEX_INSTANCE_CONFIG__ = config
-  global.__TMP_WEEX_INSTANCE_DATA__ = data
-  start(Vue)
+  const start = new Function('Vue', '__weex_require_module__', appCode)
+  start(Vue, requireNativeModule)
+}
+
+function normalize(v, config) {
+  var type = typof(v)
+
+  switch (type) {
+    case 'undefined':
+    case 'null':
+      return ''
+    case 'regexp':
+      return v.toString()
+    case 'date':
+      return v.toISOString()
+    case 'number':
+    case 'string':
+    case 'boolean':
+    case 'array':
+    case 'object':
+      if (v instanceof Node) {
+        return v.ref
+      }
+      return v
+    case 'function':
+      config.callbacks[++config.uid] = v
+      return config.uid.toString()
+    default:
+      return JSON.stringify(v)
+  }
 }
 
 global.destroyInstance = function destroyInstance(instanceId) {
@@ -82,9 +129,17 @@ global.getRoot = function getRoot(instanceId) {
   console.log('getRoot', window.body)
 }
 
+const nativeModules = {}
+
 global.registerModules = function registerModules(modules) {
-  // register all modules & methods
-  console.log('registerModules', modules)
+  for (const name in modules) {
+    if (!nativeModules[name]) {
+      nativeModules[name] = {}
+    }
+    modules[name].forEach(method => {
+      nativeModules[name][method.name] = method.args
+    })
+  }
 }
 
 global.registerComponents = function registerComponents(components) {

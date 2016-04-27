@@ -21,3 +21,5 @@ new Vue({
     with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {staticClass:"a b",class:[y, 'y'],attrs:{value:"asdfasdfaf"}}, [], '')], '')}
   }
 })
+
+console.log(__weex_require_module__('dom'))
