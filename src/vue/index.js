@@ -72,7 +72,6 @@ global.createInstance = function createInstance(
     return output
   }
 
-
   // create weex instance
   callNative(instanceId, [{module: 'dom', method: 'createBody',
     args: [{'ref': '_root', type: 'list', attr: {}, style: {}}]}])
@@ -142,9 +141,29 @@ global.registerModules = function registerModules(modules) {
   }
 }
 
+const nativeComponents = {}
+
 global.registerComponents = function registerComponents(components) {
-  // register all components
-  console.log('registerComponents', components)
+  const config = Vue.config
+  const newComponents = {}
+  if (Array.isArray(components)) {
+    components.forEach(component =>  {
+      if (!component) {
+        return
+      }
+      if (typeof component === 'string') {
+        nativeComponents[component] = true
+        newComponents[component] = true
+      } else if (typeof component === 'object' && typeof component.type === 'string') {
+        nativeComponents[component.type] = component
+        newComponents[component.type] = true
+      }
+    })
+    const oldIsReservedTag = config.isReservedTag
+    config.isReservedTag = name => {
+      return newComponents[name] || oldIsReservedTag(name)
+    }
+  }
 }
 
 // global.callNative = function callNative() {}

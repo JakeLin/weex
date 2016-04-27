@@ -8,7 +8,7 @@ Vue.component('foo', {
   },
   staticRenderFns: [
     function () {
-      with(this){return __h__('div', undefined, ["Hello World"], '')}
+      with(this){return __h__('text', undefined, ["Hello World"], '')}
     }
   ]
 })
@@ -23,3 +23,9 @@ new Vue({
 })
 
 console.log(__weex_require_module__('dom'))
+
+registerComponents(['a', {name: 'b'}, null])
+
+console.log(Vue.config.isReservedTag('a'))
+console.log(Vue.config.isReservedTag('b'))
+console.log(Vue.config.isReservedTag('c'))
