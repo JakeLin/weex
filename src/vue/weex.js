@@ -3935,6 +3935,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	
 	var latestNodeId = 1;
+	// let hackFirstNode = true
 	
 	function Node(tagName, data) {
 	  data = data || {};
@@ -3962,7 +3963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.attr[key] = value;
 	  }
 	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttrs', args: [this.nodeId, _defineProperty({}, key, value)] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttrs', args: [String(this.nodeId), _defineProperty({}, key, value)] }]);
 	  }
 	};
 	
@@ -3976,7 +3977,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  delete this.attr[key];
 	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttr', args: [this.nodeId, _defineProperty({}, key, null)] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttr', args: [String(this.nodeId), _defineProperty({}, key, null)] }]);
 	  }
 	};
 	
@@ -3990,7 +3991,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.style[key] = value;
 	  }
 	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateStyle', args: [this.nodeId, _defineProperty({}, key, value)] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateStyle', args: [String(this.nodeId), _defineProperty({}, key, value)] }]);
 	  }
 	};
 	
@@ -4011,7 +4012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  descriptor.handlers[type].push(handler);
 	
 	  if (this.attached && needAddEvent) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addEvent', args: [this.nodeId, type] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addEvent', args: [String(this.nodeId), type] }]);
 	  }
 	};
 	
@@ -4048,8 +4049,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attachAll(child);
 	  }
 	
-	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [this.nodeId, child.toJSON(), -1] }]);
+	  if (this.attached && !this._uselessNode) {
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [String(this.nodeId), child.toJSON(), -1] }]);
 	  }
 	};
 	
@@ -4109,11 +4110,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  if (this.attached && target.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'moveElement', args: [target.nodeId, this.nodeId, beforeIndex + 1] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'moveElement', args: [String(target.nodeId), this.nodeId, beforeIndex + 1] }]);
 	  } else if (this.attached && !target.attached) {
 	    target.attached = true;
 	    attachAll(target);
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [this.nodeId, target.toJSON(), beforeIndex + 1] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [String(this.nodeId), target.toJSON(), beforeIndex + 1] }]);
 	  }
 	};
 	
@@ -4142,15 +4143,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // before.children
 	  }
 	
-	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'removeElement', args: [child.nodeId] }]);
+	  if (this.attached && !child._uselessNode) {
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'removeElement', args: [String(child.nodeId)] }]);
 	  }
 	
 	  // todo: remove all node and remove all events
 	};
 	
 	Node.prototype.toJSON = function toJSON() {
-	  var ref = this.nodeId;
+	  var ref = String(this.nodeId);
 	  var type = this.tagName;
 	  var attr = this.attr;
 	  var style = this.style;
@@ -4542,11 +4543,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	function query(el, instanceId) {
 	  var body = new _native.Node(el);
 	  body.instanceId = instanceId;
-	  window.body = body;
-	  var root = new _native.Node('div');
-	  window.root = root;
 	  body.nodeId = '_root';
 	  body.attached = true;
+	  var root = new _native.Node('div');
+	  root._uselessNode = true; // hack, it'a uselessNode for weex
 	  body.appendChild(root);
 	  return root;
 	}

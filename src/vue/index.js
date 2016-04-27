@@ -79,14 +79,14 @@ global.createInstance = function createInstance(
           const value = args[index]
           finalArgs[index] = normalize(value, methodConfig)
         })
-        callNative(instanceId, [{module: name, method: methodName, args: finalArgs}])
+        callNative(instanceId + '', [{module: name, method: methodName, args: finalArgs}])
       }
     }
     return output
   }
 
   // create weex instance
-  callNative(instanceId, [{module: 'dom', method: 'createBody',
+  callNative(instanceId + '', [{module: 'dom', method: 'createBody',
     args: [{'ref': '_root', type: 'list', attr: {}, style: {}}]}])
 
   const start = new Function('Vue', '__weex_require_module__', appCode)

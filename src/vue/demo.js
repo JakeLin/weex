@@ -1,14 +1,14 @@
 Vue.component('foo', {
   props: ['a', 'b'],
   data: function () {
-    return {list: [1,2,3,4,5]}
+    return {list: [1,2]}
   },
   render: function () {
     with (this) { return __h__('div', undefined, [(list)&&__renderList__((list), function(k, v,$index){return __h__('div', {class:[a, 'a'],style:{m: '1', n: a},attrs:{"n":a},staticAttrs:{"m":"a","style":"l: 2"}}, [("\n aaa"+__toString__(a)+"bbb"+__toString__(k)+"-"+__toString__(v)+"\n "),_staticTrees[0]], '')})], '')}
   },
   staticRenderFns: [
     function () {
-      with(this){return __h__('text', undefined, ["Hello World"], '')}
+      with(this){return __h__('text', {staticAttrs: {value: 'Hello World'}}, [], '')}
     }
   ]
 })
