@@ -6,7 +6,7 @@
 // - return callback
 // - get root dom
 
-var Vue = require('vue-next')
+var Vue = require('vue')
 var Node = global.WeexNode
 
 function overrideVue(Vue) {
