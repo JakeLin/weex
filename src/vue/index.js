@@ -25,12 +25,15 @@ function overrideVue(Vue) {
       const instanceId = global.__TMP_WEEX_INSTANCE_ID__
       const config = global.__TMP_WEEX_INSTANCE_CONFIG__
       const externalData = global.__TMP_WEEX_INSTANCE_DATA__
+      const methodConfig = global.__TMP_WEEX_INSTANCE_METHOD_CONFIG__
       delete global.__TMP_WEEX_INSTANCE_ID__
       delete global.__TMP_WEEX_INSTANCE_CONFIG__
       delete global.__TMP_WEEX_INSTANCE_DATA__
+      delete global.__TMP_WEEX_INSTANCE_METHOD_CONFIG__
       this.$instanceId = instanceId
       options.instanceId = instanceId
       options.globalConfig = config
+      options.methodConfig = methodConfig
       const dataOption = options.data
       const data = typeof dataOption === 'function' ? dataOption() : dataOption
       options.data = Object.assign(data, externalData)
@@ -40,6 +43,11 @@ function overrideVue(Vue) {
       (parentOptions && parentOptions.globalConfig)) {
       options.globalConfig = parentOptions.globalConfig
     }
+
+    if (!options.methodConfig &&
+      (parentOptions && parentOptions.methodConfig)) {
+      options.methodConfig = parentOptions.methodConfig
+    }
   }
 
   return Vue
@@ -47,14 +55,18 @@ function overrideVue(Vue) {
 
 Vue = overrideVue(Vue)
 
+const globalMethodConfig = {}
+
 global.createInstance = function createInstance(
   instanceId, appCode, config /* {bundleUrl, debug} */, data) {
+  const methodConfig = {callbacks: [], events: [], uid: 1}
+  globalMethodConfig[instanceId] = methodConfig
 
   global.__TMP_WEEX_INSTANCE_ID__ = instanceId
   global.__TMP_WEEX_INSTANCE_CONFIG__ = config
   global.__TMP_WEEX_INSTANCE_DATA__ = data
+  global.__TMP_WEEX_INSTANCE_METHOD_CONFIG__ = methodConfig
 
-  const methodConfig = {callbacks: [], uid: 1}
   function requireNativeModule(name) {
     const nativeModule = nativeModules[name] || []
     const output = {}

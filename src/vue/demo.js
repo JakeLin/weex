@@ -14,18 +14,22 @@ Vue.component('foo', {
 })
 
 new Vue({
-  el: '#app',
+  el: 'scroller',
   data: {x: 1, y: 2, z: 'foo'},
+  methods: {foo: function (e) {
+    console.log('event', e)
+  }},
   style: {y: {fontSize: 64}},
   render: function () {
-    with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {staticClass:"a b",class:[y, 'y'],attrs:{value:"asdfasdfaf"}}, [], '')], '')}
+    with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {on:{"click":foo}, staticClass:"a b",class:[y, 'y'],attrs:{value:"asdfasdfaf"}}, [], '')], '')}
   }
 })
 
-console.log(__weex_require_module__('dom'))
+// // testing registerModules()
+// console.log(__weex_require_module__('dom'))
 
-registerComponents(['a', {name: 'b'}, null])
-
-console.log(Vue.config.isReservedTag('a'))
-console.log(Vue.config.isReservedTag('b'))
-console.log(Vue.config.isReservedTag('c'))
+// // testing registerComponents()
+// registerComponents(['a', {name: 'b'}, null])
+// console.log(Vue.config.isReservedTag('a'))
+// console.log(Vue.config.isReservedTag('b'))
+// console.log(Vue.config.isReservedTag('c'))
