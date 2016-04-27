@@ -18,10 +18,11 @@ new Vue({
   data: {x: 1, y: 2, z: 'foo'},
   methods: {foo: function (e) {
     console.log('event', e)
+    this.y++
   }},
   style: {y: {fontSize: 64}},
   render: function () {
-    with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {on:{"click":foo}, staticClass:"a b",class:[y, 'y'],attrs:{value:"asdfasdfaf"}}, [], '')], '')}
+    with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {on:{"click":foo}, staticClass:"a b",class:[y, 'y'],attrs:{value:(__toString__(y)+"asdfasdfaf")}}, [], '')], '')}
   }
 })
 

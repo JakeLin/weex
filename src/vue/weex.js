@@ -3962,7 +3962,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.attr[key] = value;
 	  }
 	  if (this.attached) {
-	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttr', args: [this.nodeId, _defineProperty({}, key, value)] }]);
+	    global.callNative(this.instanceId, [{ module: 'dom', method: 'updateAttrs', args: [this.nodeId, _defineProperty({}, key, value)] }]);
 	  }
 	};
 	
@@ -4017,11 +4017,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Node.prototype.appendChild = function appendChild(child) {
 	  if (!child) {
-	    console.log('call native: append skip', this.nodeId);
 	    return;
 	  }
-	
-	  child.instanceId = this.instanceId;
 	
 	  var children = this.children;
 	  var length = children.length;
@@ -4046,6 +4043,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  child.attached = this.attached;
 	
+	  if (!child.instanceId && this.instanceId) {
+	    child.instanceId = this.instanceId;
+	    attachAll(child);
+	  }
+	
 	  if (this.attached) {
 	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [this.nodeId, child.toJSON(), -1] }]);
 	  }
@@ -4053,16 +4055,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Node.prototype.insertBefore = function insertBefore(target, before) {
 	  if (!target) {
-	    console.log('call native: move skip', this.nodeId);
 	    return;
 	  }
 	
 	  if (before && before.nextSibling === target) {
-	    console.log('call native: move skip', this.nodeId);
 	    return;
 	  }
 	
-	  target.instanceId = this.instanceId;
+	  if (!target.instanceId && this.instanceId) {
+	    target.instanceId = this.instanceId;
+	  }
 	
 	  var children = this.children;
 	  var targetParent = target.parentNode;
@@ -4110,13 +4112,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    global.callNative(this.instanceId, [{ module: 'dom', method: 'moveElement', args: [target.nodeId, this.nodeId, beforeIndex + 1] }]);
 	  } else if (this.attached && !target.attached) {
 	    target.attached = true;
+	    attachAll(target);
 	    global.callNative(this.instanceId, [{ module: 'dom', method: 'addElement', args: [this.nodeId, target.toJSON(), beforeIndex + 1] }]);
 	  }
 	};
 	
 	Node.prototype.removeChild = function removeChild(child) {
 	  if (!child) {
-	    console.log('call native: remove skip', this.nodeId);
 	    return;
 	  }
 	
@@ -4158,6 +4160,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return child.toJSON();
 	    }) };
 	};
+	
+	function attachAll(node) {
+	  var instanceId = node.instanceId;
+	  var attached = node.attached;
+	  node.children.forEach(function (child) {
+	    child.instanceId = instanceId;
+	    child.attached = attached;
+	    attachAll(child);
+	  });
+	}
+	
+	// function detachAll (node) {}
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
