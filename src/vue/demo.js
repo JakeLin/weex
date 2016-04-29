@@ -21,8 +21,44 @@ return new Vue({
     this.y++
   }},
   style: {y: {fontSize: 64}},
+  // stream: true,
+  // old:
+  // __h__(tag, data, children, namespace)
+  // new:
+  // __r__(self, children)       -> render
+  // __s__(tag, data, namespace) -> self
+  // __c__(children)             -> children
   render: function () {
-    with (this) { return __h__('div', {staticAttrs:{"id":"app"}}, [__h__('foo', {attrs:{"a":x,"b":y}}, undefined, '')," ",__h__(z, {}, undefined)," ",__h__('text', {on:{"click":foo}, staticClass:"a b",class:[y, 'y'],attrs:{value:(__toString__(y)+"asdfasdfaf")}}, [], '')], '')}
+    with (this) {
+      // return __r__(
+      //   __s__('div', {}),
+      //   [
+      //     __r__(
+      //       __s__('text', {
+      //         on:{"click":foo},
+      //         staticClass:"a b",
+      //         class:[y, 'y'],
+      //         attrs:{value:(__toString__(y)+"asdfasdfaf")},
+      //         // append: true
+      //       }),
+      //       []
+      //     )
+      //   ]
+      // )
+      return __h__(
+        'div', {},
+        [
+          // __h__('foo', {attrs:{"a":x,"b":y}}, undefined, ''),
+          // __h__(z, {}, undefined),
+          __h__('text', {
+            on:{"click":foo},
+            staticClass:"a b",
+            class:[y, 'y'],
+            attrs:{value:(__toString__(y)+"asdfasdfaf")}
+          }, [], '')
+        ], ''
+      )
+    }
   }
 })
 
