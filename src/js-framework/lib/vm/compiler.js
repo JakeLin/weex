@@ -10,6 +10,8 @@
  * events.js: $on
  */
 
+import * as _ from './util'
+
 /**
  * build(externalDirs)
  *   createVm()
@@ -45,6 +47,7 @@ export function _build() {
     this._compile(template, this._parentEl)
   }
 
+  _.debug(`"ready" lifecycle in Vm(${this._type})`)
   this.$emit('hook:ready')
   this._ready = true
 }
@@ -353,7 +356,7 @@ export function _bindRepeat(target, fragBlock, info) {
         if (!mergedData.hasOwnProperty('INDEX')) {
           Object.defineProperty(mergedData, 'INDEX', {
             value: () => {
-              nativeLog('[WARNING] "INDEX" in repeat is deprecated,' +
+              console.warn('"INDEX" in repeat is deprecated,' +
                 ' please use "$index" instead')
             }
           })
@@ -366,7 +369,6 @@ export function _bindRepeat(target, fragBlock, info) {
       mergedData[valueName] = item
     }
     context = context._mergeContext(mergedData)
-    // console.log(context)
     vms.push(context)
     context._compile(target, fragBlock, {repeat: item})
   }

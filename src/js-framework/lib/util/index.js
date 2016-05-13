@@ -198,39 +198,43 @@ export var indexOf = (arr, obj) => {
   return -1
 }
 
-
-/// debug.js
-
-
 const hasConsole = typeof console !== 'undefined'
 
 /**
- * Log a message.
- *
  * @param {String} msg
  */
+export var error = (...args) => {
+  hasConsole && console.error && console.error('[JS Framework]', ...args)
+}
 
-export var log = (msg) => {
-  const _config = Config || {}
-  if (hasConsole && _config.debug) {
-    console.log.call(this, '[info]: ', msg)
-  }
+
+/**
+ * @param {String} msg
+ */
+export var warn = (...args) => {
+  hasConsole && console.warn && console.warn('[JS Framework]', ...args)
 }
 
 /**
- * We've got a problem here.
- *
  * @param {String} msg
  */
-
-export var warn = (msg) => {
-  // if (hasConsole && (!config.silent || config.debug)) {
-  if (hasConsole) {
-    console.warn.call(this, '[warn]: ', msg)
-    /* istanbul ignore if */
-    // if (config.debug) {
-    //   /* jshint debug: true */
-    //   debugger
-    // }
-  }
+export var info = (...args) => {
+  hasConsole && console.info && console.info('[JS Framework]', ...args)
 }
+
+/**
+ * @param {String} msg
+ */
+export var debug = (...args) => {
+  hasConsole && console.debug && console.debug('[JS Framework]', ...args)
+}
+
+
+/**
+ * @param {String} msg
+ */
+export var log = (...args) => {
+  hasConsole && console.log && console.log('[JS Framework]', ...args)
+}
+
+

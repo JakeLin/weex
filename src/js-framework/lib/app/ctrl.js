@@ -10,11 +10,7 @@
  * corresponded with the API of instance manager (framework.js)
  */
 
-import {
-  bind, extend
-}
-from '../util'
-import * as perf from '../perf'
+import * as _ from '../util'
 import Listener from './dom-listener'
 
 export function updateActions() {
@@ -30,18 +26,21 @@ export function updateActions() {
 }
 
 export function init(code, data) {
+  _.debug('Intialize an instance with', code, data)
+
   var result
   // @see: lib/app/bundle.js
-  const define = bind(this.define, this)
+  const define = _.bind(this.define, this)
   const bootstrap = (name, config, _data) => {
     result = this.bootstrap(name, config, _data || data)
     this.updateActions()
     this.doc.listener.createFinish()
     this.doc.close()
+    _.debug(`After intialized an instance(${this.id})`)
   }
 
   // backward(register/render)
-  const register = bind(this.register, this)
+  const register = _.bind(this.register, this)
   const render = (name, _data) => {
     result = this.bootstrap(name, {}, _data)
   }
@@ -51,8 +50,6 @@ export function init(code, data) {
   }
 
   const document = this.doc
-
-  perf.start('run bundle', this.id)
 
   let functionBody
   /* istanbul ignore if */
@@ -86,11 +83,12 @@ export function init(code, data) {
     define,
     bootstrap)
 
-  perf.end('run bundle', this.id)
   return result
 }
 
 export function destroy() {
+  _.debug(`Destory an instance(${this.id})`)
+
   this.id = ''
   this.eventManager = null
   this.options = null
@@ -108,6 +106,9 @@ export function getRootElement() {
 }
 
 export function fireEvent(ref, type, e, domChanges) {
+  _.debug(`Fire a "${type}" event on an element(${ref})`,
+            `in instance(${this.id})`)
+
   if (Array.isArray(ref)) {
     ref.some((ref) => {
       return this.fireEvent(ref, type, e) !== false
@@ -118,7 +119,6 @@ export function fireEvent(ref, type, e, domChanges) {
   const el = this.doc.getRef(ref)
 
   if (el) {
-    perf.start('manage event', ref + '-' + type)
     e = e || {}
     e.type = type
     e.target = el
@@ -127,7 +127,6 @@ export function fireEvent(ref, type, e, domChanges) {
       updateElement(el, domChanges)
     }
     const result = this.eventManager.fire(el, type, e)
-    perf.end('manage event', ref + '-' + type)
     this.updateActions()
     this.doc.listener.updateFinish()
     return result
@@ -137,6 +136,9 @@ export function fireEvent(ref, type, e, domChanges) {
 }
 
 export function callback(callbackId, data, ifKeepAlive) {
+  _.debug(`Invoke a callback(${callbackId}) with`, data,
+            `in instance(${this.id})`)
+
   const callback = this.callbacks[callbackId]
 
   if (typeof callback === 'function') {
@@ -155,13 +157,16 @@ export function callback(callbackId, data, ifKeepAlive) {
 }
 
 export function refreshData(data) {
+  _.debug(`Refresh with`, data,
+            `in instance[${this.id}]`)
+
   const vm = this.vm
 
   if (vm && data) {
     if (typeof vm.refreshData === 'function') {
       vm.refreshData(data)
     } else {
-      extend(vm, data)
+      _.extend(vm, data)
     }
     this.updateActions()
     this.doc.listener.refreshFinish()

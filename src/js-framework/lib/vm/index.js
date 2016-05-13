@@ -3,8 +3,7 @@
  * ViewModel Constructor & definition
  */
 
-import {extend, toArray} from '../util'
-
+import * as _ from '../util'
 import * as scope from './instance/scope'
 import * as compiler from './compiler'
 import * as directive from './directive'
@@ -58,16 +57,18 @@ export default function Vm(
   // bind events and lifecycles
   this._initEvents(externalEvents)
 
+  _.debug(`"init" lifecycle in Vm(${this._type})`)
   this.$emit('hook:init')
   this._inited = true
   // proxy data and methods
   // observe data and add this to vms
   this._data = typeof data === 'function' ? data() : data
   if (mergedData) {
-    extend(this._data, mergedData)
+    _.extend(this._data, mergedData)
   }
   this._initScope()
 
+  _.debug(`"created" lifecycle in Vm(${this._type})`)
   this.$emit('hook:created')
   this._created = true
   // backward old ready entry
@@ -78,9 +79,8 @@ export default function Vm(
   this._build()
 }
 
-extend(Vm.prototype, scope, compiler, directive, domHelper, events)
-extend(Vm, {
+_.extend(Vm.prototype, scope, compiler, directive, domHelper, events)
+_.extend(Vm, {
   registerModules,
   registerMethods
 })
-// Vm.registerModules(modules)

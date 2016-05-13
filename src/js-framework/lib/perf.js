@@ -1,11 +1,13 @@
-import log from './log'
-
 var data = {type: 'root', children: []}
 var current = data
 var stack = [current]
 
 function spaces(num) {
   return Array(num).join(' ')
+}
+
+function log(...args) {
+  console.log(...args)
 }
 
 export function start(type, id) {
