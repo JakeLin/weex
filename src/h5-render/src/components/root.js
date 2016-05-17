@@ -44,8 +44,9 @@ RootComponent.prototype.fixRootHeight = function () {
   !html.style.height && (html.style.height = '100%')
   !body.style.height && (body.style.height = '100%')
   !rootContainer.style.height && (rootContainer.style.height = '100%')
-  !this.data.style.height
-    && (this.data.style.height = window.innerHeight / this.data.scale)
+  !this.data.style.height && (this.data.style.height = '100%')
+  // !this.data.style.height
+  //   && (this.data.style.height = window.innerHeight / this.data.scale)
 }
 
 module.exports = RootComponent
