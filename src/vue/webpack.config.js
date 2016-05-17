@@ -2,10 +2,8 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: 'vue',
+  entry: 'vue/dist/weex.common.js',
   output: {
-    filename: 'dist.js',
-    library: 'Vue',
-    libraryTarget: 'umd'
+    filename: 'dist.js'
   }
 }
