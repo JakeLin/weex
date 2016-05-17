@@ -22,7 +22,6 @@ function Embed (data, nodeType) {
 Embed.prototype = Object.create(Component.prototype)
 
 Embed.prototype.create = function () {
-
   var node = document.createElement('div')
   node.id = this.id
   node.style.overflow = 'scroll'
