@@ -146,11 +146,11 @@ export function getRoot(instanceId) {
 }
 
 var jsHandlers = {
-  fireEvent: function fireEvent(instanceId, ref, type, data) {
+  fireEvent: function fireEvent(instanceId, ref, type, data, domChanges) {
     var instance = instanceMap[instanceId]
     var result
     perf.start('fireEvent', instanceId + '-' + ref + '-' + type)
-    result = instance.fireEvent(ref, type, data)
+    result = instance.fireEvent(ref, type, data, domChanges)
     perf.end('fireEvent', instanceId + '-' + ref + '-' + type)
     return result
   },
