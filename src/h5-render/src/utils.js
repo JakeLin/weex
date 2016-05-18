@@ -108,7 +108,7 @@ function getRgb(color) {
 
 // direction: 'l' | 'r', default is 'r'
 // num: how many times to loop, should be a positive integer
-function getLoopArray(arr, num, direction) {
+function loopArray(arr, num, direction) {
   if (!isArray(arr)) {
     return
   }
@@ -142,5 +142,5 @@ module.exports = {
   detectWebp: detectWebp,
   getRandom: getRandom,
   getRgb: getRgb,
-  getLoopArray: getLoopArray
+  loopArray: loopArray
 }
