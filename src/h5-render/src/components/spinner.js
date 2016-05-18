@@ -60,7 +60,8 @@ Spinner.prototype.setKeyframeColor = function (val) {
       cssRules = item.cssRules
       for (var j = 0, m = cssRules.length; j < m; j++) {
         keyframe = cssRules[j]
-        if (keyframe.type === CSSRule.KEYFRAME_RULE) {
+        if ((keyframe.type === CSSRule.KEYFRAME_RULE
+          || keyframe.type === CSSRule.WEBKIT_KEYFRAME_RULE)) {
           keyframe.style.boxShadow = keyframeRules[j]
         }
       }
