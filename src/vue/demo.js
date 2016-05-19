@@ -4,10 +4,10 @@
  * old:
  * __h__(tag, data, children, namespace)
  * new:
- * __r__(self, children)       -> render
- * __s__(tag, data, namespace) -> self
- * __t__(text)                 -> text content
- * __m__(index)                -> static tree
+ * _h(self, children)       -> render
+ * _e(tag, data, namespace) -> self
+ * _t(text)                 -> text content
+ * _m(index)                -> static tree
  *
  * the new format MUST be with `stream: true` option from root Vm
  */
@@ -39,27 +39,27 @@
 //         })
 //       ], '')
 //       // // new format
-//       // return __r__(
-//       //   __s__('div', {
+//       // return _h(
+//       //   _e('div', {
 //       //     staticAttrs: {a: 'b'}
 //       //   }),
 //       //   [
-//       //     __r__(
-//       //       __s__('text', {
+//       //     _h(
+//       //       _e('text', {
 //       //         staticAttrs: {value: 'child text content'}
 //       //       })
 //       //     ),
 //       //   (list) && __renderList__((list), function(k, v, $index) {
-//       //     return __r__(
-//       //       __s__('div', {
+//       //     return _h(
+//       //       _e('div', {
 //       //         class:[a, 'a'],
 //       //         style:{m: '1', n: a},
 //       //         attrs:{"n":a},
 //       //         staticAttrs:{"m":"a","style":"l: 2"}
 //       //       }),
 //       //       [
-//       //         __t__("\n aaa"+__toString__(a)+"bbb"+__toString__(k)+"-"+__toString__(v)+"\n "),
-//       //         __m__(0)
+//       //         _t("\n aaa"+__toString__(a)+"bbb"+__toString__(k)+"-"+__toString__(v)+"\n "),
+//       //         _m(0)
 //       //       ]
 //       //     )
 //       //   })]
@@ -74,8 +74,8 @@
 //           staticAttrs: {value: 'Hello World'}
 //         }, [], '')
 //         // // new format
-//         // return __r__(
-//         //   __s__('text', {
+//         // return _h(
+//         //   _e('text', {
 //         //     staticAttrs: {value: 'Hello World'}
 //         //   }),
 //         //   []
@@ -110,22 +110,22 @@
 //         ], ''
 //       )
 //       // // new format
-//       // return __r__(
-//       //   __s__('div', {}),
+//       // return _h(
+//       //   _e('div', {}),
 //       //   [
-//       //     __r__(
-//       //       __s__('foo', {
+//       //     _h(
+//       //       _e('foo', {
 //       //         attrs:{"a":x,"b":y}
 //       //       }),
 //       //       []
 //       //     ),
-//       //     __r__(
-//       //       __s__('text', {
+//       //     _h(
+//       //       _e('text', {
 //       //         on:{"click":foo},
 //       //         staticClass:"a b",
 //       //         class:[y, 'y'],
 //       //         attrs:{value:(__toString__(y)+"asdfasdfaf")},
-//       //         // append: true
+//       //         // atom: true
 //       //       }),
 //       //       []
 //       //     )
@@ -151,14 +151,14 @@
 //   stream: true,
 //   render: function () {
 //     with (this) {
-//       return __r__(
-//         __s__('div', {
+//       return _h(
+//         _e('div', {
 //           staticAttrs: {a: '1', b: '2'}
 //         }),
 //         [
-//           __t__('hello'),
-//           __r__(
-//             __s__('image', {
+//           _t('hello'),
+//           _h(
+//             _e('image', {
 //               staticAttrs: {
 //                 src: 'http://www.baidu.com/favicon.ico',
 //                 style: 'width: 32px; height: 32px;'
@@ -180,13 +180,13 @@
 //   stream: true,
 //   render: function () {
 //     with (this) {
-//       return __r__(
-//         __s__('div', {
+//       return _h(
+//         _e('div', {
 //           staticAttrs: {a: '1', b: '2'}
 //         }),
 //         [
-//           __t__('hello'),
-//           __m__(0)
+//           _t('hello'),
+//           _m(0)
 //         ]
 //       )
 //     }
@@ -194,8 +194,8 @@
 //   staticRenderFns: [
 //     function () {
 //       with (this) {
-//         return __r__(
-//           __s__('image', {
+//         return _h(
+//           _e('image', {
 //             staticAttrs: {
 //               src: 'http://www.baidu.com/favicon.ico',
 //               style: 'width: 64px; height: 64px;'
@@ -217,14 +217,14 @@
 //   stream: true,
 //   render: function () {
 //     with (this) {
-//       return __r__(
-//         __s__('div', {
+//       return _h(
+//         _e('div', {
 //           staticAttrs: {a: '1', b: '2'}
 //         }),
 //         [
-//           __t__('hello'),
-//           __r__(
-//             __s__('image', {
+//           _t('hello'),
+//           _h(
+//             _e('image', {
 //               attrs: {
 //                 src: url
 //               },
@@ -248,14 +248,14 @@
 //   stream: true,
 //   render: function () {
 //     with (this) {
-//       return __r__(
-//         __s__('div', {
+//       return _h(
+//         _e('div', {
 //           staticAttrs: {a: '1', b: '2'}
 //         }),
 //         [
-//           __t__('hello'),
-//           __r__(
-//             __s__('image', {
+//           _t('hello'),
+//           _h(
+//             _e('image', {
 //               attrs: {
 //                 src: url
 //               },
@@ -274,29 +274,29 @@
 //   stream: true,
 //   render: function () {
 //     with (this) {
-//       return __r__(__s__('foo'), [])
+//       return _h(_e('foo'), [])
 //     }
 //   }
 // })
 
 /**
  * Example 5
- * append=tree
+ * atom=tree
  */
 Vue.component('foo', {
   data: function () { return {url: 'http://www.baidu.com/favicon.ico'}},
   stream: true,
   render: function () {
     with (this) {
-      return __r__(
-        __s__('div', {
+      return _h(
+        _e('div', {
           staticAttrs: {a: '1', b: '2'},
-          // append: true
+          atom: true
         }),
         [
-          __t__('hello'),
-          __r__(
-            __s__('image', {
+          _t('hello'),
+          _h(
+            _e('image', {
               attrs: {
                 src: url
               },
@@ -315,9 +315,9 @@ return new Vue({
   stream: true,
   render: function () {
     with (this) {
-      return __r__(__s__('foo', {
-        append: true
-      }), [])
+      return _h(_e('foo', {
+        atom: true
+      }))
     }
   }
 })
