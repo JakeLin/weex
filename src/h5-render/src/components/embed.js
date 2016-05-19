@@ -14,6 +14,7 @@ function Embed (data, nodeType) {
   if (attr) {
     this.source = attr.src
     this.loader = attr.loade || 'xhr'
+    this.jsonpCallback = attr.jsonpCallback
   }
   Component.call(this, data, nodeType)
   this.initWeex()
@@ -37,6 +38,7 @@ Embed.prototype.initWeex = function () {
     source: this.source,
     bundleUrl: this.source,
     loader: this.loader,
+    jsonpCallback: this.jsonpCallback,
     width: this.node.getBoundingClientRect().width,
     rootId: this.id,
     embed: true
