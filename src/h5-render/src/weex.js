@@ -22,7 +22,7 @@ var WEAPP_STYLE_ID = 'weapp-style'
 var DEFAULT_DESIGN_WIDTH = 750
 var DEFAULT_SCALE = window.innerWidth / DEFAULT_DESIGN_WIDTH
 var DEFAULT_ROOT_ID = 'weex'
-var DEFAULT_JSON_CALLBACK_NAME = 'weexJsonpCallback'
+var DEFAULT_JSONP_CALLBACK_NAME = 'weexJsonpCallback'
 
 window.WXEnvironment = {
   weexVersion: config.weexVersion,
@@ -71,7 +71,7 @@ function Weex(options) {
   this.instanceId = options.appId
   this.rootId = options.rootId || (DEFAULT_ROOT_ID + utils.getRandom(10))
   this.designWidth = options.designWidth || DEFAULT_DESIGN_WIDTH
-  this.jsonpCallback = options.jsonpCallback || DEFAULT_JSON_CALLBACK_NAME
+  this.jsonpCallback = options.jsonpCallback || DEFAULT_JSONP_CALLBACK_NAME
   this.source = options.source
   this.loader = options.loader
 
