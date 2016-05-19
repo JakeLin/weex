@@ -46,12 +46,12 @@ dl, ol, ul {
 
 .top-bar-title {
     float: left;
-    margin-right: 1rem;
-    margin-left: 101px;    
+    margin-right: 5px;
+    margin-left: 10px;    
     margin-top: 29px;    
     background: url("http://weex.alibaba-inc.com/en-site/img/weex_logo_blue@3x.png") no-repeat;
     height: 31px;
-    width: 120px;
+    width: 145px;
     background-position: 0px 0px;
     -webkit-background-size: cover;
     background-size: cover;
