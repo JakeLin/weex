@@ -297,7 +297,12 @@ export function _compileNativeComponent(template, dest, type) {
   this._bindElement(element, template)
 
   if (template.attr && template.attr.append) { // backward, append prop in attr
-    element.append = template.attr.append
+    template.append = template.attr.append
+  }
+
+  if (template.append) { // give the append attribute for ios adaptation
+    element.attr = element.attr || {}
+    element.attr.append = template.append
   }
 
   const treeMode = template.append === 'tree'
@@ -407,7 +412,8 @@ export function _bindRepeat(target, fragBlock, info) {
       const reusedMap = {}
       data.forEach((item, index) => {
         const key = trackBy ? item[trackBy] : index
-        if (!key) {
+        /* istanbul ignore if */
+        if (key == null || key === '') {
           return
         }
         trackMap[key] = item

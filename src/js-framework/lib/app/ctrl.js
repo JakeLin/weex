@@ -23,6 +23,7 @@ export function init(code, data) {
   const define = bind(this.define, this)
   const bootstrap = (name, config, _data) => {
     result = this.bootstrap(name, config, _data || data)
+    this.updateActions()
     this.doc.listener.createFinish()
     this.doc.close()
   }
@@ -58,10 +59,20 @@ export function init(code, data) {
     'bootstrap',
     'register',
     'render',
+    '__weex_define__', // alias for define
+    '__weex_bootstrap__', // alias for bootstrap
     functionBody
   )
 
-  fn(define, require, document, bootstrap, register, render)
+  fn(
+    define,
+    require,
+    document,
+    bootstrap,
+    register,
+    render,
+    define,
+    bootstrap)
 
   perf.end('run bundle', this.id)
   return result
