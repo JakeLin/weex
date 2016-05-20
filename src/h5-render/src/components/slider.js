@@ -9,7 +9,7 @@ require('carrousel')
 require('../styles/slider.css')
 
 function Slider (data) {
-  this.autoPlay = true  // always true for autoplay
+  this.autoPlay = false  // default value is false.
   this.direction = 'row' // 'column' is not temporarily supported.
   this.children = []
   this.isPageShow = true
@@ -221,15 +221,15 @@ Slider.prototype.onAppend = function () {
   // for all child elements to append is ok.
   var preloadTime = 0.8
   this.preloadImgsTimer = setTimeout(function () {
-    var imgs = this.carrousel.element.querySelectorAll('img')
+    var imgs = this.carrousel.element.querySelectorAll('.weex-img')
     for (var i = 0, l = imgs.length; i < l; i++) {
       var img = imgs[i]
       var iLazySrc = img.getAttribute('i-lazy-src')
       var imgSrc = img.getAttribute('img-src')
       if (iLazySrc) {
-        img.setAttribute('src', iLazySrc)
+        img.style.backgroundImage = 'url(' + iLazySrc + ')'
       } else if (imgSrc) {
-        img.setAttribute('src', imgSrc)
+        img.style.backgroundImage = 'url(' + imgSrc + ')'
       }
       img.removeAttribute('i-lazy-src')
       img.removeAttribute('img-src')
