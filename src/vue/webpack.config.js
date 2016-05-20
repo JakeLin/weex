@@ -1,9 +1,16 @@
-var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: 'vue/dist/weex.common.js',
+  entry: './demo.vue?entry',
   output: {
-    filename: 'dist.js'
+    filename: 'demo.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.vue(\?[^?]+)?$/,
+        loader: 'weex-loader-next'
+      }
+    ]
   }
 }
