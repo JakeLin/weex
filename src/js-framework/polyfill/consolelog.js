@@ -16,21 +16,23 @@ function normalize (v) {
   if (type.toLowerCase() === '[object object]') {
     v = JSON.stringify(v)
   } else {
-    v = v.toString()
+    v = String(v)
   }
   return v
 }
 
 export function printlog(...args) {
-  logLevel = global.WXEnvironment &&
-                global.WXEnvironment.logLevel ||
-                '__INFO'
+  const {WXEnvironment, nativeLog} = global
 
-  if (typeof global.nativeLog === 'function') {
+  logLevel = (WXEnvironment &&
+                WXEnvironment.logLevel) ||
+                'info'
+
+  if (typeof nativeLog === 'function') {
     let level = args.pop()
     if (LEVELS.indexOf(LEVEL_MAP[level]) <=
           LEVELS.indexOf(logLevel)) {
-      global.nativeLog(...args.map(v => normalize(v)), level)
+      nativeLog(...args.map(v => normalize(v)), level)
     }
   }
 }
