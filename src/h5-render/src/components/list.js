@@ -92,7 +92,11 @@ List.prototype.insertBefore = function (child, before) {
     this.listElement.appendChild(child.node)
     children.push(child.data)
   } else {
-    this.listElement.insertBefore(child.node, before.node)
+    if (before.fixedPlaceholder) {
+      this.listElement.insertBefore(child.node, before.fixedPlaceholder)
+    } else {
+      this.listElement.insertBefore(child.node, before.node)
+    }
     children.splice(i, 0, child.data)
   }
 }
@@ -114,7 +118,10 @@ List.prototype.removeChild = function (child) {
   }
   // remove from componentMap recursively
   componentManager.removeElementByRef(child.data.ref)
-  this.listElement.removeChild(child.node)
+  if (child.fixedPlaceholder) {
+    this.listElement.removeChild(child.fixedPlaceholder)
+  }
+  child.node.parentNode.removeChild(child.node)
 }
 
 module.exports = List
