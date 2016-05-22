@@ -179,4 +179,12 @@ casperjs test style.js
   * 'image' support attribute 'resize' and its values 'stetch', 'contain' and 'cover'
   * add config item 'embed' for the initiation of embeded weex instance
 
+* 0.2.8
+
+  * fix lazyloading of slider images
+  * fix `auto-play`'s default value of slider
+
+* 0.2.9
+
+  * fix removing & inserting before fixed child
 
