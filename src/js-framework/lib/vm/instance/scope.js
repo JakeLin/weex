@@ -116,6 +116,7 @@ exports._proxy = function (key) {
  */
 
 exports._unproxy = function (key) {
+  /* istanbul ignore next */
   delete this[key]
 }
 
