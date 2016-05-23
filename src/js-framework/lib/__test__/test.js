@@ -513,6 +513,28 @@ describe('test input and output', function () {
     delete allDocs[name]
   })
 
+  it('repeat with array track-by case', function () {
+    var name = 'repeat-track-by'
+    var inputCode = readInput(name)
+    var outputCode = readOutput(name)
+    var doc = new Document(name)
+    allDocs[name] = doc
+
+    framework.createInstance(name, inputCode)
+    framework.refreshInstance(name, {
+      titlelist: [
+        {text: 'Hello World2'},
+        {text: 'Hello World1'}
+      ]
+    })
+    var expected = eval('(' + outputCode + ')')
+    var actual = doc.toJSON()
+    expect(actual).eql(expected)
+
+    framework.destroyInstance(name)
+    delete allDocs[name]
+  })
+
   it('repeat with array non-obj case', function () {
     var name = 'repeat-array-non-obj'
     var inputCode = readInput(name)

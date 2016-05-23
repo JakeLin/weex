@@ -371,33 +371,6 @@ export function _bindRepeat(target, fragBlock, info) {
     context._compile(target, fragBlock, {repeat: item})
   }
 
-  function diffItem(vm, item) {
-    const oldItem = vm._data
-    const oldKeys = []
-    for (const key in oldItem) {
-      if (!item.hasOwnProperty(key)) {
-        vm[key] = undefined
-      }
-    }
-    for (const key in item) {
-      vm[key] = item[key]
-    }
-  }
-
-  function setItemValue(item, index, vm) {
-    let mergedData
-    if (oldStyle) {
-      if (typeof item === 'object') {
-        diffItem(vm, item)
-        vm.INDEX = index
-      }
-    }
-    else {
-      vm[keyName] = index
-      vm[valueName] = item
-    }
-  }
-
   const list = this._watchBlock(fragBlock, getter, 'repeat',
     (data) => {
       if (!fragBlock) {
