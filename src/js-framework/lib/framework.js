@@ -13,7 +13,6 @@
  *   - callback(funcId, data)
  */
 
-import * as perf from './perf'
 import * as config from './config'
 import AppInstance from './app'
 import Vm from './vm'
@@ -55,12 +54,9 @@ export function createInstance(instanceId, code, options, data) {
       instanceMap[instanceId] = 'Vue'
       return VueFramework.createInstance(instanceId, code, options, data)
     }
-    perf.start('createInstance', instanceId)
     const newInstance = new AppInstance(instanceId, options)
     instanceMap[instanceId] = newInstance
-    const result = newInstance.init(code, data)
-    perf.end('createInstance', instanceId)
-    return result
+    return newInstance.init(code, data)
   }
   return new Error(`invalid instance id "${instanceId}"`)
 }
@@ -77,10 +73,7 @@ export function refreshInstance(instanceId, data) {
     if (instance === 'Vue') {
       return VueFramework.refreshInstance(instanceId, data)
     }
-    perf.start('refreshData', instanceId)
-    const result = instance.refreshData(data)
-    perf.end('refreshData', instanceId)
-    return result
+    return instance.refreshData(data)
   }
   return new Error(`invalid instance id "${instanceId}"`)
 }
@@ -99,11 +92,8 @@ export function destroyInstance(instanceId) {
     delete instanceMap[instanceId]
     return
   }
-  perf.start('destroyInstance', instanceId)
   instance.destroy()
   delete instanceMap[instanceId]
-  perf.end('destroyInstance', instanceId)
-
   return instanceMap
 }
 
@@ -166,23 +156,15 @@ export function getRoot(instanceId) {
   return new Error(`invalid instance id "${instanceId}"`)
 }
 
-var jsHandlers = {
+const jsHandlers = {
   fireEvent: function fireEvent(instanceId, ref, type, data) {
     const instance = instanceMap[instanceId]
-    perf.start('fireEvent', instanceId + '-' + ref + '-' + type)
-    const result = instance.fireEvent(ref, type, data)
-    perf.end('fireEvent', instanceId + '-' + ref + '-' + type)
-    return result
+    return instance.fireEvent(ref, type, data)
   },
 
   callback: function callback(instanceId, funcId, data, ifLast) {
     const instance = instanceMap[instanceId]
-    perf.start('callback',
-      instanceId + '-' + funcId + '-' + data + '-' + ifLast)
-    const result = instance.callback(funcId, data, ifLast)
-    perf.end('callback',
-      instanceId + '-' + funcId + '-' + data + '-' + ifLast)
-    return result
+    return instance.callback(funcId, data, ifLast)
   }
 }
 
@@ -194,7 +176,7 @@ var jsHandlers = {
  */
 export function callJS(instanceId, tasks) {
   const instance = instanceMap[instanceId]
-  let results = []
+  const results = []
   if (instance && Array.isArray(tasks)) {
     if (instance === 'Vue') {
       return VueFramework.callJS(instanceId, tasks)
@@ -203,14 +185,11 @@ export function callJS(instanceId, tasks) {
       const handler = jsHandlers[task.method]
       const args = [...task.args]
       if (typeof handler === 'function') {
-        log('javascript:', task.method, task.args)
         args.unshift(instanceId)
         results.push(handler(...args))
       }
     })
-  } else {
-    results.push(new Error(`invalid instance id "${instanceId}" or tasks`))
+    return results
   }
-
-  return results
+  return [new Error(`invalid instance id "${instanceId}" or tasks`)]
 }

@@ -28,11 +28,7 @@ describe('generate workflow', () => {
   vm.constructor = function () {
     contentIndex++
     this._content = {index: contentIndex}
-    this.$on = (type, cb) => {
-      if (type === 'hook:ready') {
-        cb()
-      }
-    }
+    this.$on = sinon.spy()
   }
 
   beforeEach(() => {

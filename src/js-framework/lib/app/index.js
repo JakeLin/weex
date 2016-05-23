@@ -4,7 +4,6 @@
  */
 
 import {typof, extend} from '../util'
-import * as perf from '../perf'
 import * as bundle from './bundle'
 import * as ctrl from './ctrl'
 import Differ from './differ'
@@ -15,7 +14,6 @@ import {Document, Node} from './dom'
 import {registerComponent, requireComponent, requireModule} from './register'
 
 export default function AppInstance(instanceId, options) {
-  perf.start('initInstance', instanceId)
   this.id = instanceId
   this.options = options || {}
   this.vm = null
@@ -31,8 +29,6 @@ export default function AppInstance(instanceId, options) {
   })
   this.doc.setEventManager(this.eventManager)
   this.doc.setListener(this.listener)
-
-  perf.end('initInstance', instanceId)
 }
 
 function normalize(app, v) {
