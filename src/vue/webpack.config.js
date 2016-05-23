@@ -1,5 +1,11 @@
 var webpack = require('webpack')
 
+var banner = '// { "framework": "Vue" }\n'
+
+var bannerPlugin = new webpack.BannerPlugin(banner, {
+  raw: true
+})
+
 module.exports = {
   entry: './demo.vue?entry',
   output: {
@@ -12,5 +18,6 @@ module.exports = {
         loader: 'weex-loader-next'
       }
     ]
-  }
+  },
+  plugins: [bannerPlugin]
 }

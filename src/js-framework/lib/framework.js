@@ -17,6 +17,10 @@ import * as perf from './perf'
 import * as config from './config'
 import AppInstance from './app'
 import Vm from './vm'
+import checkVersion from './framework-detector'
+
+// note: temporarily
+import VueManager from 'vue/dist/weex.common.js'
 
 var {
   nativeComponentMap
@@ -39,6 +43,11 @@ export function createInstance(instanceId, code, options, data) {
 
   var result
   if (!instance) {
+    const info = checkVersion(code)
+    if (info && info.framework === 'Vue') {
+      instanceMap[instanceId] = 'Vue'
+      return VueManager.createInstance(instanceId, code, options, data)
+    }
     perf.start('createInstance', instanceId)
     instance = new AppInstance(instanceId, options)
     instanceMap[instanceId] = instance
@@ -61,6 +70,9 @@ export function refreshInstance(instanceId, data) {
   var instance = instanceMap[instanceId]
   var result
   if (instance) {
+    if (instance === 'Vue') {
+      return VueManager.refreshInstance(instanceId, data)
+    }
     perf.start('refreshData', instanceId)
     result = instance.refreshData(data)
     perf.end('refreshData', instanceId)
@@ -79,7 +91,11 @@ export function destroyInstance(instanceId) {
   if (!instance) {
     return new Error(`invalid instance id "${instanceId}"`)
   }
-
+  if (instance === 'Vue') {
+    VueManager.destroyInstance(instanceId)
+    delete instanceMap[instanceId]
+    return
+  }
   perf.start('destroyInstance', instanceId)
   instance.destroy()
   delete instanceMap[instanceId]
@@ -93,6 +109,7 @@ export function destroyInstance(instanceId) {
  * @param  {array} components array of name
  */
 export function registerComponents(components) {
+  VueManager.registerComponents(components)
   if (Array.isArray(components)) {
     components.forEach(function register(name) {
       /* istanbul ignore if */
@@ -113,6 +130,7 @@ export function registerComponents(components) {
  * @param  {object} modules a object of modules
  */
 export function registerModules(modules) {
+  VueManager.registerModules(modules)
   if (typeof modules === 'object') {
     Vm.registerModules(modules)
   }
@@ -138,6 +156,9 @@ export function getRoot(instanceId) {
   var instance = instanceMap[instanceId]
   var result
   if (instance) {
+    if (instance === 'Vue') {
+      return VueManager.getRoot(instanceId)
+    }
     result = instance.getRootElement()
   } else {
     result = new Error(`invalid instance id "${instanceId}"`)
@@ -177,6 +198,9 @@ export function callJS(instanceId, tasks) {
   const instance = instanceMap[instanceId]
   let results = []
   if (instance && Array.isArray(tasks)) {
+    if (instance === 'Vue') {
+      return VueManager.callJS(instanceId, tasks)
+    }
     tasks.forEach((task) => {
       const handler = jsHandlers[task.method]
       const args = [...task.args]
