@@ -242,9 +242,10 @@ public class WXViewUtils {
     }
     return -3;
   }
-
   public static int getScreenHeight() {
-    return WXEnvironment.sApplication.getResources().getDisplayMetrics().heightPixels;
+    return WXEnvironment.sApplication.getResources()
+        .getDisplayMetrics()
+        .heightPixels;
   }
 
   public static int getWeexWidth(String instanceId) {
@@ -260,7 +261,9 @@ public class WXViewUtils {
   }
 
   public static int getScreenWidth() {
-    return WXEnvironment.sApplication.getResources().getDisplayMetrics().widthPixels;
+    return  WXEnvironment.sApplication.getResources()
+        .getDisplayMetrics()
+        .widthPixels;
   }
 
   /**
