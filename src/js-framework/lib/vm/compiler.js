@@ -513,6 +513,7 @@ export function _mergeContext(mergedData) {
   const context = Object.create(this)
   context._data = mergedData
   context._initData()
+  context._initComputed()
   context._realParent = this
   return context
 }
