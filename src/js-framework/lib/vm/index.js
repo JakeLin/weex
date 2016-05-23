@@ -9,14 +9,14 @@ import * as compiler from './compiler'
 import * as directive from './directive'
 import * as domHelper from './dom-helper'
 import * as events from './events'
-// import * as modules from './../api/modules'
-// import * as api from './../api/api'
 
 import {registerModules, registerMethods} from '../app/register'
 
 function callOldReadyEntry(vm, component) {
   if (component.methods &&
       component.methods.ready) {
+    _.warn('"exports.methods.ready" is deprecated, ' +
+      'please use "exports.created" instead')
     component.methods.ready.call(vm)
   }
 }

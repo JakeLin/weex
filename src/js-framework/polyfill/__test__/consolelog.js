@@ -25,10 +25,10 @@ describe('polyfill for printlog', () => {
   })
 
   it('a log message', () => {
-    printlog('a log message', '__VERBOSE')
+    printlog('a log message', {msg: 'msg'}, '__VERBOSE')
     expect(global.nativeLog.callCount).to.be.equal(1)
     expect(global.nativeLog.firstCall.args).eql(
-      ['a log message', '__VERBOSE']
+      ['a log message', '{"msg":"msg"}', '__VERBOSE']
     )
   })
 

@@ -160,8 +160,6 @@ export var normalize = (v) => {
     case 'object':
     case 'function':
       return v
-    default:
-      return JSON.stringify(v)
   }
 }
 
@@ -198,13 +196,14 @@ export var indexOf = (arr, obj) => {
   return -1
 }
 
-const hasConsole = typeof console !== 'undefined'
+const enableLog = typeof console !== 'undefined'
+                    && global.IS_PRODUCT !== true
 
 /**
  * @param {String} msg
  */
 export var error = (...args) => {
-  hasConsole && console.error && console.error('[JS Framework]', ...args)
+  enableLog && console.error && console.error('[JS Framework]', ...args)
 }
 
 
@@ -212,21 +211,21 @@ export var error = (...args) => {
  * @param {String} msg
  */
 export var warn = (...args) => {
-  hasConsole && console.warn && console.warn('[JS Framework]', ...args)
+  enableLog && console.warn && console.warn('[JS Framework]', ...args)
 }
 
 /**
  * @param {String} msg
  */
 export var info = (...args) => {
-  hasConsole && console.info && console.info('[JS Framework]', ...args)
+  enableLog && console.info && console.info('[JS Framework]', ...args)
 }
 
 /**
  * @param {String} msg
  */
 export var debug = (...args) => {
-  hasConsole && console.debug && console.debug('[JS Framework]', ...args)
+  enableLog && console.debug && console.debug('[JS Framework]', ...args)
 }
 
 
@@ -234,7 +233,7 @@ export var debug = (...args) => {
  * @param {String} msg
  */
 export var log = (...args) => {
-  hasConsole && console.log && console.log('[JS Framework]', ...args)
+  enableLog && console.log && console.log('[JS Framework]', ...args)
 }
 
 

@@ -256,8 +256,8 @@ Element.prototype.insertAfter = function (node, after) {
   node.parentRef = this.ref
   if (this.attached) {
     setAttached(node, this.depth)
-  }
-  else {
+  } else {
+    /* istanbul ignore next */
     setDetached(node)
   }
   children.splice(index + 1, 0, node)
@@ -473,6 +473,7 @@ Element.prototype.setAttr = function (key, value) {
 }
 
 Element.prototype.setStyle = function (key, value) {
+  /* istanbul ignore if */
   if (this.style[key] === value) {
     return
   }

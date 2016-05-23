@@ -4,7 +4,7 @@ const UnexpectedPromise = function () {
   console.warn(MSG)
 
   this.then = () => {
-    console.warn(MGS)
+    console.warn(MSG)
   }
 }
 

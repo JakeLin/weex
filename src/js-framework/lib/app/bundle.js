@@ -130,6 +130,7 @@ export function bootstrap(name, config, data) {
   } else if (isNpmModule(name)) {
     cleanName = removeJSSurfix(name)
     // check if define by old 'define' method
+    /* istanbul ignore if */
     if (!this.customComponentMap[cleanName]) {
       return new Error(`It's not a component: ${name}`)
     }
@@ -148,6 +149,7 @@ export function bootstrap(name, config, data) {
   }
 
   let _checkDowngrade = downgrade.check(config.downgrade)
+  /* istanbul ignore if */
   if (_checkDowngrade.isDowngrade) {
     this.callTasks([{
       module: 'instanceWrap',
