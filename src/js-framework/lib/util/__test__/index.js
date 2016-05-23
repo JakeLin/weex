@@ -218,24 +218,53 @@ describe('Util', () => {
         })
     })
 
-    describe('log', () => {
-        it('should be log a info prefix message', () => {
-            let spy = sinon.spy(console.log)
-            util.log('info message here')
-            expect(spy.called).eql(false)
-
-            let spy2 = sinon.spy(util, 'log')
-            util.log('test')
-            expect(spy2.called).eql(true)
+    describe('error', () => {
+        it('should be log a error prefix message', () => {
+            let spy = sinon.stub(console, 'error')
+            util.error('error message')
+            expect(spy.called).eql(true)
+            expect(spy.firstCall.args).eql(['[JS Framework]', 'error message'])
+            console.error.restore();
         })
     })
 
     describe('warn', () => {
-        it('should be log a warm prefix message', () => {
+        it('should be log a warn prefix message', () => {
             let spy = sinon.stub(console, 'warn')
             util.warn('warn message')
             expect(spy.called).eql(true)
-            expect(spy.firstCall.args).eql(['[warn]: ', 'warn message'])
+            expect(spy.firstCall.args).eql(['[JS Framework]', 'warn message'])
+            console.warn.restore();
+        })
+    })
+
+    describe('info', () => {
+        it('should be log a info prefix message', () => {
+            let spy = sinon.stub(console, 'info')
+            util.info('info message')
+            expect(spy.called).eql(true)
+            expect(spy.firstCall.args).eql(['[JS Framework]', 'info message'])
+            console.info.restore();
+        })
+    })
+
+    describe('debug', () => {
+        it('should be log a debug prefix message', () => {
+            console.debug = sinon.spy()
+            util.debug('debug message')
+            expect(console.debug.called).eql(true)
+            expect(console.debug.firstCall.args).eql(['[JS Framework]', 'debug message'])
+            console.debug = null
+        })
+    })
+
+    describe('log', () => {
+        it('should be log a verbose prefix message', () => {
+            let spy = sinon.stub(console, 'log')
+            util.log('verbose message')
+            expect(spy.called).eql(true)
+            expect(spy.firstCall.args).eql(['[JS Framework]', 'verbose message'])
+            console.log.restore()
         })
     })
 

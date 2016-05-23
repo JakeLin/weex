@@ -102,14 +102,9 @@ p.get = function () {
   var value
   try {
     value = this.getter.call(vm, vm)
+  /* istanbul ignore next */
   } catch (e) {
-    // if (config.warnExpressionErrors) {
-    //   _.warn(
-    //     'Error when evaluating expression "' +
-    //     this.expression + '":\n   ' + e
-    //   )
-    // }
-    _.warn('Error when update"')
+    _.error('A error occurred when binding data in ', this.getter)
   }
   // "touch" every property so they are all tracked as
   // dependencies for deep watching

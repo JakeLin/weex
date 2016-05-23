@@ -4,18 +4,16 @@ var sinonChai = require('sinon-chai')
 var expect = chai.expect
 chai.use(sinonChai)
 
-var config = require('../config')
+require('../../polyfill/consolelog')
 var perf = require('../perf')
 
 describe('@perf.js:record perf logs', function () {
   before(() => {
-    config.debug = true
     sinon.stub(console, 'log')
     perf.reset()
   })
 
   after(() => {
-    config.debug = false
     console.log.restore()
   })
 

@@ -3,6 +3,7 @@ const {
 } = global
 
 // fix no setTimeout on Android V8
+/* istanbul ignore if */
 if (typeof setTimeout === 'undefined' &&
   typeof setTimeoutNative === 'function') {
   const timeoutMap = {}
