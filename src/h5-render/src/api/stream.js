@@ -116,9 +116,10 @@ var stream = {
       }
     }
     if (typeof param !== 'object' || !param.url) {
-      return logger.error('invalid config or invalid config.url for sendHttp API')
+      return logger.error(
+        'invalid config or invalid config.url for sendHttp API')
     }
-    
+
     var sender = this.sender
     var method = param.method || 'GET'
     var xhr = new XMLHttpRequest()
@@ -128,7 +129,10 @@ var stream = {
     }
     xhr.onerror = function (error) {
       return logger.error('unexpected error in sendHttp API', error)
-      sender.performCallback(callbackId, new Error('unexpected error in sendHttp API'))
+      sender.performCallback(
+        callbackId,
+        new Error('unexpected error in sendHttp API')
+      )
     }
     xhr.send()
   },
