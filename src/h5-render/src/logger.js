@@ -1,5 +1,7 @@
 var config = require('./config')
 
+var _initialized = false
+
 var logger = {
 	log: function () {},
 	warn: function () {},
@@ -35,8 +37,14 @@ function hijack() {
 	}
 }
 
-if (config.debug && console) {
-	hijack()
+logger.init = function () {
+	if (_initialized) {
+		return
+	}
+	_initialized = true
+	if (config.debug && console) {
+		hijack()
+	}
 }
 
 module.exports = logger
