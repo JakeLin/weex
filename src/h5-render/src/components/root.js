@@ -21,15 +21,16 @@ function RootComponent(data, nodeType) {
       || rootCandidates.indexOf(nodeType) === -1
       || downgrades[nodeType]) {
     nodeType = 'div'
+  } else {
+    // If the root component is not a embed element in a webpage, then
+    // the html and body height should be fixed to the max height
+    // of viewport.
+    if (!componentManager.weexInstance.embed) {
+      this.fixRootHeight()
+    }
+    !this.data.style.height && (this.data.style.height = '100%')
   }
 
-  // If the root component is not a embed element in a webpage, then
-  // the html and body height should be fixed to the max height
-  // of viewport.
-  if (!componentManager.weexInstance.embed) {
-    this.fixRootHeight()
-  }
-  !this.data.style.height && (this.data.style.height = '100%')
   data.type = nodeType
   var cmp = componentManager.createElement(data)
   cmp.node.id = id
