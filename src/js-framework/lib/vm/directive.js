@@ -23,7 +23,18 @@ export function _applyNaitveComponentOptions(template) {
   const options = nativeComponentMap[type]
 
   if (typeof options === 'object') {
-    _.extend(template, options)
+    for (const key in options) {
+      if (template[key] == null) {
+        template[key] = options[key]
+      } else if (_.typof(template[key]) === 'object' &&
+        _.typof(options[key]) === 'object') {
+        for (const subkey in options[key]) {
+          if (template[key][subkey] == null) {
+            template[key][subkey] = options[key][subkey]
+          }
+        }
+      }
+    }
   }
 }
 

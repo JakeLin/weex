@@ -8,7 +8,7 @@ const {
 } = chai
 
 describe('a polyfill of', () => {
-  it('Promise', () => {
+  it.skip('Promise', () => {
     sinon.stub(console, 'warn')
     expect(typeof Promise).to.be.equal('function')
     new Promise(sinon.spy()).then(sinon.spy())
