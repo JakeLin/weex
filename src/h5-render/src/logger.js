@@ -1,4 +1,5 @@
 var config = require('./config')
+var utils = require('./utils')
 
 var _initialized = false
 
@@ -8,31 +9,19 @@ var logger = {
   error: function () {}
 }
 
-function hijack() {
-  if (console.log) {
-    logger.log = function () {
-      console.log.apply(
-        console,
-        ['[h5-render]'].concat(Array.prototype.slice.call(arguments, 0))
-      )
-    }
-  }
-
-  if (console.warn) {
-    logger.warn = function () {
-      console.warn.apply(
-        console,
-        ['[h5-render]'].concat(Array.prototype.slice.call(arguments, 0))
-      )
-    }
-  }
-
-  if (console.error) {
-    logger.error = function () {
-      console.error.apply(
-        console,
-        ['[h5-render]'].concat(Array.prototype.slice.call(arguments, 0))
-      )
+function hijack(k) {
+  if (utils.isArray(k)) {
+    k.forEach(function (key) {
+      hijack(key)
+    })
+  } else {
+    if (console[k]) {
+      logger[k] = function () {
+        console[k].apply(
+          console,
+          ['[h5-render]'].concat(Array.prototype.slice.call(arguments, 0))
+        )
+      }
     }
   }
 }
@@ -43,7 +32,7 @@ logger.init = function () {
   }
   _initialized = true
   if (config.debug && console) {
-    hijack()
+    hijack(['log', 'warn', 'error'])
   }
 }
 
