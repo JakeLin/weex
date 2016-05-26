@@ -20,7 +20,6 @@ function List(data, nodeType) {
   this.direction = directionMap.h.indexOf(data.attr.direction) === -1
     ? 'v'
     : 'h'
-  this.totalWidth = 0
   Component.call(this, data, nodeType)
 }
 
