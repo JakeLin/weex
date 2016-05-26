@@ -8,8 +8,11 @@ var LazyLoad = require('../lazyLoad')
 require('carrousel')
 require('../styles/slider.css')
 
+var DEFAULT_INTERVAL = 3000
+
 function Slider (data) {
   this.autoPlay = false  // default value is false.
+  this.interval = DEFAULT_INTERVAL
   this.direction = 'row' // 'column' is not temporarily supported.
   this.children = []
   this.isPageShow = true
@@ -51,7 +54,7 @@ Slider.prototype._idleWhenDomRendering = function () {
 
 Slider.prototype.attr = {
   interval: function (val) {
-    this.interval = parseInt(val) || 3000
+    this.interval = parseInt(val) || DEFAULT_INTERVAL
     if (this.carrousel) {
       this.carrousel.playInterval = this.interval
     }
