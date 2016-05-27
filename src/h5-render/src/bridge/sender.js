@@ -24,9 +24,10 @@ Sender.getSender = function (instanceId) {
 Sender.prototype = {
 
   // perform a callback to jsframework.
-  performCallback: function (callbackId, data) {
+  performCallback: function (callbackId, data, keepAlive) {
     var args = [callbackId]
     data && args.push(data)
+    keepAlive && args.push(keepAlive)
     _send(this.instanceId, {
       method: 'callback',
       args: args

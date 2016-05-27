@@ -2,6 +2,7 @@
 
 require('./styles/base.css')
 
+require('./polyfill')
 var config = require('./config')
 var Loader = require('./loader')
 var utils = require('./utils')
@@ -39,16 +40,16 @@ var _downgrades = {}
 
 var downgradable = ['list', 'scroller']
 
-; (function getGlobalDowngradesFromUrlParams() {
+; (function initializeWithUrlParams() {
 
-  // Get global _downgrades from url's params.
   var params = lib.httpurl(location.href).params
   for (var k in params) {
-    if (params[k] !== true && params[k] !== 'true') {
-      continue
-    }
+    // Get global _downgrades from url's params.
     var match = k.match(/downgrade_(\w+)/)
     if (!match || !match[1]) {
+      continue
+    }
+    if (params[k] !== true && params[k] !== 'true') {
       continue
     }
     var downk = match[1]
@@ -57,7 +58,15 @@ var downgradable = ['list', 'scroller']
     }
   }
 
+  // set global 'debug' config to true if there's a debug flag in current url.
+  var debug = params['debug']
+  if (debug === true || debug === 'true') {
+    config.debug = true
+  }
+
 })()
+
+require('./logger').init()
 
 function Weex(options) {
 
