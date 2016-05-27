@@ -15,9 +15,10 @@ import EventManager from '../event'
 describe('document constructor', () => {
 
   it('create & destroy document', () => {
-    const doc = new Document('foo')
+    const doc = new Document('foo', 'http://path/to/url')
     expect(doc).is.an.object
     expect(doc.id).eql('foo')
+    expect(doc.URL).eql('http://path/to/url')
     expect(instanceMap.foo).equal(doc)
     expect(doc.documentElement).is.an.object
     expect(doc.documentElement.ref).is.be.equal('_documentElement')
