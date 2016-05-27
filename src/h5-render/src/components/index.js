@@ -26,7 +26,6 @@ var Web = require('./web')
 var components = {
   init: function (Weex) {
     Weex.registerComponent('root', RootComponent)
-    Weex.registerComponent('root', RootComponent)
     Weex.registerComponent('container', Container)
     Weex.registerComponent('div', Container)
     Weex.registerComponent('image', Image)
