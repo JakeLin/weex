@@ -19,7 +19,7 @@
       ]
     },
     components: {
-      item: require('./item.vue')
+      item: require('./components/demo-item.vue')
     }
   }
 </script>
