@@ -11,7 +11,6 @@
 
 <script>
   module.exports = {
-    props: ['url', 'title'],
-    stream: true
+    props: ['url', 'title']
   }
 </script>

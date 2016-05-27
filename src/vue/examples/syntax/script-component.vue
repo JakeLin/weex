@@ -1,3 +1,9 @@
+<!--
+  * `components` option to require sub components
+  * use attribute to pass props to sub components
+  * see `./components/sub.vue` source code for more details
+-->
+
 <template>
   <list>
     <cell v-for="item in items">
@@ -9,8 +15,6 @@
 
 <script>
   module.exports = {
-    el: 'list',
-    stream: true,
     data: {
       items: [
         {title: 'A', url: 'a'},
@@ -19,7 +23,7 @@
       ]
     },
     components: {
-      item: require('./components/demo-item.vue')
+      item: require('./components/sub.vue')
     }
   }
 </script>
