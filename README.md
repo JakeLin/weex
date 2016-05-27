@@ -11,6 +11,10 @@ We agree that you may discuss technical information about Weex, except that you 
 
 Support Android 4.1 (API 16) and iOS soon. See [Weex website](http://alibaba.github.io/weex/) for more information. 
 
+## For Windows
+
+Please ***INSTALL [Git for Windows](https://git-scm.com/download/win)*** and run all the following commands in git-bash.
+
 ## Meet Weex
 
 * [Install Playground](http://alibaba.github.io/weex/download.html).
@@ -36,54 +40,12 @@ Support Android 4.1 (API 16) and iOS soon. See [Weex website](http://alibaba.git
 
 ## Scripts
 
-### For end-user
+See [SCRIPTS.md](SCRIPTS.md) for more information.
 
-**clean `*.js` in the folders of `examples/build` and `test/build`**
-```shell
-npm run clean
-```
+## FAQ
 
-**transform `*.we` in the folders of `examples` & `test`**
-```shell
-npm run transform
-```
-
-**npm run clean && npm run transform**
-```shell
-npm run dev
-```
-
-**run a file server at `12580` port**
-```shell
-npm run serve
-```
-
-**run a watcher for `*.we` changed**
-```shell
-npm run watch
-```
-
-### For SDK Developer
-
-**build js-framework and h5-render**
-```shell
-npm run build
-```
-
-**run test under js-framework and h5-render**
-```shell
-npm run ci
-```
-
-**copy the built files to `playground`**
-```shell
-npm run copy
-```
-
-## For Windows
-
-Please install [Git for Windows](https://git-scm.com/download/win) or [Cygwin](https://www.cygwin.com/).
+See [FAQ](./doc/faq.md) for more information.
 
 ## Contributing
 
-See [Weex Contributing Guide](./CONTRIBUTING.md).
+See [Weex Contributing Guide](./CONTRIBUTING.md) for more information.
