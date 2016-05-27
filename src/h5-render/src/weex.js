@@ -32,6 +32,7 @@ window.WXEnvironment = {
   platform: 'Web',
   osName: lib.env.browser ? lib.env.browser.name : null,
   osVersion: lib.env.browser ? lib.env.browser.version.val : null,
+  deviceWidth: DEFAULT_DESIGN_WIDTH,
   deviceHeight: window.innerHeight / DEFAULT_SCALE
 }
 
