@@ -5,7 +5,7 @@
 <script>
   module.exports = {
     components: {
-      'example-list': require('./components/example-list.vue')
+      'example-list': require('./include/example-list.vue')
     },
     data: {
       items: [
