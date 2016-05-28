@@ -14,7 +14,7 @@ function walk(dir, root) {
       if (stat.isFile() && extname === '.vue') {
         var name = path.join('dist', dir, path.basename(file, extname));
         entry[name] = fullpath + '?entry=true';
-      } else if (stat.isDirectory() && file !== 'components') {
+      } else if (stat.isDirectory() && file !== 'include') {
         var subdir = path.join(dir, file);
         walk(subdir, root);
       }

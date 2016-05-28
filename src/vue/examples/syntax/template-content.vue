@@ -1,6 +1,6 @@
 <!--
   * `<slot>` will let the sub component contains the parent's children
-  * see `./components/btn.vue` source code for more details
+  * see `./include/btn.vue` source code for more details
 -->
 
 <template>
@@ -14,7 +14,7 @@
 <script>
   module.exports = {
     components: {
-      btn: require('./components/btn.vue')
+      btn: require('./include/btn.vue')
     }
   }
 </script>

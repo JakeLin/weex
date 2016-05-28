@@ -1,7 +1,7 @@
 <!--
   * `components` option to require sub components
   * use attribute to pass props to sub components
-  * see `./components/sub.vue` source code for more details
+  * see `./include/sub.vue` source code for more details
 -->
 
 <template>
@@ -23,7 +23,7 @@
       ]
     },
     components: {
-      item: require('./components/sub.vue')
+      item: require('./include/sub.vue')
     }
   }
 </script>
