@@ -7,12 +7,12 @@
     </refresh>
     <headlines v-if="show0" :ds="showData.header"></headlines>
     <category v-if="show0" :ds="showData.category"></category>
-    <!-- <coupon v-if="show1" :ds="showData.coupon"></coupon> -->
-    <!-- <goods v-if="show1" :ds="showData.goods"></goods> -->
-    <!-- <resource v-if="show1" :ds="showData.resource"></resource> -->
-    <!-- <scene v-if="show1" :ds="showData.scene"></scene> -->
-    <!-- <match v-if="show2" :ds="showData.match"></match> -->
-    <!-- <brand v-if="show2" :ds="showData.brand"></brand> -->
+    <coupon v-if="show1" :ds="showData.coupon"></coupon>
+    <goods v-if="show1" :ds="showData.goods"></goods>
+    <resource v-if="show1" :ds="showData.resource"></resource>
+    <scene v-if="show1" :ds="showData.scene"></scene>
+    <match v-if="show2" :ds="showData.match"></match>
+    <brand v-if="show2" :ds="showData.brand"></brand>
     <loading class="loading" @loading="handleLoading" :display="displayLoading">
       <text style="color:#eee;">加载更多...</text>
     </loading>
@@ -47,12 +47,12 @@
     components: {
       headlines: require('./include/headlines.vue'),
       category: require('./include/category.vue'),
-      // coupon: require('./include/coupon.vue'),
-      // goods: require('./include/goods.vue'),
-      // resource: require('./include/resource.vue'),
-      // scene: require('./include/scene.vue'),
-      // match: require('./include/match.vue'),
-      // brand: require('./include/brand.vue')
+      coupon: require('./include/coupon.vue'),
+      goods: require('./include/goods.vue'),
+      resource: require('./include/resource.vue'),
+      scene: require('./include/scene.vue'),
+      match: require('./include/match.vue'),
+      brand: require('./include/brand.vue')
     },
     data: {
       navBarHeight: 88,
@@ -64,7 +64,7 @@
       displayLoading: 'show',
       showData: {}
     },
-    mounted: function () {
+    created: function () {
       this.showData = {
         "header": {
           "topBanner": "https://gw.alicdn.com/tps/TB1J48kMXXXXXXtapXXXXXXXXXX-750-782.jpg",
