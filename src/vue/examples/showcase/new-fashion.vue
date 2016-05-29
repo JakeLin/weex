@@ -6,7 +6,7 @@
       <text style="margin-left:36px;color:#eee;">下拉刷新...</text>
     </refresh>
     <headlines v-if="show0" :ds="showData.header"></headlines>
-    <!-- <category v-if="show0" :ds="showData.category"></category> -->
+    <category v-if="show0" :ds="showData.category"></category>
     <!-- <coupon v-if="show1" :ds="showData.coupon"></coupon> -->
     <!-- <goods v-if="show1" :ds="showData.goods"></goods> -->
     <!-- <resource v-if="show1" :ds="showData.resource"></resource> -->
@@ -46,7 +46,7 @@
   module.exports = {
     components: {
       headlines: require('./include/headlines.vue'),
-      // category: require('./include/category.vue'),
+      category: require('./include/category.vue'),
       // coupon: require('./include/coupon.vue'),
       // goods: require('./include/goods.vue'),
       // resource: require('./include/resource.vue'),
