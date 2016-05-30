@@ -830,4 +830,40 @@ describe('test input and output', function () {
     framework.destroyInstance(name)
     delete allDocs[name]
   })
+
+  it.only('input binding', function () {
+    var name = 'input-binding'
+    var inputCode = readInput(name)
+    var outputCode = readOutput(name)
+    var doc = new Document(name)
+    allDocs[name] = doc
+
+    framework.createInstance(name, inputCode)
+    var expected = eval('(' + outputCode + ')')
+    var actual = doc.toJSON()
+    expect(actual).eql(expected)
+
+    expected.children[0].attr.value = 'abcdefg'
+    framework.callJS(name, [{
+      method: 'fireEvent',
+      args: [doc.body.children[0].ref, 'change', {}, {attrs: {value: 'abcdefg'}}]
+    }])
+
+    expected.children.push({type: 'text', attr: {value: '1 - abcdefg'}})
+    actual = doc.toJSON()
+    expect(actual).eql(expected)
+
+    expected.children[0].attr.value = '12345'
+    framework.callJS(name, [{
+      method: 'fireEvent',
+      args: [doc.body.children[0].ref, 'change', {}, {attrs: {value: '12345'}}]
+    }])
+
+    expected.children.push({type: 'text', attr: {value: '2 - 12345'}})
+    actual = doc.toJSON()
+    expect(actual).eql(expected)
+
+    framework.destroyInstance(name)
+    delete allDocs[name]
+  })
 })
