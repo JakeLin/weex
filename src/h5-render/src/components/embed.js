@@ -13,7 +13,7 @@ function Embed (data, nodeType) {
   var attr = data.attr
   if (attr) {
     this.source = attr.src
-    this.loader = attr.loade || 'xhr'
+    this.loader = attr.loader || 'xhr'
   }
   Component.call(this, data, nodeType)
   this.initWeex()
@@ -54,12 +54,12 @@ Embed.prototype.reloadWeex = function () {
   this.initWeex()
 }
 
-// src is not updatable temporarily
-// Embed.prototype.attr = {
-//   src: function (value) {
-//     this.src = value
-//     this.reloadWeex()
-//   }
-// }
+// not recommended, because of the leak of memory.
+Embed.prototype.attr = {
+  src: function (value) {
+    this.src = value
+    this.reloadWeex()
+  }
+}
 
 module.exports = Embed
