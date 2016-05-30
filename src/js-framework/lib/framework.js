@@ -13,7 +13,6 @@
  *   - callback(funcId, data)
  */
 
-import * as perf from './perf'
 import * as config from './config'
 import AppInstance from './app'
 import Vm from './vm'
@@ -39,11 +38,9 @@ export function createInstance(instanceId, code, options, data) {
 
   var result
   if (!instance) {
-    perf.start('createInstance', instanceId)
     instance = new AppInstance(instanceId, options)
     instanceMap[instanceId] = instance
     result = instance.init(code, data)
-    perf.end('createInstance', instanceId)
   } else {
     result = new Error(`invalid instance id "${instanceId}"`)
   }
@@ -61,9 +58,7 @@ export function refreshInstance(instanceId, data) {
   var instance = instanceMap[instanceId]
   var result
   if (instance) {
-    perf.start('refreshData', instanceId)
     result = instance.refreshData(data)
-    perf.end('refreshData', instanceId)
   } else {
     result = new Error(`invalid instance id "${instanceId}"`)
   }
@@ -80,11 +75,8 @@ export function destroyInstance(instanceId) {
     return new Error(`invalid instance id "${instanceId}"`)
   }
 
-  perf.start('destroyInstance', instanceId)
   instance.destroy()
   delete instanceMap[instanceId]
-  perf.end('destroyInstance', instanceId)
-
   return instanceMap
 }
 
@@ -149,20 +141,14 @@ var jsHandlers = {
   fireEvent: function fireEvent(instanceId, ref, type, data, domChanges) {
     var instance = instanceMap[instanceId]
     var result
-    perf.start('fireEvent', instanceId + '-' + ref + '-' + type)
     result = instance.fireEvent(ref, type, data, domChanges)
-    perf.end('fireEvent', instanceId + '-' + ref + '-' + type)
     return result
   },
 
   callback: function callback(instanceId, funcId, data, ifLast) {
     var instance = instanceMap[instanceId]
     var result
-    perf.start('callback',
-      instanceId + '-' + funcId + '-' + data + '-' + ifLast)
     result = instance.callback(funcId, data, ifLast)
-    perf.end('callback',
-      instanceId + '-' + funcId + '-' + data + '-' + ifLast)
     return result
   }
 }
@@ -181,7 +167,6 @@ export function callJS(instanceId, tasks) {
       const handler = jsHandlers[task.method]
       const args = [...task.args]
       if (typeof handler === 'function') {
-        log('javascript:', task.method, task.args)
         args.unshift(instanceId)
         results.push(handler(...args))
       }

@@ -317,9 +317,7 @@ describe('bind events', () => {
   })
   // - bind method to eventManager
   it('add event to manager by handler', () => {
-    vm._bindEvents(el, {click: function ($event) {
-      this.foo(this.a, $event)
-    }})
+    vm._bindEvents(el, {click: sinon.spy()})
     expect(manager.targets.length).equal(1)
     var target = manager.targets[0]
     expect(target).a('object')
@@ -427,6 +425,22 @@ describe('bind external infomations to sub vm', () => {
     expect(subVm._rootEl.style.bbb).eql(3)
   })
 
+  it('bind simply classlist to a sub vm with root element', () => {
+    subVm._rootEl = {
+      attr: {},
+      style: {},
+      event: []
+    }
+    const template = {
+      classList: ['class-style1']
+    }
+    initElement(subVm._rootEl)
+    vm._bindSubVm(subVm, template)
+    vm._bindSubVmAfterInitialized(subVm, template)
+    expect(subVm._rootEl.classStyle.aaa).eql(1)
+    expect(subVm._rootEl.classStyle.bbb).eql(2)
+  })
+
   it('bind classlist to a sub vm with root element', () => {
     subVm._rootEl = {
       attr: {},
@@ -447,7 +461,6 @@ describe('bind external infomations to sub vm', () => {
     expect(subVm._rootEl.classStyle.aaa).eql(2)
     expect(subVm._rootEl.classStyle.bbb).to.be.undefined
     expect(subVm._rootEl.classStyle.ccc).eql(3)
-
   })
 
   it('bind events to a sub vm with root element', () => {

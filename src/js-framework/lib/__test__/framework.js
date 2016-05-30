@@ -273,7 +273,7 @@ describe('framework entry', () => {
   describe('register methods', () => {
     it('with object of methods', () => {
       const methods = {
-        a: () => 'a'
+        a: sinon.spy()
       }
 
       framework.registerMethods(methods)

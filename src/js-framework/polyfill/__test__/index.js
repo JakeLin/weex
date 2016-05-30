@@ -9,7 +9,15 @@ const {
 
 describe('a polyfill of', () => {
   it('Promise', () => {
+    sinon.stub(console, 'warn')
     expect(typeof Promise).to.be.equal('function')
+    new Promise(sinon.spy()).then(sinon.spy())
+    Promise.all()
+    Promise.race()
+    Promise.resolve()
+    Promise.reject()
+    expect(console.warn.callCount).to.be.equal(6)
+    console.warn.restore()
   })
 
   it('Object.assign', () => {
