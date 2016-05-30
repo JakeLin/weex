@@ -179,11 +179,11 @@ export function refreshData(data) {
 function updateElement(el, changes) {
   const attrs = changes.attrs || {}
   for (const name in attrs) {
-    el.setAttr(name, attrs)
+    el.setAttr(name, attrs[name], true)
   }
   const style = changes.style || {}
   for (const name in style) {
-    el.setStyle(name, style[name])
+    el.setStyle(name, style[name], true)
   }
 }
 
