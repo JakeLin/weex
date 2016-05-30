@@ -831,7 +831,7 @@ describe('test input and output', function () {
     delete allDocs[name]
   })
 
-  it.only('input binding', function () {
+  it('input binding', function () {
     var name = 'input-binding'
     var inputCode = readInput(name)
     var outputCode = readOutput(name)
@@ -846,7 +846,12 @@ describe('test input and output', function () {
     expected.children[0].attr.value = 'abcdefg'
     framework.callJS(name, [{
       method: 'fireEvent',
-      args: [doc.body.children[0].ref, 'change', {}, {attrs: {value: 'abcdefg'}}]
+      args: [
+        doc.body.children[0].ref,
+        'change',
+        {},
+        {attrs: {value: 'abcdefg'}}
+      ]
     }])
 
     expected.children.push({type: 'text', attr: {value: '1 - abcdefg'}})
@@ -856,7 +861,12 @@ describe('test input and output', function () {
     expected.children[0].attr.value = '12345'
     framework.callJS(name, [{
       method: 'fireEvent',
-      args: [doc.body.children[0].ref, 'change', {}, {attrs: {value: '12345'}}]
+      args: [
+        doc.body.children[0].ref,
+        'change',
+        {},
+        {attrs: {value: '12345'}}
+      ]
     }])
 
     expected.children.push({type: 'text', attr: {value: '2 - 12345'}})
