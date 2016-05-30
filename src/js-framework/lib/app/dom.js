@@ -460,12 +460,12 @@ function removeIfExisted(node) {
   }
 }
 
-Element.prototype.setAttr = function (key, value) {
+Element.prototype.setAttr = function (key, value, silence) {
   if (this.attr[key] === value) {
     return
   }
   this.attr[key] = value
-  if (this.attached) {
+  if (!silence && this.attached) {
     const renderer = this.getRenderer()
     if (renderer) {
       renderer.setAttr(this.ref, key, value)
@@ -473,13 +473,13 @@ Element.prototype.setAttr = function (key, value) {
   }
 }
 
-Element.prototype.setStyle = function (key, value) {
+Element.prototype.setStyle = function (key, value, silence) {
   /* istanbul ignore if */
   if (this.style[key] === value) {
     return
   }
   this.style[key] = value
-  if (this.attached) {
+  if (!silence && this.attached) {
     const renderer = this.getRenderer()
     if (renderer) {
       renderer.setStyle(this.ref, key, value)
