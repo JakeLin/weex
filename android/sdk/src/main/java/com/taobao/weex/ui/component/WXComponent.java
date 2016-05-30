@@ -931,7 +931,7 @@ public abstract class WXComponent implements IWXObject, IWXActivityStateListener
   }
 
   public void notifyApppearStateChange(String wxEventType){
-    WXBridgeManager.getInstance().fireEvent(mInstanceId,getRef(),wxEventType,null);
+    WXBridgeManager.getInstance().fireEvent(mInstanceId,getRef(),wxEventType,null,null);
   }
 
   public static class MeasureOutput {
