@@ -164,8 +164,8 @@ export function _targetIsComposed(target, type) {
   if (this._app && this._app.customComponentMap) {
     component = this._app.customComponentMap[type]
   }
-  if (this.components) {
-    component = this.components[type]
+  if (this._options && this._options.components) {
+    component = this._options.components[type]
   }
   if (target.component) {
     component = component || {}
