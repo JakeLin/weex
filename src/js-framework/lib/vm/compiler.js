@@ -10,7 +10,7 @@
  * events.js: $on
  */
 
-import * as _ from './util'
+import * as _ from '../util/index'
 
 /**
  * build(externalDirs)
