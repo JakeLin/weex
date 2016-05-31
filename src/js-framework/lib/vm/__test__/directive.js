@@ -6,15 +6,15 @@ chai.use(sinonChai)
 
 import * as directive from '../directive.js'
 
-import scope from '../instance/scope'
+import * as state from '../core/state.js'
 import EventManager from '../../app/event'
 
 function extendVm(vm, methodNames) {
-  Object.assign(vm, scope)
+  Object.assign(vm, state)
   methodNames.forEach((name) => {
     vm[name] = directive[name]
   })
-  vm._initScope()
+  vm._initState()
 }
 
 function initElement(el) {

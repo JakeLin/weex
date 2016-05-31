@@ -6,7 +6,7 @@ chai.use(sinonChai)
 
 import * as compiler from '../compiler'
 import * as directive from '../directive'
-import scope from '../instance/scope'
+import * as state from '../core/state'
 
 describe('generate workflow', () => {
   var contentIndex = 0
@@ -522,8 +522,8 @@ describe('merge context', () => {
       _data: {a: 1, b: 2},
       _mergeContext: compiler._mergeContext
     }
-    Object.assign(vm, scope)
-    vm._initScope()
+    Object.assign(vm, state)
+    vm._initState()
   })
 
   afterEach(() => {
