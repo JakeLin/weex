@@ -38,7 +38,8 @@ export function printlog(...args) {
 }
 
 /* istanbul ignore if */
-if (typeof console === 'undefined') {
+if (typeof console === 'undefined' ||
+    Object.keys(console).length === 0) {
   global.console = {
     log: (...args) => { // __VERBOSE
       printlog(...args, '__VERBOSE')

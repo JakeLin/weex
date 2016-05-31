@@ -26,7 +26,7 @@ export function updateActions() {
 }
 
 export function init(code, data) {
-  _.debug('Intialize an instance with', code, data)
+  _.debug('Intialize an instance with:\n', code, data)
 
   var result
   // @see: lib/app/bundle.js

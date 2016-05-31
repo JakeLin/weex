@@ -190,6 +190,20 @@ function _callNative(name, tasks, cbId) {
 
 describe('test input and output', function () {
 
+  before(() => {
+    sinon.stub(console, 'log')
+    sinon.stub(console, 'info')
+    sinon.stub(console, 'warn')
+    sinon.stub(console, 'error')
+  })
+
+  after(() => {
+    console.log.restore()
+    console.info.restore()
+    console.warn.restore()
+    console.error.restore()
+  })
+
   beforeEach(function () {
     callNativeSpy.reset()
     global.callNative = _callNative
