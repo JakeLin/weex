@@ -39,6 +39,7 @@ export function printlog(...args) {
 
 /* istanbul ignore if */
 if (typeof console === 'undefined' ||
+    // in jscore, it has `console` object without any keys.
     Object.keys(console).length === 0) {
   global.console = {
     log: (...args) => { // __VERBOSE
