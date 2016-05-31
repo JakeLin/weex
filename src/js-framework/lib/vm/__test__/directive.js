@@ -151,6 +151,21 @@ describe('set props', () => {
     '_watch', '_bindKey', '_bindDir',
     '_setId', '_setAttr', '_setClass', '_setStyle',
     '_setEvent', '_bindEvents', '_bindElement']
+
+  before(() => {
+    sinon.stub(console, 'log')
+    sinon.stub(console, 'info')
+    sinon.stub(console, 'warn')
+    sinon.stub(console, 'error')
+  })
+
+  after(() => {
+    console.log.restore()
+    console.info.restore()
+    console.warn.restore()
+    console.error.restore()
+  })
+
   beforeEach(() => {
     el = {
       attr: {}, style: {}
