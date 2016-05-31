@@ -449,7 +449,8 @@ describe('generate workflow', () => {
       expect(vm._mergeContext).callCount(0)
       expect(vm.constructor).callCount(1)
       expect(vm.constructor.args[0][0]).eql('b')
-      expect(vm.constructor.args[0][2]).eql({type: 'a'})
+      expect(vm.constructor.args[0][1]).eql({})
+      expect(vm.constructor.args[0][3]).eql({type: 'a'})
       done()
     }
 
@@ -504,7 +505,9 @@ describe('generate workflow', () => {
 
       expect(vm.constructor).callCount(2)
       expect(vm.constructor.args[0][0]).eql('b')
+      expect(vm.constructor.args[0][3]).eql({element: {}, display: true})
       expect(vm.constructor.args[1][0]).eql('b')
+      expect(vm.constructor.args[1][3]).eql({element: {}, display: true})
 
       done()
     }

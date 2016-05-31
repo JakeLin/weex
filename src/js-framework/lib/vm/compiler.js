@@ -90,9 +90,10 @@ export function _compile(target, dest, meta) {
     return
   }
   const type = typeGetter
-  if (context._targetIsComposed(target, type)) {
+  const component = context._targetIsComposed(target, type)
+  if (component) {
     _.debug('compile composed component by', target)
-    context._compileCustomComponent(target, dest, type, meta)
+    context._compileCustomComponent(component, target, dest, type, meta)
     return
   }
   _.debug('compile native component by', target)
@@ -159,10 +160,17 @@ export function _targetNeedCheckType(typeGetter, meta) {
  * @return {boolean}
  */
 export function _targetIsComposed(target, type) {
-  if (this._app && this._app.customComponentMap && type) {
-    return !!this._app.customComponentMap[type]
+  let component
+  if (this._app && this._app.customComponentMap) {
+    component = this._app.customComponentMap[type]
   }
-  return !!target.component
+  if (this._options && this._options.components) {
+    component = this._options.components[type]
+  }
+  if (target.component) {
+    component = component || {}
+  }
+  return component
 }
 
 /**
@@ -259,10 +267,10 @@ export function _compileType(target, dest, typeGetter, meta) {
  * @param {object} dest
  * @param {string} type
  */
-export function _compileCustomComponent(target, dest, type, meta) {
+export function _compileCustomComponent(component, target, dest, type, meta) {
   const Vm = this.constructor
   const context = this
-  const subVm = new Vm(type, context, dest, undefined, {
+  const subVm = new Vm(type, component, context, dest, undefined, {
     'hook:init': function () {
       context._setId(target.id, null, this)
     },

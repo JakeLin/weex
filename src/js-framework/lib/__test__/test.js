@@ -731,6 +731,22 @@ describe('test input and output', function () {
     delete allDocs[name]
   })
 
+  it('components options', function () {
+    var name = 'components'
+    var inputCode = readInput(name)
+    var outputCode = readOutput(name)
+    var doc = new Document(name)
+    allDocs[name] = doc
+
+    framework.createInstance(name, inputCode)
+    var expected = eval('(' + outputCode + ')')
+    var actual = doc.toJSON()
+    expect(actual).eql(expected)
+
+    framework.destroyInstance(name)
+    delete allDocs[name]
+  })
+
   it('refresh twice', function () {
     var name = 'refresh2'
     var inputCode = readInput(name)
@@ -798,7 +814,6 @@ describe('test input and output', function () {
     framework.destroyInstance(name)
     delete allDocs[name]
   })
-
 
   it('a bigger wrong transformer version', () => {
     var name = 'transformer3'
