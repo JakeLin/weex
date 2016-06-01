@@ -148,6 +148,8 @@ export const frameworks = {
 ### Expose JS Framework APIs
 
 ```javascript
+// 3rd-party-framework.js
+
 export function createInstance (id, code, config, data) { ... }
 export function destroyInstance (id) { ... }
 export function refreshInstance (id, data) { ... }
@@ -156,8 +158,9 @@ export function registerModules (modules) { ... }
 export function callTasks (id, tasks) { ... }
 export function getRoot (id) { ... }
 
-export function setDocument (document: Document) { ... }
 export function setTasksListener (func (id, tasks)) { ... }
+export function setDocument (document: Document) { ... }
+export function setEventManager (eventManager: EventManager) { ... }
 ```
 
 The virtual-DOM tasks should follow [virtual-DOM spec](virtual-dom-apis.md).
