@@ -100,6 +100,28 @@ Document.prototype.createComment = function (text) {
   return new Comment(text, this)
 }
 
+Document.prototype.fireEvent = function (el, type, e, domChanges) {
+  e = e || {}
+  e.type = type
+  e.target = el
+  e.timestamp = Date.now()
+  if (domChanges) {
+    updateElement(el, domChanges)
+  }
+  return this.eventManager.fire(el, type, e)
+}
+
+function updateElement(el, changes) {
+  const attrs = changes.attrs || {}
+  for (const name in attrs) {
+    el.setAttr(name, attrs[name], true)
+  }
+  const style = changes.style || {}
+  for (const name in style) {
+    el.setStyle(name, style[name], true)
+  }
+}
+
 export function Node() {
 }
 
