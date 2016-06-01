@@ -35,9 +35,11 @@ Sender.prototype = {
   },
 
   fireEvent: function (ref, type, event) {
-    // Note that the event.target must be the standard event's
-    // currentTarget. Therefor a process for replacing target must
-    // be done when a event is fired.
+    // The event.target must be the standard event's currentTarget.
+    // The default event behaviour should be prevented.
+    // It should not bubble up by default.
+    event.preventDefault()
+    event.stopPropagation()
     var evt = utils.extend({}, event)
     evt.target = evt.currentTarget
     evt.value = event.target.value
