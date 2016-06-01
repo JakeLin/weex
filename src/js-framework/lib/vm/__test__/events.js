@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import Vm from '../'
-import {Document} from '../../app/dom'
+import {Document} from '../../dom'
 
 describe('bind and fire events', () => {
   let doc, customComponentMap, spy

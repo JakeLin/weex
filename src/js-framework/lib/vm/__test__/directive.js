@@ -7,7 +7,7 @@ chai.use(sinonChai)
 import * as directive from '../directive'
 
 import * as state from '../core/state'
-import EventManager from '../../app/event'
+import EventManager from '../../dom/event'
 
 function extendVm(vm, methodNames) {
   Object.assign(vm, state)

@@ -2,8 +2,6 @@
  * @fileOverview event manager
  */
 
-import * as _ from '../util'
-
 export default function EventManager() {
   this.els = []
   this.targets = []

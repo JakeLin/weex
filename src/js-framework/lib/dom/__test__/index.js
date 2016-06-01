@@ -10,7 +10,7 @@ import {
   Node,
   Element,
   Comment
-} from '../dom'
+} from '../'
 
 describe('document constructor', () => {
 

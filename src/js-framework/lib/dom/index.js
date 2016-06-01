@@ -4,7 +4,7 @@
  */
 
 import EventManager from './event'
-import Listener from './dom-listener'
+import Listener from './listener'
 
 const DEFAULT_TAG_NAME = 'div'
 

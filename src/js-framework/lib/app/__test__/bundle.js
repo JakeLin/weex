@@ -12,8 +12,7 @@ import * as register from '../register'
 import {
   Document
 }
-from '../dom'
-import Listener from '../dom-listener'
+from '../../dom'
 import Vm from '../../vm'
 import pkg from '../../../package.json'
 

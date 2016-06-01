@@ -8,7 +8,7 @@ import * as bundle from './bundle'
 import * as ctrl from './ctrl'
 import Differ from './differ'
 
-import {Document, Node} from './dom'
+import {Document, Node} from '../dom'
 import {registerComponent, requireComponent, requireModule} from './register'
 
 export default function AppInstance(instanceId, options) {

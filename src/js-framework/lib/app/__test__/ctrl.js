@@ -7,7 +7,7 @@ chai.use(sinonChai)
 import * as _ from '../../util'
 import * as ctrl from '../ctrl'
 import Differ from '../differ'
-import {Document} from '../dom'
+import {Document} from '../../dom'
 import pkg from '../../../package.json'
 
 describe('the api of app', () => {
@@ -27,15 +27,10 @@ describe('the api of app', () => {
         1: spy2
       },
       vm: {},
-      differ: new Differ(id),
-      callTasks: function (tasks) {
-        spy1(tasks)
-      }
+      differ: new Differ(id)
     }
 
-    app.doc = new Document(id, '', (tasks) => {
-      app.callTasks(tasks)
-    })
+    app.doc = new Document(id, '', spy1)
     app.doc.createBody('div')
     sinon.spy(app.doc.eventManager, 'fire')
     app.bootstrap.returns()

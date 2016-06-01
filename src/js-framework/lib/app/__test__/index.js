@@ -7,7 +7,7 @@ chai.use(sinonChai)
 import AppInstance from '../index'
 import * as bundle from '../bundle'
 import * as ctrl from '../ctrl'
-import {Node} from '../dom'
+import {Node} from '../../dom'
 import {
   registerComponent,
   requireComponent,

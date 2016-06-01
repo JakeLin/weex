@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import Vm from '../'
-import {Document} from '../../app/dom'
+import {Document} from '../../dom'
 import Differ from '../../app/differ'
 
 describe('generate virtual dom for a single vm', () => {

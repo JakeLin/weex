@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import * as domHelper from '../dom-helper'
-import {Document} from '../../app/dom'
+import {Document} from '../../dom'
 
 describe('help create body', () => {
   var vm
