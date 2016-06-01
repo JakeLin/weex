@@ -10,7 +10,7 @@ const DEFAULT_TAG_NAME = 'div'
 
 export const instanceMap = {}
 
-export function Document(id, url, callTasks) {
+export function Document(id, url, handler) {
   id = id ? id.toString() : ''
   this.id = id
   this.URL = url
@@ -18,9 +18,17 @@ export function Document(id, url, callTasks) {
   instanceMap[id] = this
   this.reset()
   this.eventManager = new EventManager()
+  this.listener = new Listener(id, handler || genCallTasks(id))
   this.createDocumentElement()
+}
 
-  this.listener = new Listener(id, callTasks)
+function genCallTasks(id) {
+  return (tasks) => {
+    if (!Array.isArray(tasks)) {
+      tasks = [tasks]
+    }
+    callNative(id, tasks, '-1')
+  }
 }
 
 Document.prototype.reset = function () {

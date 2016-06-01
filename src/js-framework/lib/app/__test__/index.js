@@ -15,6 +15,7 @@ import {
 } from '../register'
 
 describe('App Instance', () => {
+  const oriCallNative = global.callNative
   const callNativeSpy = sinon.spy()
   let app
 
@@ -33,7 +34,7 @@ describe('App Instance', () => {
   })
 
   after(() => {
-    global.callNative = undefined
+    global.callNative = oriCallNative
   })
 
   describe('normal check', () => {

@@ -11,6 +11,7 @@ import * as config from '../config'
 import Vm from '../vm'
 
 describe('framework entry', () => {
+  const oriCallNative = global.callNative
   const callNativeSpy = sinon.spy()
   const instanceId = Date.now() + ''
 
@@ -39,7 +40,7 @@ describe('framework entry', () => {
   after(() => {
     Vm.registerModules.restore()
     Vm.registerMethods.restore()
-    global.callNative = undefined
+    global.callNative = oriCallNative
   })
 
   describe('createInstance', () => {

@@ -19,8 +19,7 @@ export default function AppInstance(instanceId, options) {
   this.callbacks = {}
   this.doc = new Document(
     instanceId,
-    this.options.bundleUrl,
-    (tasks) => this.callTasks(tasks)
+    this.options.bundleUrl
   )
   this.differ = new Differ(instanceId)
   this.uid = 0

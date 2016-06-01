@@ -13,6 +13,7 @@ import {
 } from '../dom'
 
 describe('dom listener basic', () => {
+
   it('works with no handler', () => {
     let doc = new Document('foo')
     doc.createBody('r')
