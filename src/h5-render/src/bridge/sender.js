@@ -34,13 +34,16 @@ Sender.prototype = {
     })
   },
 
-  fireEvent: function (ref, type, event) {
-    // The event.target must be the standard event's currentTarget.
-    // The default event behaviour should be prevented.
-    // It should not bubble up by default.
-    event.preventDefault()
-    event.stopPropagation()
+  fireEvent: function (ref, type, event) {    
+    if (event._alreadyFired) {
+      // stop bubbling up in virtual dom tree.
+      return
+    }
+    // do not prevent default, otherwise the touchstart
+    // event will no longer trigger a click event
+    event._alreadyFired = true
     var evt = utils.extend({}, event)
+    // The event.target must be the standard event's currentTarget.
     evt.target = evt.currentTarget
     evt.value = event.target.value
     evt.timestamp = Date.now()
