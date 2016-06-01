@@ -1,4 +1,4 @@
-import * as Weex from './weex'
+import Weex from './default'
 
 export default {
   Weex
