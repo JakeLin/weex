@@ -4,8 +4,8 @@ import sinonChai from 'sinon-chai'
 const expect = chai.expect
 chai.use(sinonChai)
 
-import * as domHelper from '../dom-helper.js'
-import {Document, destroyDocument} from '../../app/dom.js'
+import * as domHelper from '../dom-helper'
+import {Document, destroyDocument} from '../../app/dom'
 
 describe('help create body', () => {
   var vm

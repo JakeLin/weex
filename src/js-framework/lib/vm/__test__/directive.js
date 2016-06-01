@@ -4,9 +4,9 @@ import sinonChai from 'sinon-chai'
 const expect = chai.expect
 chai.use(sinonChai)
 
-import * as directive from '../directive.js'
+import * as directive from '../directive'
 
-import * as state from '../core/state.js'
+import * as state from '../core/state'
 import EventManager from '../../app/event'
 
 function extendVm(vm, methodNames) {

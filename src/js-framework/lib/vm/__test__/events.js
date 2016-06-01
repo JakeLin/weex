@@ -5,8 +5,8 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import Vm from '../'
-import {Document, destroyDocument} from '../../app/dom.js'
-import DomListener from '../../app/dom-listener.js'
+import {Document, destroyDocument} from '../../app/dom'
+import DomListener from '../../app/dom-listener'
 import EventManager from '../../app/event'
 
 describe('bind and fire events', () => {
