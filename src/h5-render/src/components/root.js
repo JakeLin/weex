@@ -66,7 +66,7 @@ RootComponent.prototype.detectRootHeight = function () {
   if (height > window.innerHeight) {
     logger.warn([
       'for scrollable root like \'list\' and \'scroller\', the height of ',
-      'the root container musted be a user-specified value. Otherwise ',
+      'the root container must be a user-specified value. Otherwise ',
       'the scrollable element may not be able to work correctly. ',
       'Current height of the root element \'' + rootQuery + '\' is ',
       height + 'px, and mostly its height should be less than the ',
