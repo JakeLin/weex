@@ -16,6 +16,7 @@ A.prototype.create = function () {
   node.classList.add('weex-container')
   this.node = node
   node.addEventListener('click', function (e) {
+    e.stopPropagation()
     location.href = this.href
   })
   this.node.style.textDecoration = 'none'
@@ -23,14 +24,14 @@ A.prototype.create = function () {
 }
 
 A.prototype.attr = {
-	href: function (val) {
-		val += ''
-		if (!val) {
-			return logger.warn('href of <a> should not be a null value.')
-		}
-		this.href = val
-		this.node.setAttribute('href', val)
-	}
+  href: function (val) {
+    val += ''
+    if (!val) {
+      return logger.warn('href of <a> should not be a null value.')
+    }
+    this.href = val
+    this.node.setAttribute('href', val)
+  }
 }
 
 module.exports = A
