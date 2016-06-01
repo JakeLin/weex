@@ -11,14 +11,13 @@
  */
 
 import * as _ from '../util'
-import Listener from './dom-listener'
 
 export function updateActions() {
   this.differ.flush()
   const tasks = []
-  if (this.listener && this.listener.updates.length) {
-    tasks.push(...this.listener.updates)
-    this.listener.updates = []
+  if (this.doc && this.doc.listener && this.doc.listener.updates.length) {
+    tasks.push(...this.doc.listener.updates)
+    this.doc.listener.updates = []
   }
   if (tasks.length) {
     this.callTasks(tasks)
@@ -126,7 +125,7 @@ export function fireEvent(ref, type, e, domChanges) {
     if (domChanges) {
       updateElement(el, domChanges)
     }
-    const result = this.eventManager.fire(el, type, e)
+    const result = this.doc.eventManager.fire(el, type, e)
     this.updateActions()
     this.doc.listener.updateFinish()
     return result

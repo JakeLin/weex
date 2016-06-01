@@ -11,8 +11,6 @@ import {
   Element,
   Comment
 } from '../dom'
-import Listener from '../dom-listener'
-import EventManager from '../event'
 
 describe('document constructor', () => {
 
@@ -41,13 +39,11 @@ describe('document methods', () => {
   })
 
   it('open & close with a listener', () => {
-    const listener = new Listener('bar')
-    doc.setListener(listener)
-    expect(listener.batched).is.false
+    expect(doc.listener.batched).is.false
     doc.close()
-    expect(listener.batched).is.true
+    expect(doc.listener.batched).is.true
     doc.open()
-    expect(listener.batched).is.false
+    expect(doc.listener.batched).is.false
   })
 
   it('create body', () => {
@@ -317,24 +313,22 @@ describe('Element', () => {
     el.setClassStyle({a: 311, c: 313})
     expect(el.toJSON().style).eql({a: 311, c: 22, d: 14})
 
-    const eventManager = new EventManager()
-    doc.setEventManager(eventManager)
-
     const handler = function () {}
     el.addEvent('click', handler)
     expect(el.toJSON().event).eql(['click'])
-    expect(eventManager._get(el).events.click).equal(handler)
+    expect(doc.eventManager._get(el).events.click).equal(handler)
     el.removeEvent('click')
     expect(el.toJSON().event).is.undefined
-    expect(eventManager._get(el).events.click).is.undefined
+    expect(doc.eventManager._get(el).events.click).is.undefined
   })
 })
 
 describe('Node', () => {
-  let doc, el, el2, el3, c, c2, c3
+  let doc, el, el2, el3, c, c2, c3, spy
 
   beforeEach(() => {
-    doc = new Document('foo')
+    spy = sinon.spy()
+    doc = new Document('foo', '', spy)
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
     el = new Element('bar', null, doc)
@@ -376,36 +370,32 @@ describe('Node', () => {
   })
 
   it('tree operations with renderer', () => {
-    const spy = sinon.spy()
-    const listener = new Listener('bar', spy)
-    doc.setListener(listener)
-
     doc.body.appendChild(el)
     el.appendChild(el2)
     el.appendChild(el3)
 
-    expect(spy.args.length).eql(3)
-    el.insertBefore(el3, el2, true) // [el3, el2]
     expect(spy.args.length).eql(4)
-    expect(spy.args[3][0]).eql([{
+    el.insertBefore(el3, el2, true) // [el3, el2]
+    expect(spy.args.length).eql(5)
+    expect(spy.args[4][0]).eql([{
       module: 'dom', method: 'moveElement',
       args: [el3.ref, el.ref, 0]
     }])
     el.insertAfter(el3, el2, true) // [el2, el3]
-    expect(spy.args.length).eql(5)
-    expect(spy.args[4][0]).eql([{
+    expect(spy.args.length).eql(6)
+    expect(spy.args[5][0]).eql([{
       module: 'dom', method: 'moveElement',
       args: [el3.ref, el.ref, 2]
     }])
     el.removeChild(el2) // [el3]
-    expect(spy.args.length).eql(6)
-    expect(spy.args[5][0]).eql([{
+    expect(spy.args.length).eql(7)
+    expect(spy.args[6][0]).eql([{
       module: 'dom', method: 'removeElement',
       args: [el2.ref]
     }])
     el.clear() // []
-    expect(spy.args.length).eql(7)
-    expect(spy.args[6][0]).eql([{
+    expect(spy.args.length).eql(8)
+    expect(spy.args[7][0]).eql([{
       module: 'dom', method: 'removeElement',
       args: [el3.ref]
     }])
@@ -413,10 +403,11 @@ describe('Node', () => {
 })
 
 describe('complicated situations', () => {
-  let doc, el, el2, el3, c, c2, c3, listener, spy
+  let doc, el, el2, el3, c, c2, c3, spy
 
   beforeEach(() => {
-    doc = new Document('foo')
+    spy = sinon.spy()
+    doc = new Document('foo', '', spy)
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
     el = new Element('bar', null, doc)
@@ -425,9 +416,6 @@ describe('complicated situations', () => {
     c = new Comment('aaa', doc)
     c2 = new Comment('bbb', doc)
     c3 = new Comment('ccc', doc)
-    spy = sinon.spy()
-    listener = new Listener('bar', spy)
-    doc.setListener(listener)
   })
 
   afterEach(() => {
@@ -438,34 +426,34 @@ describe('complicated situations', () => {
     doc.body.appendChild(el)
     doc.body.appendChild(el2)
     doc.body.appendChild(el3)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertAfter(el2, el)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertAfter(el3, el2, true)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertBefore(el, el2)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertBefore(el2, el3, true)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertAfter(c, el)
     doc.body.insertAfter(c2, el2)
     doc.body.insertAfter(c3, el3)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, c, el2, c2, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
@@ -477,28 +465,28 @@ describe('complicated situations', () => {
     doc.body.insertAfter(c, el, true)
     doc.body.insertAfter(el2, c)
     doc.body.insertAfter(el2, c, true)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, c, el2, c2, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     // move to another place that not change the pureChildren
     doc.body.insertBefore(el, el2)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([c, el, el2, c2, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertBefore(el, c)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, c, el2, c2, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertAfter(c, el2)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, c, c2, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
 
     doc.body.insertBefore(c2, c)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, c2, c, el3, c3])
     expect(doc.body.pureChildren).eql([el, el2, el3])
   })
@@ -528,15 +516,15 @@ describe('complicated situations', () => {
     doc.body.appendChild(c)
     doc.body.appendChild(c2)
     doc.body.appendChild(el2)
-    expect(spy.args.length).eql(2)
+    expect(spy.args.length).eql(3)
     expect(doc.body.children).eql([el, c, c2, el2])
     expect(doc.body.pureChildren).eql([el, el2])
 
     doc.body.insertBefore(el3, c)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el3, c, c2, el2])
     expect(doc.body.pureChildren).eql([el, el3, el2])
-    expect(spy.args[2][0]).eql([{
+    expect(spy.args[3][0]).eql([{
       module: 'dom', method: 'addElement',
       args: ['_root', el3.toJSON(), 1]}])
   })
@@ -546,15 +534,15 @@ describe('complicated situations', () => {
     doc.body.appendChild(el2)
     doc.body.appendChild(c)
     doc.body.appendChild(c2)
-    expect(spy.args.length).eql(2)
+    expect(spy.args.length).eql(3)
     expect(doc.body.children).eql([el, el2, c, c2])
     expect(doc.body.pureChildren).eql([el, el2])
 
     doc.body.insertBefore(el3, c)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, el2, el3, c, c2])
     expect(doc.body.pureChildren).eql([el, el2, el3])
-    expect(spy.args[2][0]).eql([{
+    expect(spy.args[3][0]).eql([{
       module: 'dom', method: 'addElement',
       args: ['_root', el3.toJSON(), 2]}])
   })
@@ -564,15 +552,15 @@ describe('complicated situations', () => {
     doc.body.appendChild(c)
     doc.body.appendChild(c2)
     doc.body.appendChild(el2)
-    expect(spy.args.length).eql(2)
+    expect(spy.args.length).eql(3)
     expect(doc.body.children).eql([el, c, c2, el2])
     expect(doc.body.pureChildren).eql([el, el2])
 
     doc.body.insertAfter(el3, c2)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([el, c, c2, el3, el2])
     expect(doc.body.pureChildren).eql([el, el3, el2])
-    expect(spy.args[2][0]).eql([{
+    expect(spy.args[3][0]).eql([{
       module: 'dom', method: 'addElement',
       args: ['_root', el3.toJSON(), 1]}])
   })
@@ -582,15 +570,15 @@ describe('complicated situations', () => {
     doc.body.appendChild(c2)
     doc.body.appendChild(el)
     doc.body.appendChild(el2)
-    expect(spy.args.length).eql(2)
+    expect(spy.args.length).eql(3)
     expect(doc.body.children).eql([c, c2, el, el2])
     expect(doc.body.pureChildren).eql([el, el2])
 
     doc.body.insertAfter(el3, c2)
-    expect(spy.args.length).eql(3)
+    expect(spy.args.length).eql(4)
     expect(doc.body.children).eql([c, c2, el3, el, el2])
     expect(doc.body.pureChildren).eql([el3, el, el2])
-    expect(spy.args[2][0]).eql([{
+    expect(spy.args[3][0]).eql([{
       module: 'dom', method: 'addElement',
       args: ['_root', el3.toJSON(), 0]}])
   })

@@ -3,26 +3,32 @@
  * A simple virtual dom implementation
  */
 
+import EventManager from './event'
+import Listener from './dom-listener'
+
 const DEFAULT_TAG_NAME = 'div'
 
 export const instanceMap = {}
 
-export function Document(id, url) {
+export function Document(id, url, callTasks) {
   id = id ? id.toString() : ''
   this.id = id
   this.URL = url
 
   instanceMap[id] = this
   this.reset()
+  this.eventManager = new EventManager()
   this.createDocumentElement()
+
+  this.listener = new Listener(id, callTasks)
 }
 
 Document.prototype.reset = function () {
   this.nextRef = 1
   this.nodeMap = {}
+  this.closed = false
   this.listener = null
   this.eventManager = null
-  this.closed = false
 }
 Document.prototype.destroy = function () {
   this.reset()
@@ -40,15 +46,6 @@ Document.prototype.close = function () {
   if (this.listener) {
     this.listener.batched = true
   }
-}
-
-Document.prototype.setEventManager = function (eventManager) {
-  this.eventManager = eventManager
-}
-
-Document.prototype.setListener = function (listener) {
-  this.listener = listener
-  listener.batched = !!this.closed
 }
 
 Document.prototype.addRef = function (el) {

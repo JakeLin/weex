@@ -6,7 +6,6 @@ chai.use(sinonChai)
 
 import Vm from '../'
 import {Document} from '../../app/dom'
-import DomListener from '../../app/dom-listener'
 import Differ from '../../app/differ'
 
 describe('generate virtual dom for a single vm', () => {
@@ -17,12 +16,11 @@ describe('generate virtual dom for a single vm', () => {
 
   beforeEach(() => {
     differ = new Differ('test')
-    doc = new Document('test')
-    doc.setListener(new DomListener('test', function (actions) {
+    doc = new Document('test', '', function (actions) {
       actions.forEach((action) => {
         spy.apply(null, ['test', action.method].concat(action.args))
       })
-    }))
+    })
     customComponentMap = {}
   })
 
@@ -996,18 +994,14 @@ describe('generate dom actions', () => {
   }
 
   beforeEach(() => {
-    doc = new Document('foo')
-    differ = new Differ('foo')
     spy = sinon.spy()
-    listener = new DomListener('bar', function (actions) {
+    doc = new Document('foo', '', function (actions) {
       actions.forEach((action) => {
         spy.apply(null, ['bar', action.method].concat(action.args))
       })
     })
-    doc.setListener(listener)
-    doc.setEventManager({
-      add: sinon.spy()
-    })
+    differ = new Differ('foo')
+    doc.eventManager.add = sinon.spy()
     customComponentMap = {}
     app = {doc, customComponentMap, differ}
   })

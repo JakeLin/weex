@@ -13,7 +13,6 @@ import {
   Document
 }
 from '../dom'
-import EventManager from '../event'
 import Listener from '../dom-listener'
 import Vm from '../../vm'
 import pkg from '../../../package.json'
@@ -30,14 +29,12 @@ describe('parsing a bundle file', () => {
   }
 
   before(() => {
-    sinon.stub(console, 'log')
     sinon.stub(console, 'info')
     sinon.stub(console, 'warn')
     sinon.stub(console, 'error')
   })
 
   after(() => {
-    console.log.restore()
     console.info.restore()
     console.warn.restore()
     console.error.restore()
@@ -52,20 +49,13 @@ describe('parsing a bundle file', () => {
       const id = Date.now()
       callTasksSpy = sinon.spy()
 
-      let doc = new Document(id)
-      let eventManager = new EventManager()
-      let listener = new Listener(id, (tasks, callback) => {
+      let doc = new Document(id, '', (tasks, callback) => {
         app.callTasks(tasks, callback)
       })
-      doc.setEventManager(eventManager)
-      doc.setListener(listener)
 
       app = {
-        id,
+        id, doc,
         customComponentMap: {},
-        doc,
-        eventManager,
-        listener,
         callbacks: {},
         callTasks: (tasks, callback) => {
           callTasksSpy(tasks)
@@ -285,20 +275,13 @@ describe('parsing a bundle file', () => {
       callTasksSpy = sinon.spy()
       readySpy = sinon.spy()
 
-      let doc = new Document(id)
-      let eventManager = new EventManager()
-      let listener = new Listener(id, (tasks, callback) => {
+      let doc = new Document(id, '', (tasks, callback) => {
         app.callTasks(tasks, callback)
       })
-      doc.setEventManager(eventManager)
-      doc.setListener(listener)
 
       app = {
-        id,
+        id, doc,
         customComponentMap: {},
-        doc,
-        eventManager,
-        listener,
         callbacks: {},
         callTasks: (tasks, callback) => {
           callTasksSpy(tasks)
@@ -456,20 +439,13 @@ describe('parsing a bundle file', () => {
       const id = Date.now()
       callTasksSpy = sinon.spy()
 
-      let doc = new Document(id)
-      let eventManager = new EventManager()
-      let listener = new Listener(id, (tasks, callback) => {
+      let doc = new Document(id, '', (tasks, callback) => {
         app.callTasks(tasks, callback)
       })
-      doc.setEventManager(eventManager)
-      doc.setListener(listener)
 
       app = {
-        id,
+        id, doc,
         customComponentMap: {},
-        doc,
-        eventManager,
-        listener,
         callbacks: {},
         callTasks: (tasks, callback) => {
           callTasksSpy(tasks)

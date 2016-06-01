@@ -11,14 +11,10 @@ import {
   Element,
   Comment
 } from '../dom'
-import Listener from '../dom-listener'
-import EventManager from '../event'
 
 describe('dom listener basic', () => {
   it('works with no handler', () => {
     let doc = new Document('foo')
-    let listener = new Listener('bar')
-    doc.setListener(listener)
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
     doc.destroy()
@@ -26,15 +22,11 @@ describe('dom listener basic', () => {
 })
 
 describe('dom listener details', () => {
-  let doc, listener, spy, eventManager
+  let doc, listener, spy
 
   beforeEach(() => {
-    doc = new Document('foo')
     spy = sinon.spy()
-    listener = new Listener('bar', spy)
-    eventManager = new EventManager()
-    doc.setListener(listener)
-    doc.setEventManager(eventManager)
+    doc = new Document('foo', '', spy)
   })
 
   afterEach(() => {
@@ -126,7 +118,7 @@ describe('dom listener details', () => {
     doc.body.insertAfter(el3, el) // [el2, el, el3]
 
     expect(spy.args.length).eql(2)
-    expect(listener.updates).eql([
+    expect(doc.listener.updates).eql([
       {
         module: 'dom', method: 'addElement',
         args: ['_root', el2.toJSON(), 0]
@@ -212,7 +204,7 @@ describe('dom listener details', () => {
     el.addEvent('appear', () => {})
     el.removeEvent('appear')
     expect(spy.args.length).eql(8)
-    expect(listener.updates).eql([
+    expect(doc.listener.updates).eql([
       {module: 'dom', method: 'updateAttrs', args: [el.ref, {a: 1}]},
       {module: 'dom', method: 'updateStyle', args: [el.ref, {a: 2}]},
       {module: 'dom', method: 'updateStyle', args: [el.ref, {a: 2, b: 4}]},
