@@ -148,8 +148,8 @@ var chai = require('chai')
 var sinon = require('sinon')
 var sinonChai = require('sinon-chai')
 
-var framework = require('../runtime')
-var pkg = require('../../package.json')
+import framework from '../runtime'
+import * as pkg from '../../package.json'
 
 Object.assign(global, framework, {
   frameworkVersion: pkg.version,

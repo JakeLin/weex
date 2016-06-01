@@ -1,179 +1,63 @@
-/**
- * @fileOverview Main entry, instance manager
- *
- * - createInstance(instanceId, code, options, data)
- * - refreshInstance(instanceId, data)
- * - destroyInstance(instanceId)
- * - registerComponents(components)
- * - registerModules(modules)
- * - getRoot(instanceId)
- * - instanceMap
- * - callJS(instanceId, tasks)
- *   - fireEvent(ref, type, data)
- *   - callback(funcId, data)
- */
+import frameworks from './frameworks'
 
-import * as config from '../config'
-import AppInstance from '../app'
-import Vm from '../vm'
+const versionRegExp = /^\/\/ *(\{[^\}]*\}) *\r?\n/
 
-var {
-  nativeComponentMap
-} = config
-var instanceMap = {}
-
-/**
- * create a Weex instance
- *
- * @param  {string} instanceId
- * @param  {string} code
- * @param  {object} [options] option `HAS_LOG` enable print log
- * @param  {object} [data]
- */
-export function createInstance(instanceId, code, options, data) {
-  var instance = instanceMap[instanceId]
-  options = options || {}
-
-  config.debug = options.debug
-
-  var result
-  if (!instance) {
-    instance = new AppInstance(instanceId, options)
-    instanceMap[instanceId] = instance
-    result = instance.init(code, data)
-  } else {
-    result = new Error(`invalid instance id "${instanceId}"`)
+function checkVersion (code) {
+  let info
+  const result = versionRegExp.exec(code)
+  if (result) {
+    try {
+      info = JSON.parse(result[1])
+    } catch (e) {}
   }
-
-  return result
+  return info
 }
 
-/**
- * refresh a Weex instance
- *
- * @param  {string} instanceId
- * @param  {object} data
- */
-export function refreshInstance(instanceId, data) {
-  var instance = instanceMap[instanceId]
-  var result
-  if (instance) {
-    result = instance.refreshData(data)
-  } else {
-    result = new Error(`invalid instance id "${instanceId}"`)
+const instanceMap = {}
+
+export function createInstance (id, code, config, data) {
+  let info = instanceMap[id]
+  if (!info) {
+    info = checkVersion(code) || {}
+    if (!frameworks[info.framework]) {
+      info.framework = 'Weex'
+    }
+    instanceMap[id] = info
+    return frameworks[info.framework].createInstance(id, code, config, data)
   }
-  return result
+  return new Error(`invalid instance id "${id}"`)
 }
 
-/**
- * destroy a Weex instance
- * @param  {string} instanceId
- */
-export function destroyInstance(instanceId) {
-  var instance = instanceMap[instanceId]
-  if (!instance) {
-    return new Error(`invalid instance id "${instanceId}"`)
-  }
-
-  instance.destroy()
-  delete instanceMap[instanceId]
-  return instanceMap
+const methods = {
+  createInstance
 }
 
-/**
- * register the name of each native component
- * @param  {array} components array of name
- */
-export function registerComponents(components) {
-  if (Array.isArray(components)) {
-    components.forEach(function register(name) {
-      /* istanbul ignore if */
-      if (!name) {
-        return
+function genInit(methodName) {
+  methods[methodName] = function (...args) {
+    for (const name in frameworks) {
+      const framework = frameworks[name]
+      if (framework && framework[methodName]) {
+        framework[methodName](...args)
       }
-      if (typeof name === 'string') {
-        nativeComponentMap[name] = true
-      } else if (typeof name === 'object' && typeof name.type === 'string') {
-        nativeComponentMap[name.type] = name
-      }
-    })
+    }
   }
 }
 
-/**
- * register the name and methods of each module
- * @param  {object} modules a object of modules
- */
-export function registerModules(modules) {
-  if (typeof modules === 'object') {
-    Vm.registerModules(modules)
+['registerComponents', 'registerModules', 'registerMethods'].forEach(genInit)
+
+function genInstance(methodName) {
+  methods[methodName] = function (...args) {
+    const id = args[0]
+    const info = instanceMap[id]
+    if (info && frameworks[info.framework]) {
+      return frameworks[info.framework][methodName](...args)
+    }
+    return new Error(`invalid instance id "${id}"`)
   }
 }
 
-/**
- * register the name and methods of each api
- * @param  {object} apis a object of apis
- */
-export function registerMethods(apis) {
-  if (typeof apis === 'object') {
-    Vm.registerMethods(apis)
-  }
-}
+['destroyInstance', 'refreshInstance', 'callJS', 'getRoot'].forEach(genInstance)
 
-/**
- * get a whole element tree of an instance
- * for debugging
- * @param  {string} instanceId
- * @return {object} a virtual dom tree
- */
-export function getRoot(instanceId) {
-  var instance = instanceMap[instanceId]
-  var result
-  if (instance) {
-    result = instance.getRootElement()
-  } else {
-    result = new Error(`invalid instance id "${instanceId}"`)
-  }
-  return result
-}
+methods.receiveTasks = methods.callJS
 
-var jsHandlers = {
-  fireEvent: function fireEvent(instanceId, ref, type, data, domChanges) {
-    var instance = instanceMap[instanceId]
-    var result
-    result = instance.fireEvent(ref, type, data, domChanges)
-    return result
-  },
-
-  callback: function callback(instanceId, funcId, data, ifLast) {
-    var instance = instanceMap[instanceId]
-    var result
-    result = instance.callback(funcId, data, ifLast)
-    return result
-  }
-}
-
-/**
- * accept calls from native (event or callback)
- *
- * @param  {string} instanceId
- * @param  {array} tasks list with `method` and `args`
- */
-export function callJS(instanceId, tasks) {
-  const instance = instanceMap[instanceId]
-  let results = []
-  if (instance && Array.isArray(tasks)) {
-    tasks.forEach((task) => {
-      const handler = jsHandlers[task.method]
-      const args = [...task.args]
-      if (typeof handler === 'function') {
-        args.unshift(instanceId)
-        results.push(handler(...args))
-      }
-    })
-  } else {
-    results.push(new Error(`invalid instance id "${instanceId}" or tasks`))
-  }
-
-  return results
-}
+export default methods

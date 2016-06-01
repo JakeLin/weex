@@ -1,5 +1,5 @@
 import './polyfill'
-import * as runtime from './lib/runtime'
+import runtime from './lib/runtime'
 import {version, optionalDependencies} from './package.json'
 
 for (let methodName in runtime) {
