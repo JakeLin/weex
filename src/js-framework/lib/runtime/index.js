@@ -13,9 +13,9 @@
  *   - callback(funcId, data)
  */
 
-import * as config from './config'
-import AppInstance from './app'
-import Vm from './vm'
+import * as config from '../config'
+import AppInstance from '../app'
+import Vm from '../vm'
 
 var {
   nativeComponentMap

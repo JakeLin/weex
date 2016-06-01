@@ -6,7 +6,7 @@ const {
 } = chai
 chai.use(sinonChai)
 
-import * as framework from '../framework'
+import * as framework from '../runtime'
 import * as config from '../config'
 import Vm from '../vm'
 
