@@ -11,18 +11,22 @@ export function Document(id, url) {
   id = id ? id.toString() : ''
   this.id = id
   this.URL = url
+
+  instanceMap[id] = this
+  this.reset()
+  this.createDocumentElement()
+}
+
+Document.prototype.reset = function () {
   this.nextRef = 1
   this.nodeMap = {}
   this.listener = null
   this.eventManager = null
   this.closed = false
-  instanceMap[id] = this
-
-  this.createDocumentElement()
 }
-
-export function destroyDocument(id) {
-  delete instanceMap[id]
+Document.prototype.destroy = function () {
+  this.reset()
+  delete instanceMap[this.id]
 }
 
 Document.prototype.open = function () {

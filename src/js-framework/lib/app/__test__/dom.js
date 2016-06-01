@@ -6,8 +6,10 @@ chai.use(sinonChai)
 
 import {
   instanceMap,
-  Document, destroyDocument,
-  Node, Element, Comment
+  Document,
+  Node,
+  Element,
+  Comment
 } from '../dom'
 import Listener from '../dom-listener'
 import EventManager from '../event'
@@ -22,7 +24,7 @@ describe('document constructor', () => {
     expect(instanceMap.foo).equal(doc)
     expect(doc.documentElement).is.an.object
     expect(doc.documentElement.ref).is.be.equal('_documentElement')
-    destroyDocument('foo')
+    doc.destroy()
     expect(instanceMap.foo).is.undefined
   })
 })
@@ -35,7 +37,7 @@ describe('document methods', () => {
   })
 
   afterEach(() => {
-    destroyDocument('foo')
+    doc.destroy()
   })
 
   it('open & close with a listener', () => {
@@ -111,7 +113,7 @@ describe('Element', () => {
   })
 
   afterEach(() => {
-    destroyDocument('foo')
+    doc.destroy()
   })
 
   it('init correctly', () => {
@@ -344,7 +346,7 @@ describe('Node', () => {
   })
 
   afterEach(() => {
-    destroyDocument('foo')
+    doc.destroy()
   })
 
   it('prev and next', () => {
@@ -429,7 +431,7 @@ describe('complicated situations', () => {
   })
 
   afterEach(() => {
-    destroyDocument('foo')
+    doc.destroy()
   })
 
   it('move a node to its original position', () => {

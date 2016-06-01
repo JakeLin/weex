@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import * as domHelper from '../dom-helper'
-import {Document, destroyDocument} from '../../app/dom'
+import {Document} from '../../app/dom'
 
 describe('help create body', () => {
   var vm
@@ -18,8 +18,8 @@ describe('help create body', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('create body with type', () => {
@@ -42,8 +42,8 @@ describe('help create element', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('create element with type', () => {
@@ -65,8 +65,8 @@ describe('help create block', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('create block with element', () => {
@@ -95,8 +95,8 @@ describe('help attach target', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('attach body to documentElement', () => {
@@ -204,8 +204,8 @@ describe('help move target', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('move an element to an element mark', () => {
@@ -308,8 +308,8 @@ describe('help remove target', () => {
   })
 
   afterEach(() => {
+    vm._app.doc.destroy()
     vm = null
-    destroyDocument('foo')
   })
 
   it('remove body', () => {

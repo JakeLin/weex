@@ -6,8 +6,10 @@ chai.use(sinonChai)
 
 import {
   instanceMap,
-  Document, destroyDocument,
-  Node, Element, Comment
+  Document,
+  Node,
+  Element,
+  Comment
 } from '../dom'
 import Listener from '../dom-listener'
 import EventManager from '../event'
@@ -19,7 +21,7 @@ describe('dom listener basic', () => {
     doc.setListener(listener)
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
-    destroyDocument('foo')
+    doc.destroy()
   })
 })
 
@@ -36,7 +38,7 @@ describe('dom listener details', () => {
   })
 
   afterEach(() => {
-    destroyDocument('foo')
+    doc.destroy()
   })
 
   it('create body', (done) => {

@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import Vm from '../'
-import {Document, destroyDocument} from '../../app/dom'
+import {Document} from '../../app/dom'
 import DomListener from '../../app/dom-listener'
 import Differ from '../../app/differ'
 
@@ -28,7 +28,7 @@ describe('generate virtual dom for a single vm', () => {
 
   afterEach(() => {
     spy.reset()
-    destroyDocument('test')
+    doc.destroy()
   })
 
   it('generate an single element', () => {
@@ -470,7 +470,7 @@ describe('generate virtual dom for sub vm', () => {
   })
 
   afterEach(() => {
-    destroyDocument('test')
+    doc.destroy()
   })
 
   it('generate sub elements', () => {
@@ -1013,9 +1013,9 @@ describe('generate dom actions', () => {
   })
 
   afterEach(() => {
-    app = doc = listener = spy = null
     customComponentMap = {}
-    destroyDocument('test')
+    doc.destroy()
+    app = doc = listener = spy = null
   })
 
   it('received create body and add element actions', () => {

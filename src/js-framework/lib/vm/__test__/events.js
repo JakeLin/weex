@@ -5,7 +5,7 @@ const expect = chai.expect
 chai.use(sinonChai)
 
 import Vm from '../'
-import {Document, destroyDocument} from '../../app/dom'
+import {Document} from '../../app/dom'
 import DomListener from '../../app/dom-listener'
 import EventManager from '../../app/event'
 
@@ -35,7 +35,7 @@ describe('bind and fire events', () => {
   })
 
   afterEach(() => {
-    destroyDocument('test')
+    doc.destroy()
   })
 
   it('bind event and fire in a single dom', (done) => {
