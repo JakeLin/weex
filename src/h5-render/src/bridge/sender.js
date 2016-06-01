@@ -34,7 +34,7 @@ Sender.prototype = {
     })
   },
 
-  fireEvent: function (ref, type, event) {    
+  fireEvent: function (ref, type, event) {
     if (event._alreadyFired) {
       // stop bubbling up in virtual dom tree.
       return
