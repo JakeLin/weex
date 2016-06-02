@@ -1,0 +1,1399 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>Data Binding · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.0.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="style-n-class.html" />
+    
+    
+    <link rel="prev" href="main.html" />
+    
+
+    <link rel="stylesheet"  href="//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/weex_doc.css" >
+    <!--     
+    <link rel="stylesheet"  href="ali_addition/weex_doc.css" >
+    -->
+    
+    <link rel="icon" type="image/x-icon" href="http://alibaba.github.io/weex/img/favicon.ico">
+
+    <script src="//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/weex_doc.js"></script>
+    <!-- 
+    <script src="ali_addition/weex_doc.js"></script>
+    -->    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    
+    
+<div class="weex-doc-header">
+    <div class="top-bar">
+        <div class="top-bar-title" onclick="location='http://alibaba.github.io/weex/index.html'" ></div>                        
+        <div class="top-bar-left">
+            <ul  class="menu" role="menubar" >
+                <li role="menuitem">
+                    <a href='http://alibaba.github.io/weex/demo.html'>Showcase</a>                            
+                </li>
+                <li role="menuitem" >
+                    <a href="http://alibaba.github.io/weex/download.html">Download</a>
+                </li>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li>
+                    <a href="https://github.com/alibaba/weex">
+                        <img class='github' src='//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/github.png' alt='github' >                                          </a>
+                </li>
+            </ul>                    
+        </div>
+    </div>        
+</div>
+
+
+
+            
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../guide.html">
+            
+                <a href="../guide.html">
+            
+                    
+                    Guide
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../tutorial.html">
+            
+                <a href="../tutorial.html">
+            
+                    
+                    Tutorial
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="main.html">
+            
+                <a href="main.html">
+            
+                    
+                    Syntax
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.2.2.1" data-path="data-binding.html">
+            
+                <a href="data-binding.html">
+            
+                    
+                    Data Binding
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="style-n-class.html">
+            
+                <a href="style-n-class.html">
+            
+                    
+                    Style and Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="events.html">
+            
+                <a href="events.html">
+            
+                    
+                    Events
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="display-logic.html">
+            
+                <a href="display-logic.html">
+            
+                    
+                    Display Logic Control
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="render-logic.html">
+            
+                <a href="render-logic.html">
+            
+                    
+                    Render Logic Control
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="composed-component.html">
+            
+                <a href="composed-component.html">
+            
+                    
+                    Composed Component
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.7" data-path="id.html">
+            
+                <a href="id.html">
+            
+                    
+                    Find an Element
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.8" data-path="comm.html">
+            
+                <a href="comm.html">
+            
+                    
+                    Communications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.9" data-path="config-n-data.html">
+            
+                <a href="config-n-data.html">
+            
+                    
+                    Page Config & Data
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../how-to/main.html">
+            
+                <a href="../how-to/main.html">
+            
+                    
+                    How-tos
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../how-to/require-3rd-party-libs.html">
+            
+                <a href="../how-to/require-3rd-party-libs.html">
+            
+                    
+                    Require 3rd-party Libs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../how-to/transform-code-into-js-bundle.html">
+            
+                <a href="../how-to/transform-code-into-js-bundle.html">
+            
+                    
+                    Transform Code Into JS Bundle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../advanced/main.html">
+            
+                <a href="../advanced/main.html">
+            
+                    
+                    Advanced
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../advanced/how-it-works.html">
+            
+                <a href="../advanced/how-it-works.html">
+            
+                    
+                    How It Works
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../advanced/how-data-binding-works.html">
+            
+                <a href="../advanced/how-data-binding-works.html">
+            
+                    
+                    How Data Binding Works
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../advanced/integrate-to-android.html">
+            
+                <a href="../advanced/integrate-to-android.html">
+            
+                    
+                    Integrate to Android
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../advanced/extend-to-android.html">
+            
+                <a href="../advanced/extend-to-android.html">
+            
+                    
+                    Extend to Android
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.5" data-path="../advanced/integrate-to-html5.html">
+            
+                <a href="../advanced/integrate-to-html5.html">
+            
+                    
+                    Integrate to HTML5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.6" data-path="../advanced/extend-to-html5.html">
+            
+                <a href="../advanced/extend-to-html5.html">
+            
+                    
+                    Extend to HTML5
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../references/main.html">
+            
+                <a href="../references/main.html">
+            
+                    
+                    References
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../references/bootstrap.html">
+            
+                <a href="../references/bootstrap.html">
+            
+                    
+                    Bootstrap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../references/component-defs.html">
+            
+                <a href="../references/component-defs.html">
+            
+                    
+                    Component Definition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../references/api.html">
+            
+                <a href="../references/api.html">
+            
+                    
+                    Instance APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../components/main.html">
+            
+                <a href="../components/main.html">
+            
+                    
+                    Built-in Components
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../references/common-attrs.html">
+            
+                <a href="../references/common-attrs.html">
+            
+                    
+                    Common Attributes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../references/common-style.html">
+            
+                <a href="../references/common-style.html">
+            
+                    
+                    Common Style
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.2.1" data-path="../references/text-style.html">
+            
+                <a href="../references/text-style.html">
+            
+                    
+                    Text Style
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../references/common-event.html">
+            
+                <a href="../references/common-event.html">
+            
+                    
+                    Common Event
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../components/special-element.html">
+            
+                <a href="../components/special-element.html">
+            
+                    
+                    Special Element
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="../components/div.html">
+            
+                <a href="../components/div.html">
+            
+                    
+                    div
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.6" data-path="../components/scroller.html">
+            
+                <a href="../components/scroller.html">
+            
+                    
+                    scroller
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.7" data-path="../components/list.html">
+            
+                <a href="../components/list.html">
+            
+                    
+                    list
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.7.1" data-path="../components/cell.html">
+            
+                <a href="../components/cell.html">
+            
+                    
+                    cell
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.8" data-path="../components/text.html">
+            
+                <a href="../components/text.html">
+            
+                    
+                    text
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.9" data-path="../components/image.html">
+            
+                <a href="../components/image.html">
+            
+                    
+                    image
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.10" data-path="../components/input.html">
+            
+                <a href="../components/input.html">
+            
+                    
+                    input
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.11" data-path="../components/switch.html">
+            
+                <a href="../components/switch.html">
+            
+                    
+                    switch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.12" data-path="../components/slider.html">
+            
+                <a href="../components/slider.html">
+            
+                    
+                    slider
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.12.1" data-path="../components/indicator.html">
+            
+                <a href="../components/indicator.html">
+            
+                    
+                    indicator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.13" data-path="../components/video.html">
+            
+                <a href="../components/video.html">
+            
+                    
+                    video
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.14" data-path="../components/a.html">
+            
+                <a href="../components/a.html">
+            
+                    
+                    a
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.15" data-path="../components/web.html">
+            
+                <a href="../components/web.html">
+            
+                    
+                    web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.16" data-path="../components/wxc-tabbar.html">
+            
+                <a href="../components/wxc-tabbar.html">
+            
+                    
+                    wxc-tabbar
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.17" data-path="../components/wxc-navpage.html">
+            
+                <a href="../components/wxc-navpage.html">
+            
+                    
+                    wxc-navpage
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../modules/">
+            
+                <a href="../modules/">
+            
+                    
+                    Built-in Modules
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.5.1" data-path="../modules/dom.html">
+            
+                <a href="../modules/dom.html">
+            
+                    
+                    dom
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.2" data-path="../modules/stream.html">
+            
+                <a href="../modules/stream.html">
+            
+                    
+                    steam
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.3" data-path="../modules/modal.html">
+            
+                <a href="../modules/modal.html">
+            
+                    
+                    modal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.4" data-path="../modules/animation.html">
+            
+                <a href="../modules/animation.html">
+            
+                    
+                    animation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.5" data-path="../modules/webview.html">
+            
+                <a href="../modules/webview.html">
+            
+                    
+                    webview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.6" data-path="../modules/navigator.html">
+            
+                <a href="../modules/navigator.html">
+            
+                    
+                    navigator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" >
+            
+                <span>
+            
+                    
+                    Low-level Specs
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.6.1" data-path="../specs/js-bundle-format.html">
+            
+                <a href="../specs/js-bundle-format.html">
+            
+                    
+                    JS Bundle Format
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.2" data-path="../specs/js-framework-apis.html">
+            
+                <a href="../specs/js-framework-apis.html">
+            
+                    
+                    JS Framework APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.3" data-path="../specs/virtual-dom-apis.html">
+            
+                <a href="../specs/virtual-dom-apis.html">
+            
+                    
+                    Virtual DOM APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../demo/main.html">
+            
+                <a href="../demo/main.html">
+            
+                    
+                    Examples
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../demo/hello-world.html">
+            
+                <a href="../demo/hello-world.html">
+            
+                    
+                    Hello World
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../demo/modal.html">
+            
+                <a href="../demo/modal.html">
+            
+                    
+                    Modal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../demo/list.html">
+            
+                <a href="../demo/list.html">
+            
+                    
+                    List
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../demo/slider.html">
+            
+                <a href="../demo/slider.html">
+            
+                    
+                    Slider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../demo/animation.html">
+            
+                <a href="../demo/animation.html">
+            
+                    
+                    Animation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" >
+            
+                <a target="_blank" href="https://github.com/alibaba/weex/tree/dev/examples">
+            
+                    
+                    More
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tools/main.html">
+            
+                <a href="../tools/main.html">
+            
+                    
+                    Service & Tools
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tools/cli.html">
+            
+                <a href="../tools/cli.html">
+            
+                    
+                    CLI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tools/transformer.html">
+            
+                <a href="../tools/transformer.html">
+            
+                    
+                    Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../tools/playground-app.html">
+            
+                <a href="../tools/playground-app.html">
+            
+                    
+                    Playground App
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../faq.html">
+            
+                <a href="../faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Data Binding</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="data-binding">Data-Binding</h1>
+<p><span class="weex-version">0.4</span></p>
+<p>In Weex, we use the <em>mustache</em> syntax <code>{{...}}</code> to bind data in <code>&lt;template&gt;</code> which are defined in <code>&lt;script&gt;</code>. Once data and template is bound, the data changes will influence the corresponding template content immediately and automatically.</p>
+<h2 id="binding-data-path">Binding data path</h2>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;font-size: {{size}}&quot;</span>&gt;</span>{{title}}<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-built_in">module</span>.exports = {
+    data: {
+      size: <span class="hljs-number">48</span>,
+      title: <span class="hljs-string">&apos;Alibaba Weex Team&apos;</span>
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>The code above will bind the <code>title</code> and <code>size</code> data field to <code>template</code>.</p>
+<p>We can also use <code>.</code> syntax to bind cascading data structure. Let&apos;s look at the following code snippet:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;font-size: {{title.size}}&quot;</span>&gt;</span>{{title.value}}<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-built_in">module</span>.exports = {
+    data: {
+      title: {
+        size: <span class="hljs-number">48</span>,
+        value: <span class="hljs-string">&apos;Alibaba Weex Team&apos;</span>
+      }
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h2 id="in-template-expression">In-template expression</h2>
+<p>Inside data bindings, Weex supports simply javascript expressions, e.g.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;flex-direction: row;&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>{{firstName + &apos; &apos; + lastName}}<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-built_in">module</span>.exports = {
+    data: {
+      firstName: <span class="hljs-string">&apos;John&apos;</span>,
+      lastName: <span class="hljs-string">&apos;Smith&apos;</span>
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>The expression will be evaluated in the data scope of current context.</p>
+<p><strong>NOTE: EACH BINDING CAN ONLY CONTAIN ONE SINGLE EXPRESSION</strong></p>
+<h2 id="computed-properties">Computed Properties</h2>
+<p><span class="weex-version">0.5</span></p>
+<p>According to simple operations, in-template expressions are very convenient. But if you want to put more logic into the template, you should use a computed property.</p>
+<p>e.g.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;flex-direction: row;&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>{{fullName}}<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;changeName&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+  module.exports = {
+    data: {
+      firstName: <span class="hljs-string">&apos;John&apos;</span>,
+      lastName: <span class="hljs-string">&apos;Smith&apos;</span>
+    },
+    computed: {
+      fullName: {
+        <span class="hljs-keyword">get</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+          <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.firstName + <span class="hljs-string">&apos; &apos;</span> + <span class="hljs-keyword">this</span>.lastName
+        },
+
+        <span class="hljs-keyword">set</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(v)</span> </span>{
+          <span class="hljs-keyword">var</span> s = v.split(<span class="hljs-string">&apos; &apos;</span>)
+          <span class="hljs-keyword">this</span>.firstName = s[<span class="hljs-number">0</span>]
+          <span class="hljs-keyword">this</span>.lastName = s[<span class="hljs-number">1</span>]
+        }
+      }
+    },
+    methods: {
+      changeName: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">this</span>.fullName = <span class="hljs-string">&apos;Terry King&apos;</span>
+      }
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>Here we have declared a computed property fullName. The function we provided will be used as the getter function for concating firstName and lastName.</p>
+<p>Otherwise when you call <code>changeName</code> after click, the setter will be invoked and this.firstName and this.lastName will be updated accordingly.</p>
+<p><strong>NOTE: <code>data</code> and <code>methods</code> can&apos;t have duplicate fields. &apos;Cause in the execution context -- <code>this</code>, we can access both of them.</strong></p>
+<h2 id="usage-of-some-special-attributes-in-data-binding">Usage of some special attributes in Data-Binding</h2>
+<h3 id="styles-style-or-class">Styles: <code>style</code> or <code>class</code></h3>
+<p>the style of a component can be bind using the <code>style</code> attribute:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;font-size: {{size}}; color: {{color}}; ...&quot;</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</code></pre>
+<p>while style can also get bound with <code>class</code> attribute, multiple classnames can be split by spaces:</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;{{size}}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;title {{status}}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</code></pre>
+<p>here if <code>{{size}}</code> and <code>{{status}}</code> have empty value, then only <code>class=&quot;title&quot;</code> will be rendered.</p>
+<ul>
+<li><a href="style-n-class.html">See more about style and class</a></li>
+</ul>
+<h3 id="event-handler-on">Event Handler: <code>on...</code></h3>
+<p>The event handler is an attribute which name has a prefix <code>on...</code>. The other part of attribute name is event type and the value is event handler name. We don&apos;t need to add mustache around the method name or add parentheses to call it.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;toggle&quot;</span>&gt;</span>Toggle<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-built_in">module</span>.exports = {
+    methods: {
+      toggle: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-comment">// todo</span>
+      }
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<h3 id="if--repeat"><code>if</code> &amp; <code>repeat</code></h3>
+<p><code>if</code> attribute can control the display of a component by a truthy/falsy value.</p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">container</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;flex-direction: column;&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;toggle&quot;</span>&gt;</span>Toggle<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">image</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;...&quot;</span> <span class="hljs-attr">if</span>=<span class="hljs-string">&quot;{{shown}}&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">image</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">container</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-built_in">module</span>.exports = {
+    data: {
+      shown: <span class="hljs-literal">true</span>
+    },
+    methods: {
+      toggle: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">this</span>.shown = !<span class="hljs-keyword">this</span>.shown
+      }
+    }
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+<p>We can also use <code>repeat</code> attribute to generate a list.</p>
+<ul>
+<li><a href="display-logic.html">See more about display logic control</a></li>
+</ul>
+<p>Next, let&apos;s have a look at <a href="style-n-class.html">style and class</a>.</p>
+
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="main.html" class="navigation navigation-prev " aria-label="Previous page: Syntax">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="style-n-class.html" class="navigation navigation-next " aria-label="Next page: Style and Class">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+        gitbook.page.hasChanged({"page":{"title":"Data Binding","level":"1.2.2.1","depth":3,"next":{"title":"Style and Class","level":"1.2.2.2","depth":3,"path":"syntax/style-n-class.md","ref":"syntax/style-n-class.md","articles":[]},"previous":{"title":"Syntax","level":"1.2.2","depth":2,"path":"syntax/main.md","ref":"syntax/main.md","articles":[{"title":"Data Binding","level":"1.2.2.1","depth":3,"path":"syntax/data-binding.md","ref":"syntax/data-binding.md","articles":[]},{"title":"Style and Class","level":"1.2.2.2","depth":3,"path":"syntax/style-n-class.md","ref":"syntax/style-n-class.md","articles":[]},{"title":"Events","level":"1.2.2.3","depth":3,"path":"syntax/events.md","ref":"syntax/events.md","articles":[]},{"title":"Display Logic Control","level":"1.2.2.4","depth":3,"path":"syntax/display-logic.md","ref":"syntax/display-logic.md","articles":[]},{"title":"Render Logic Control","level":"1.2.2.5","depth":3,"path":"syntax/render-logic.md","ref":"syntax/render-logic.md","articles":[]},{"title":"Composed Component","level":"1.2.2.6","depth":3,"path":"syntax/composed-component.md","ref":"syntax/composed-component.md","articles":[]},{"title":"Find an Element","level":"1.2.2.7","depth":3,"path":"syntax/id.md","ref":"syntax/id.md","articles":[]},{"title":"Communications","level":"1.2.2.8","depth":3,"path":"syntax/comm.md","ref":"syntax/comm.md","articles":[]},{"title":"Page Config & Data","level":"1.2.2.9","depth":3,"path":"syntax/config-n-data.md","ref":"syntax/config-n-data.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"3.0.3","theme":"default","variables":{},"plugins":["theme-default"],"pluginsConfig":{"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"syntax/data-binding.md","mtime":"2016-06-02T14:50:51.830Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-06-02T15:45:52.571Z"},"basePath":"..","book":{"language":""}});
+        setTimeout(function(){
+           window._rePostionVersion()
+        },100);
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+

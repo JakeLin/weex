@@ -1,0 +1,1326 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <title>JS Framework APIs · GitBook</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.0.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="virtual-dom-apis.html" />
+    
+    
+    <link rel="prev" href="js-bundle-format.html" />
+    
+
+    <link rel="stylesheet"  href="//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/weex_doc.css" >
+    <!--     
+    <link rel="stylesheet"  href="ali_addition/weex_doc.css" >
+    -->
+    
+    <link rel="icon" type="image/x-icon" href="http://alibaba.github.io/weex/img/favicon.ico">
+
+    <script src="//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/weex_doc.js"></script>
+    <!-- 
+    <script src="ali_addition/weex_doc.js"></script>
+    -->    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    
+    
+<div class="weex-doc-header">
+    <div class="top-bar">
+        <div class="top-bar-title" onclick="location='http://alibaba.github.io/weex/index.html'" ></div>                        
+        <div class="top-bar-left">
+            <ul  class="menu" role="menubar" >
+                <li role="menuitem">
+                    <a href='http://alibaba.github.io/weex/demo.html'>Showcase</a>                            
+                </li>
+                <li role="menuitem" >
+                    <a href="http://alibaba.github.io/weex/download.html">Download</a>
+                </li>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+                <li>
+                    <a href="https://github.com/alibaba/weex">
+                        <img class='github' src='//g.alicdn.com/mtb/lab-zikuan/0.1.1/weex/github.png' alt='github' >                                          </a>
+                </li>
+            </ul>                    
+        </div>
+    </div>        
+</div>
+
+
+
+            
+    <div class="book-summary">
+        
+            
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../guide.html">
+            
+                <a href="../guide.html">
+            
+                    
+                    Guide
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../tutorial.html">
+            
+                <a href="../tutorial.html">
+            
+                    
+                    Tutorial
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../syntax/main.html">
+            
+                <a href="../syntax/main.html">
+            
+                    
+                    Syntax
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="../syntax/data-binding.html">
+            
+                <a href="../syntax/data-binding.html">
+            
+                    
+                    Data Binding
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="../syntax/style-n-class.html">
+            
+                <a href="../syntax/style-n-class.html">
+            
+                    
+                    Style and Class
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="../syntax/events.html">
+            
+                <a href="../syntax/events.html">
+            
+                    
+                    Events
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="../syntax/display-logic.html">
+            
+                <a href="../syntax/display-logic.html">
+            
+                    
+                    Display Logic Control
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="../syntax/render-logic.html">
+            
+                <a href="../syntax/render-logic.html">
+            
+                    
+                    Render Logic Control
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="../syntax/composed-component.html">
+            
+                <a href="../syntax/composed-component.html">
+            
+                    
+                    Composed Component
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.7" data-path="../syntax/id.html">
+            
+                <a href="../syntax/id.html">
+            
+                    
+                    Find an Element
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.8" data-path="../syntax/comm.html">
+            
+                <a href="../syntax/comm.html">
+            
+                    
+                    Communications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.9" data-path="../syntax/config-n-data.html">
+            
+                <a href="../syntax/config-n-data.html">
+            
+                    
+                    Page Config & Data
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../how-to/main.html">
+            
+                <a href="../how-to/main.html">
+            
+                    
+                    How-tos
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.3.1" data-path="../how-to/require-3rd-party-libs.html">
+            
+                <a href="../how-to/require-3rd-party-libs.html">
+            
+                    
+                    Require 3rd-party Libs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3.2" data-path="../how-to/transform-code-into-js-bundle.html">
+            
+                <a href="../how-to/transform-code-into-js-bundle.html">
+            
+                    
+                    Transform Code Into JS Bundle
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../advanced/main.html">
+            
+                <a href="../advanced/main.html">
+            
+                    
+                    Advanced
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.4.1" data-path="../advanced/how-it-works.html">
+            
+                <a href="../advanced/how-it-works.html">
+            
+                    
+                    How It Works
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.2" data-path="../advanced/how-data-binding-works.html">
+            
+                <a href="../advanced/how-data-binding-works.html">
+            
+                    
+                    How Data Binding Works
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.3" data-path="../advanced/integrate-to-android.html">
+            
+                <a href="../advanced/integrate-to-android.html">
+            
+                    
+                    Integrate to Android
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.4" data-path="../advanced/extend-to-android.html">
+            
+                <a href="../advanced/extend-to-android.html">
+            
+                    
+                    Extend to Android
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.5" data-path="../advanced/integrate-to-html5.html">
+            
+                <a href="../advanced/integrate-to-html5.html">
+            
+                    
+                    Integrate to HTML5
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4.6" data-path="../advanced/extend-to-html5.html">
+            
+                <a href="../advanced/extend-to-html5.html">
+            
+                    
+                    Extend to HTML5
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../references/main.html">
+            
+                <a href="../references/main.html">
+            
+                    
+                    References
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../references/bootstrap.html">
+            
+                <a href="../references/bootstrap.html">
+            
+                    
+                    Bootstrap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../references/component-defs.html">
+            
+                <a href="../references/component-defs.html">
+            
+                    
+                    Component Definition
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../references/api.html">
+            
+                <a href="../references/api.html">
+            
+                    
+                    Instance APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4" data-path="../components/main.html">
+            
+                <a href="../components/main.html">
+            
+                    
+                    Built-in Components
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.1" data-path="../references/common-attrs.html">
+            
+                <a href="../references/common-attrs.html">
+            
+                    
+                    Common Attributes
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.2" data-path="../references/common-style.html">
+            
+                <a href="../references/common-style.html">
+            
+                    
+                    Common Style
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.2.1" data-path="../references/text-style.html">
+            
+                <a href="../references/text-style.html">
+            
+                    
+                    Text Style
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.3" data-path="../references/common-event.html">
+            
+                <a href="../references/common-event.html">
+            
+                    
+                    Common Event
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.4" data-path="../components/special-element.html">
+            
+                <a href="../components/special-element.html">
+            
+                    
+                    Special Element
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.5" data-path="../components/div.html">
+            
+                <a href="../components/div.html">
+            
+                    
+                    div
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.6" data-path="../components/scroller.html">
+            
+                <a href="../components/scroller.html">
+            
+                    
+                    scroller
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.7" data-path="../components/list.html">
+            
+                <a href="../components/list.html">
+            
+                    
+                    list
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.7.1" data-path="../components/cell.html">
+            
+                <a href="../components/cell.html">
+            
+                    
+                    cell
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.8" data-path="../components/text.html">
+            
+                <a href="../components/text.html">
+            
+                    
+                    text
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.9" data-path="../components/image.html">
+            
+                <a href="../components/image.html">
+            
+                    
+                    image
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.10" data-path="../components/input.html">
+            
+                <a href="../components/input.html">
+            
+                    
+                    input
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.11" data-path="../components/switch.html">
+            
+                <a href="../components/switch.html">
+            
+                    
+                    switch
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.12" data-path="../components/slider.html">
+            
+                <a href="../components/slider.html">
+            
+                    
+                    slider
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.4.12.1" data-path="../components/indicator.html">
+            
+                <a href="../components/indicator.html">
+            
+                    
+                    indicator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.13" data-path="../components/video.html">
+            
+                <a href="../components/video.html">
+            
+                    
+                    video
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.14" data-path="../components/a.html">
+            
+                <a href="../components/a.html">
+            
+                    
+                    a
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.15" data-path="../components/web.html">
+            
+                <a href="../components/web.html">
+            
+                    
+                    web
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.16" data-path="../components/wxc-tabbar.html">
+            
+                <a href="../components/wxc-tabbar.html">
+            
+                    
+                    wxc-tabbar
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.4.17" data-path="../components/wxc-navpage.html">
+            
+                <a href="../components/wxc-navpage.html">
+            
+                    
+                    wxc-navpage
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5" data-path="../modules/">
+            
+                <a href="../modules/">
+            
+                    
+                    Built-in Modules
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.5.1" data-path="../modules/dom.html">
+            
+                <a href="../modules/dom.html">
+            
+                    
+                    dom
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.2" data-path="../modules/stream.html">
+            
+                <a href="../modules/stream.html">
+            
+                    
+                    steam
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.3" data-path="../modules/modal.html">
+            
+                <a href="../modules/modal.html">
+            
+                    
+                    modal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.4" data-path="../modules/animation.html">
+            
+                <a href="../modules/animation.html">
+            
+                    
+                    animation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.5" data-path="../modules/webview.html">
+            
+                <a href="../modules/webview.html">
+            
+                    
+                    webview
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.5.6" data-path="../modules/navigator.html">
+            
+                <a href="../modules/navigator.html">
+            
+                    
+                    navigator
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6" >
+            
+                <span>
+            
+                    
+                    Low-level Specs
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.6.1" data-path="js-bundle-format.html">
+            
+                <a href="js-bundle-format.html">
+            
+                    
+                    JS Bundle Format
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.3.6.2" data-path="js-framework-apis.html">
+            
+                <a href="js-framework-apis.html">
+            
+                    
+                    JS Framework APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.6.3" data-path="virtual-dom-apis.html">
+            
+                <a href="virtual-dom-apis.html">
+            
+                    
+                    Virtual DOM APIs
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../demo/main.html">
+            
+                <a href="../demo/main.html">
+            
+                    
+                    Examples
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../demo/hello-world.html">
+            
+                <a href="../demo/hello-world.html">
+            
+                    
+                    Hello World
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../demo/modal.html">
+            
+                <a href="../demo/modal.html">
+            
+                    
+                    Modal
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../demo/list.html">
+            
+                <a href="../demo/list.html">
+            
+                    
+                    List
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../demo/slider.html">
+            
+                <a href="../demo/slider.html">
+            
+                    
+                    Slider
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../demo/animation.html">
+            
+                <a href="../demo/animation.html">
+            
+                    
+                    Animation
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" >
+            
+                <a target="_blank" href="https://github.com/alibaba/weex/tree/dev/examples">
+            
+                    
+                    More
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../tools/main.html">
+            
+                <a href="../tools/main.html">
+            
+                    
+                    Service & Tools
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../tools/cli.html">
+            
+                <a href="../tools/cli.html">
+            
+                    
+                    CLI
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../tools/transformer.html">
+            
+                <a href="../tools/transformer.html">
+            
+                    
+                    Transformer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../tools/playground-app.html">
+            
+                <a href="../tools/playground-app.html">
+            
+                    
+                    Playground App
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../faq.html">
+            
+                <a href="../faq.html">
+            
+                    
+                    FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >JS Framework APIs</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="js-framework-apis">JS Framework APIs</h1>
+<p><span class="weex-version">0.4</span></p>
+<h2 id="intro-about-js-runtime">Intro about JS Runtime</h2>
+<p>There APIs is designed for JS Framework and Native Engine working together.</p>
+<p>Considering the limitation of mobile phone resource, <em>Weex runs only one JS runtime</em> to handle all Weex instances. So it need a multi-instance management layer in JavaScript. These JS Framework APIs are just designed to finish the management job.</p>
+<ul>
+<li>First, each Weex instance have a lifecycle, from <code>createInstance</code> to <code>destroyInstance</code>. During this period, we can import some extra data by <code>refreshInstance</code>.</li>
+<li>To communicate with Native Engine, we have a couple of APIs: <code>callNative</code> and <code>callJS</code>. They are used to call each other by some commands and messages.</li>
+<li>And when JS runtime start at the beginning of the app launching, we need something initialized and configured. So we supply some APIs like <code>registerComponents</code>, <code>registerModules</code>.</li>
+<li>The last API is just for debugging, we supply an API named <code>getRoot</code> to return the whole virtual-DOM data for developers.</li>
+</ul>
+<h2 id="called-by-native-and-supplied-from-js-framework">Called by native and supplied from JS Framework</h2>
+<h3 id="createinstanceinstanceid-code-options-data"><code>createInstance(instanceId, code, options, data)</code></h3>
+<p>Create a Weex instance from Native Engine</p>
+<ul>
+<li><code>instanceId</code>: The unique id for a Weex instance, generated by Native Engine.</li>
+<li><code>code</code>: The JS bundle code send from Native Engine. It will be executed by <code>new Function(code)</code> in JS Framework. The code format depends on <a href="js-bundle-format.html">JS Bundle Foramt</a></li>
+<li><code>options</code>: <em>Optional</em>. An options object. <em>Currently it supports <code>debug</code> flag which enable printing log and <code>bundleUrl</code> flag which the url of bundle.</em></li>
+<li><code>data</code>: <em>Optional</em>. It&apos;s an chance to supply external data instead of the original data in JS bundle.</li>
+</ul>
+<p>Example:</p>
+<pre><code>createInstance(&apos;x&apos;, &apos;define(...); define(...); define(...); bootstrap(...)&apos;)
+createInstance(&apos;x&apos;, &apos;...&apos;, { bundleUrl, debug, ... }, { a: 1, b: 2 }})
+</code></pre><h3 id="destroyinstanceinstanceid"><code>destroyInstance(instanceId)</code></h3>
+<p>Destroy an existed Weex instance by id from Native Engine</p>
+<h3 id="refreshinstanceinstanceid-data"><code>refreshInstance(instanceId, data)</code></h3>
+<p>Refresh data to an existed Weex instance with certain external data from Native Engine</p>
+<p>Example:</p>
+<pre><code>refreshInstance(&apos;x&apos;, {a: 100, b: 200})
+</code></pre><h3 id="registercomponentscomponents"><code>registerComponents(components)</code></h3>
+<p>Register all native components</p>
+<ul>
+<li><code>components</code>: A map of which keys are component types and values are force options part of each type of component. <em>Currently it supports <code>append</code> attribute which forces the appending mechanism (<code>tree</code> or <code>node</code>) when first time rendering.</em></li>
+</ul>
+<p>Example:</p>
+<pre><code>registerComponents({
+  container: {}, 
+  text: {}, 
+  image: {},
+  slider: {append: &apos;tree&apos;},
+  list: {}, 
+  cell: {append: &apos;tree&apos;}, 
+  ...
+})
+</code></pre><h3 id="registermodulesmodules"><code>registerModules(modules)</code></h3>
+<p>Register the name, methods and args format of each module</p>
+<ul>
+<li><code>modules</code>: A map that collects all native module definitions. Each module definition is an array which has several API definitions. Each API definition has a <code>name</code> string and an <code>args</code> array which contains a list of each parameter&apos;s type.</li>
+</ul>
+<p><strong>NOTE: the <code>node</code> type data will actually return its <code>ref</code> property. And the <code>function</code> type data will actually return a unique function id referring to it.</strong></p>
+<p>Example:</p>
+<pre><code>registerModules({
+  event: [
+    {name: &apos;openURL&apos;, args: [&apos;string&apos;]}
+  ],
+  ...
+})
+</code></pre><h3 id="calljsinstanceid-tasks"><code>callJS(instanceId, tasks)</code></h3>
+<p>Fire events or callbacks to an existed Weex instance from Native Engine</p>
+<ul>
+<li><code>tasks[]</code>: A task list. Each task has a <code>method=&quot;fireEvent|callback&quot;</code> property and a list of <code>args</code>.<ul>
+<li>In <code>fireEvent</code> method, the <code>args</code> is <code>ref</code> of the target, event <code>type</code>, event <code>data</code> and <code>domChanges</code> description in order. <strong>Note: if some event make virtual-DOM data changed (e.g. value changed in <code>&lt;input&gt;</code> or current index changed in <code>&lt;slider&gt;</code>), the changing of the target element will be passed as <code>domChanges</code>.</strong></li>
+<li>In <code>callback</code> method, the <code>args</code> is <code>funcId</code> of a handler, <code>data</code> and <code>ifKeepAlive</code> which describes whether this callback handler should be keeping called. (Each callback handler is matched with a <code>funcId</code> when the original call happens.)</li>
+</ul>
+</li>
+</ul>
+<p>Example:</p>
+<pre><code>callJS(&apos;x&apos;, [{method: &apos;fireEvent&apos;, args: [&apos;x&apos;, &apos;13&apos;, &apos;click&apos;, {a: 100, b: 200}]}])
+callJS(&apos;x&apos;, [{method: &apos;callback&apos;, args: [&apos;x&apos;, &apos;7&apos;, {a: 100, b: 200}, true]}])
+</code></pre><h3 id="getrootinstanceid"><code>getRoot(instanceId)</code></h3>
+<p>Return a JSON object which describes the whole virtual DOM body of an existed Weex instance, which designed for debugging</p>
+<p>Example:</p>
+<pre><code>getRoot(&apos;x&apos;)
+// {ref: &apos;_root&apos;, type: &apos;container&apos;, attr: {...}, style: {...}, children: [...]}
+</code></pre><h2 id="called-from-javascript-and-implemented-with-native-code">Called from JavaScript and implemented with native code</h2>
+<h3 id="callnativeinstanceid-tasks"><code>callNative(instanceId, tasks)</code></h3>
+<p>Make native calls from JS Framework</p>
+<ul>
+<li><code>tasks[]</code>: A task list. Each task has a <code>module</code> name, a <code>method</code> name, and a <code>args[]</code> list.</li>
+</ul>
+<p>Example:</p>
+<pre><code>callNative(&apos;x&apos;, [
+  {module: &apos;dom&apos;, method: &apos;addElement&apos;, args: [&apos;_root&apos;, {ref: &apos;1&apos;, type: &apos;container&apos;}, -1]},
+  {module: &apos;dom&apos;, method: &apos;addElement&apos;, args: [&apos;1&apos;, {ref: &apos;2&apos;, type: &apos;text&apos;, ...}, -1]},
+  {module: &apos;dom&apos;, method: &apos;addElement&apos;, args: [&apos;1&apos;, {ref: &apos;3&apos;, type: &apos;image&apos;, ...}, -1]},
+  ...
+])
+</code></pre>
+                                
+                                </section>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="js-bundle-format.html" class="navigation navigation-prev " aria-label="Previous page: JS Bundle Format">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="virtual-dom-apis.html" class="navigation navigation-next " aria-label="Next page: Virtual DOM APIs">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+        gitbook.page.hasChanged({"page":{"title":"JS Framework APIs","level":"1.3.6.2","depth":3,"next":{"title":"Virtual DOM APIs","level":"1.3.6.3","depth":3,"path":"specs/virtual-dom-apis.md","ref":"specs/virtual-dom-apis.md","articles":[]},"previous":{"title":"JS Bundle Format","level":"1.3.6.1","depth":3,"path":"specs/js-bundle-format.md","ref":"specs/js-bundle-format.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.0.3","theme":"default","variables":{},"plugins":["theme-default"],"pluginsConfig":{"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"specs/js-framework-apis.md","mtime":"2016-06-02T14:50:51.830Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-06-02T15:45:52.571Z"},"basePath":"..","book":{"language":""}});
+        setTimeout(function(){
+           window._rePostionVersion()
+        },100);
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/buttons.js"></script>
+        
+    
+
+    </body>
+</html>
+
