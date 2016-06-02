@@ -51,6 +51,7 @@ List.prototype.create = function (nodeType) {
     , direction: this.direction === 'h' ? 'x' : 'y'
   })
   this.scroller.init()
+  this.offset = 0
   return node
 }
 
@@ -59,13 +60,26 @@ List.prototype.bindEvents = function (evts) {
   // to enable lazyload for Images.
   this.scroller.addEventListener('scrolling', function (e) {
     var so = e.scrollObj
+    var scrollTop = so.getScrollTop()
+    var scrollLeft = so.getScrollLeft()
+    var offset = this.direction === 'v' ? scrollTop : scrollLeft
+    var diff = offset - this.offset
+    var dir
+    if (diff >= 0) {
+      dir = this.direction === 'v' ? 'up' : 'left'
+    } else {
+      dir = this.direction === 'v' ? 'down' : 'right'
+    }
     this.dispatchEvent('scroll', {
       originalType: 'scrolling',
       scrollTop: so.getScrollTop(),
-      scrollLeft: so.getScrollLeft()
+      scrollLeft: so.getScrollLeft(),
+      offset: offset,
+      direction: direction
     }, {
       bubbles: true
     })
+    this.offset = offset
   }.bind(this))
 
   var pullendEvent = 'pull' + ({ v: 'up', h: 'left' })[this.direction] + 'end'

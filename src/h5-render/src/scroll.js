@@ -986,7 +986,7 @@ function Scroll(element, options) {
           var _s = offset - s0
           scrollAnimation = new lib.animation(
               400,
-              lib.cubicbezier.ease,
+              lib.cubicbezier.easeInOut,
               0,
               function (i1, i2) {
             var offset = (s0 + _s * i2).toFixed(2)
@@ -998,7 +998,7 @@ function Scroll(element, options) {
 
           scrollAnimation.play()
         } else {
-          setTransitionStyle(that, '0.4s', 'ease')
+          setTransitionStyle(that, '0.4s', 'ease-in-out')
           setTransformStyle(that, offset)
           setTransitionEndHandler(scrollEnd, 400)
 
