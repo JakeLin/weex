@@ -6,6 +6,7 @@ var logger = require('../logger')
 require('httpurl')
 
 var jsonpCnt = 0
+var ERROR_STATE = -1
 
 function _jsonp(config, callback, progressCallback) {
   var cbName = 'jsonp_' + (++jsonpCnt)
@@ -89,7 +90,13 @@ function _xhr(config, callback, progressCallback) {
 
   xhr.onerror = function (err) {
     logger.error('unexpected error in _xhr for \'fetch\' API', err)
-    callback(new Error('unexpected error in _xhr for \'fetch\' API'))
+    callback({
+      status: ERROR_STATE,
+      ok: false,
+      statusText: '',
+      data: '',
+      headers: {}
+    })
   }
 
   xhr.send(config.body)
