@@ -142,7 +142,7 @@ export function callback(callbackId, data, ifKeepAlive) {
   const callback = this.callbacks[callbackId]
 
   if (typeof callback === 'function') {
-    callback(data) // data is already a object, @see: lib/framework.js
+    callback(data) // data is already a object, @see: lib/runtime/index.js
 
     if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
       this.callbacks[callbackId] = undefined

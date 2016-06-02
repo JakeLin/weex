@@ -13,9 +13,9 @@
  *   - callback(funcId, data)
  */
 
-import * as config from './config'
-import AppInstance from './app'
-import Vm from './vm'
+import * as config from '../config'
+import AppInstance from '../app'
+import Vm from '../vm'
 
 var {
   nativeComponentMap
@@ -30,7 +30,7 @@ var instanceMap = {}
  * @param  {object} [options] option `HAS_LOG` enable print log
  * @param  {object} [data]
  */
-export function createInstance(instanceId, code, options, data) {
+function createInstance(instanceId, code, options, data) {
   var instance = instanceMap[instanceId]
   options = options || {}
 
@@ -54,7 +54,7 @@ export function createInstance(instanceId, code, options, data) {
  * @param  {string} instanceId
  * @param  {object} data
  */
-export function refreshInstance(instanceId, data) {
+function refreshInstance(instanceId, data) {
   var instance = instanceMap[instanceId]
   var result
   if (instance) {
@@ -69,7 +69,7 @@ export function refreshInstance(instanceId, data) {
  * destroy a Weex instance
  * @param  {string} instanceId
  */
-export function destroyInstance(instanceId) {
+function destroyInstance(instanceId) {
   var instance = instanceMap[instanceId]
   if (!instance) {
     return new Error(`invalid instance id "${instanceId}"`)
@@ -84,7 +84,7 @@ export function destroyInstance(instanceId) {
  * register the name of each native component
  * @param  {array} components array of name
  */
-export function registerComponents(components) {
+function registerComponents(components) {
   if (Array.isArray(components)) {
     components.forEach(function register(name) {
       /* istanbul ignore if */
@@ -104,7 +104,7 @@ export function registerComponents(components) {
  * register the name and methods of each module
  * @param  {object} modules a object of modules
  */
-export function registerModules(modules) {
+function registerModules(modules) {
   if (typeof modules === 'object') {
     Vm.registerModules(modules)
   }
@@ -114,7 +114,7 @@ export function registerModules(modules) {
  * register the name and methods of each api
  * @param  {object} apis a object of apis
  */
-export function registerMethods(apis) {
+function registerMethods(apis) {
   if (typeof apis === 'object') {
     Vm.registerMethods(apis)
   }
@@ -126,7 +126,7 @@ export function registerMethods(apis) {
  * @param  {string} instanceId
  * @return {object} a virtual dom tree
  */
-export function getRoot(instanceId) {
+function getRoot(instanceId) {
   var instance = instanceMap[instanceId]
   var result
   if (instance) {
@@ -159,10 +159,10 @@ var jsHandlers = {
  * @param  {string} instanceId
  * @param  {array} tasks list with `method` and `args`
  */
-export function callJS(instanceId, tasks) {
+function callJS(instanceId, tasks) {
   const instance = instanceMap[instanceId]
-  let results = []
   if (instance && Array.isArray(tasks)) {
+    const results = []
     tasks.forEach((task) => {
       const handler = jsHandlers[task.method]
       const args = [...task.args]
@@ -171,9 +171,18 @@ export function callJS(instanceId, tasks) {
         results.push(handler(...args))
       }
     })
-  } else {
-    results.push(new Error(`invalid instance id "${instanceId}" or tasks`))
+    return results
   }
+  return new Error(`invalid instance id "${instanceId}" or tasks`)
+}
 
-  return results
+export default {
+  createInstance,
+  refreshInstance,
+  destroyInstance,
+  registerComponents,
+  registerModules,
+  registerMethods,
+  getRoot,
+  callJS
 }
