@@ -5,7 +5,7 @@ var Component = require('./component')
 var utils = require('../utils')
 var logger = require('../logger')
 
-var rootCandidates = ['list', 'vlist', 'scroller']
+var rootCandidates = ['div', 'list', 'vlist', 'scroller']
 
 function RootComponent(data, nodeType) {
   var id = data.rootId + '-root'
