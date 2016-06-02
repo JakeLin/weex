@@ -133,6 +133,21 @@ function loopArray(arr, num, direction) {
   return rp.concat(lp)
 }
 
+// pad a integer number with zeros on the left.
+// example: fillInt(12, 3) -> '012'
+// - num: the number to pad
+// - len: the specified length
+function leftPad(num, len) {
+  if (len <= 0) {
+    return num
+  }
+  var numLen = (num + '').length
+  if (numLen >= len) {
+    return num
+  }
+  return new Array(len - numLen + 1).join('0') + num
+}
+
 module.exports = {
   extend: extend,
   isArray: isArray,
@@ -142,5 +157,6 @@ module.exports = {
   detectWebp: detectWebp,
   getRandom: getRandom,
   getRgb: getRgb,
-  loopArray: loopArray
+  loopArray: loopArray,
+  leftPad: leftPad
 }
