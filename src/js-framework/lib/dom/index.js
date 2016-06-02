@@ -3,12 +3,12 @@
  * A simple virtual dom implementation
  */
 
-import EventManager from './event'
 import Listener from './listener'
 
 const DEFAULT_TAG_NAME = 'div'
 
 export const instanceMap = {}
+let nextNodeRef = 1
 
 export function Document(id, url, handler) {
   id = id ? id.toString() : ''
@@ -16,8 +16,7 @@ export function Document(id, url, handler) {
   this.URL = url
 
   instanceMap[id] = this
-  this.reset()
-  this.eventManager = new EventManager()
+  this.nodeMap = {}
   this.listener = new Listener(id, handler || genCallTasks(id))
   this.createDocumentElement()
 }
@@ -31,51 +30,26 @@ function genCallTasks(id) {
   }
 }
 
-Document.prototype.reset = function () {
-  this.nextRef = 1
-  this.nodeMap = {}
-  this.closed = false
-  this.listener = null
-  this.eventManager = null
-}
 Document.prototype.destroy = function () {
-  this.reset()
+  delete this.listener
+  delete this.nodeMap
   delete instanceMap[this.id]
 }
 
 Document.prototype.open = function () {
-  this.closed = false
-  if (this.listener) {
-    this.listener.batched = false
-  }
+  this.listener.batched = false
 }
 Document.prototype.close = function () {
-  this.closed = true
-  if (this.listener) {
-    this.listener.batched = true
-  }
+  this.listener.batched = true
 }
 
-Document.prototype.addRef = function (el) {
-  el.ref = this.nextRef.toString()
-  this.nodeMap[el.ref] = el
-  this.nextRef++
-}
-
-Document.prototype.getRef = function (ref) {
-  return this.nodeMap[ref]
-}
-
-Document.prototype.removeRef = function (ref) {
-  delete this.nodeMap[ref]
-}
-
-Document.prototype.createDocumentElement = function (type, props) {
+Document.prototype.createDocumentElement = function () {
   if (!this.documentElement) {
-    this.documentElement = new Element(type, props, this)
-    this.nodeMap._documentElement = this.documentElement
-    this.documentElement.ref = '_documentElement'
-    this.documentElement.attached = true
+    const el = new Element('document')
+    el.docId = this.id
+    el.role = 'documentElement'
+    this.nodeMap[el.ref] = el
+    this.documentElement = el
   }
 
   return this.documentElement
@@ -83,24 +57,30 @@ Document.prototype.createDocumentElement = function (type, props) {
 
 Document.prototype.createBody = function (type, props) {
   if (!this.body) {
-    this.body = new Element(type, props, this)
-    this.nodeMap._root = this.body
-    this.body.ref = '_root'
-    this.body.depth = 1
+    const el = new Element(type, props)
+    el.docId = this.id
+    el.role = 'body'
+    el.depth = 1
+    this.nodeMap[el.ref] = el
+    this.body = el
   }
 
   return this.body
 }
 
 Document.prototype.createElement = function (tagName, props) {
-  return new Element(tagName, props, this)
+  return new Element(tagName, props)
 }
 
 Document.prototype.createComment = function (text) {
-  return new Comment(text, this)
+  return new Comment(text)
 }
 
-Document.prototype.fireEvent = function (el, type, e, domChanges) {
+Document.prototype.fireEvent = function (ref, type, e, domChanges) {
+  const el = this.nodeMap[ref]
+  if (!el) {
+    return
+  }
   e = e || {}
   e.type = type
   e.target = el
@@ -108,7 +88,10 @@ Document.prototype.fireEvent = function (el, type, e, domChanges) {
   if (domChanges) {
     updateElement(el, domChanges)
   }
-  return this.eventManager.fire(el, type, e)
+  const handler = el.event[type]
+  if (handler) {
+    return handler.call(el, e)
+  }
 }
 
 function updateElement(el, changes) {
@@ -123,65 +106,31 @@ function updateElement(el, changes) {
 }
 
 export function Node() {
-}
-
-Node.prototype.create = function (instanceId) {
-  this.parentRef = null
-  this.attached = false
-  if (instanceId) {
-    this.instanceId = instanceId
-    const doc = instanceMap[instanceId]
-    doc.addRef(this)
-  }
+  this.ref = (nextNodeRef++).toString()
+  this.children = []
+  this.pureChildren = []
 }
 
 Node.prototype.destroy = function () {
-  const ref = this.ref
-  const instanceId = this.instanceId
-  if (instanceId) {
-    const doc = instanceMap[instanceId]
-    doc.removeRef(ref)
+  const doc = instanceMap[this.docId]
+  if (doc) {
+    delete this.docId
+    delete doc.nodeMap[this.ref]
   }
-
-  const children = this.children || []
-  const length = children.length
-  for (let i = 0; i < length; i++) {
-    children[i].destroy()
-  }
+  this.children.forEach(child => {
+    child.destroy()
+  })
 }
 
-Node.prototype.getRenderer = function () {
-  const doc = instanceMap[this.instanceId]
-  return doc.listener
-}
-
-Node.prototype.next = function () {
-  const instanceId = this.instanceId
-  const doc = instanceMap[instanceId]
-  const parent = doc.getRef(this.parentRef)
-  if (parent) {
-    return parent.children[parent.children.indexOf(this) + 1]
-  }
-}
-
-Node.prototype.prev = function () {
-  const instanceId = this.instanceId
-  const doc = instanceMap[instanceId]
-  const parent = doc.getRef(this.parentRef)
-  if (parent) {
-    return parent.children[parent.children.indexOf(this) - 1]
-  }
-}
-
-export function Element(type=DEFAULT_TAG_NAME, props, ownerDocument) {
+export function Element(type=DEFAULT_TAG_NAME, props) {
   props = props || {}
-  this.create(ownerDocument.id)
-  this.ownerDocument = ownerDocument
+  this.nodeType = 1
+  this.ref = (nextNodeRef++).toString()
   this.type = type
   this.attr = props.attr || {}
   this.classStyle = props.classStyle || {}
   this.style = props.style || {}
-  this.event = []
+  this.event = {}
   this.children = []
   this.pureChildren = []
 }
@@ -189,306 +138,248 @@ export function Element(type=DEFAULT_TAG_NAME, props, ownerDocument) {
 Element.prototype = new Node()
 
 Element.prototype.appendChild = function (node) {
-
-  removeIfExisted(node)
-  node.parentRef = this.ref
-  this.children.push(node)
-
-  if (this.attached) {
-    setAttached(node, this.depth)
+  if (node.parentRef && node.parentRef !== this.ref) {
+    return
+  }
+  if (!node.parentRef) {
+    linkParent(node, this)
+    insertIndex(node, this.children, this.children.length, true)
+    if (this.docId) {
+      registerNode(this.docId, node)
+    }
+    if (node.nodeType === 1) {
+      const index = insertIndex(node, this.pureChildren, this.pureChildren.length)
+      if (this.docId) {
+        const listener = instanceMap[this.docId].listener
+        listener.addElement(node, this.ref, -1)
+      }
+    }
   }
   else {
-    setDetached(node)
-  }
-
-  if (node instanceof Element) {
-    this.pureChildren.push(node)
-
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        if (this.ref === '_documentElement') {
-          // if its parent is documentElement then it's a body
-          renderer.createBody(node, this.ref)
-        }
-        else {
-          renderer.addElement(node, this.ref)
-        }
+    moveIndex(node, this.children, this.children.length, true)
+    if (node.nodeType === 1) {
+      const index = moveIndex(node, this.pureChildren, this.pureChildren.length)
+      if (this.docId && index >= 0) {
+        const listener = instanceMap[this.docId].listener
+        listener.moveElement(node.ref, this.ref, index)
       }
     }
   }
 }
 
 Element.prototype.insertBefore = function (node, before) {
-
-  if (node.parentRef === this.ref) {
-    moveBefore(node, before, this.children)
-    if (node instanceof Element) {
-      const pureBeforeIndex = movePureBefore(node, before, this.pureChildren)
-      if (pureBeforeIndex >= 0 && this.attached) {
-        const renderer = this.getRenderer()
-        if (renderer) {
-          renderer.moveElement(node.ref, this.ref, pureBeforeIndex)
-        }
-      }
-    }
+  if (node.parentRef && node.parentRef !== this.ref) {
     return
   }
-
-  removeIfExisted(node)
-
-  const children = this.children
-  const index = children.indexOf(before)
-
-  node.parentRef = this.ref
-  if (this.attached) {
-    setAttached(node, this.depth)
+  if (node === before || node.nextSibling === before) {
+    return
+  }
+  if (!node.parentRef) {
+    linkParent(node, this)
+    insertIndex(node, this.children, this.children.indexOf(before), true)
+    if (this.docId) {
+      registerNode(this.docId, node)
+    }
+    if (node.nodeType === 1) {
+      const pureBefore = nextElement(before)
+      const index = insertIndex(
+        node,
+        this.pureChildren,
+        pureBefore
+          ? this.pureChildren.indexOf(pureBefore)
+          : this.pureChildren.length
+      )
+      if (this.docId) {
+        const listener = instanceMap[this.docId].listener
+        listener.addElement(node, this.ref, index)
+      }
+    }
   }
   else {
-    setDetached(node)
-  }
-  children.splice(index, 0, node)
-
-  if (node instanceof Element) {
-    const pureChildren = this.pureChildren
-    const pureIndex = getPureAfter(before, pureChildren)
-
-    pureChildren.splice(pureIndex, 0, node)
-
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        renderer.addElement(node, this.ref, pureIndex)
+    moveIndex(node, this.children, this.children.indexOf(before), true)
+    if (node.nodeType === 1) {
+      const pureBefore = nextElement(before)
+      const index = moveIndex(
+        node,
+        this.pureChildren,
+        pureBefore
+          ? this.pureChildren.indexOf(pureBefore)
+          : this.pureChildren.length
+      )
+      if (this.docId && index >= 0) {
+        const listener = instanceMap[this.docId].listener
+        listener.moveElement(node.ref, this.ref, index)
       }
     }
   }
 }
 
 Element.prototype.insertAfter = function (node, after) {
-
-  if (node.parentRef === this.ref) {
-    moveAfter(node, after, this.children)
-    if (node instanceof Element) {
-      const pureAfterIndex = movePureAfter(node, after, this.pureChildren)
-      if (pureAfterIndex >= 0 && this.attached) {
-        const renderer = this.getRenderer()
-        if (renderer) {
-          renderer.moveElement(node.ref, this.ref, pureAfterIndex)
-        }
-      }
-    }
+  if (node.parentRef && node.parentRef !== this.ref) {
     return
   }
-
-  removeIfExisted(node)
-
-  const children = this.children
-  const index = children.indexOf(after)
-
-  node.parentRef = this.ref
-  if (this.attached) {
-    setAttached(node, this.depth)
-  } else {
-    /* istanbul ignore next */
-    setDetached(node)
+  if (node === after || node.previousSibling === after) {
+    return
   }
-  children.splice(index + 1, 0, node)
-
-  if (node instanceof Element) {
-    const pureChildren = this.pureChildren
-    const pureIndex = getPureBefore(after, pureChildren)
-
-    pureChildren.splice(pureIndex + 1, 0, node)
-
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        renderer.addElement(node, this.ref, pureIndex + 1)
+  if (!node.parentRef) {
+    linkParent(node, this)
+    insertIndex(node, this.children, this.children.indexOf(after) + 1, true)
+    if (this.docId) {
+      registerNode(this.docId, node)
+    }
+    if (node.nodeType === 1) {
+      const index = insertIndex(
+        node,
+        this.pureChildren,
+        this.pureChildren.indexOf(previousElement(after)) + 1
+      )
+      if (this.docId) {
+        const listener = instanceMap[this.docId].listener
+        listener.addElement(node, this.ref, index)
+      }
+    }
+  }
+  else {
+    moveIndex(node, this.children, this.children.indexOf(after) + 1, true)
+    if (node.nodeType === 1) {
+      const index = moveIndex(
+        node,
+        this.pureChildren,
+        this.pureChildren.indexOf(previousElement(after)) + 1
+      )
+      if (this.docId && index >= 0) {
+        const listener = instanceMap[this.docId].listener
+        listener.moveElement(node.ref, this.ref, index)
       }
     }
   }
 }
 
 Element.prototype.removeChild = function (node, preserved) {
-  const children = this.children
-  const index = children.indexOf(node)
-
-  setDetached(node)
-
-  if (index >= 0) {
-    node.parentRef = null
-    children.splice(index, 1)
-    if (!preserved) {
-      node.destroy()
-    }
-  }
-
-  if (node instanceof Element) {
-    this.pureChildren.$remove(node)
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        renderer.removeElement(node.ref)
+  if (node.parentRef) {
+    removeIndex(node, this.children, true)
+    if (node.nodeType === 1) {
+      const index = removeIndex(node, this.pureChildren)
+      if (this.docId) {
+        const listener = instanceMap[this.docId].listener
+        listener.removeElement(node.ref)
       }
     }
+  }
+  if (!preserved) {
+    node.destroy()
   }
 }
 
 Element.prototype.clear = function () {
-  const children = this.children
-  const length = children.length
-  for (let i = 0; i < length; i++) {
-    const child = children[i]
-    child.parentRef = null
-    setDetached(child)
-    child.destroy()
-  }
-  children.length = 0
-
-  if (this.attached) {
-    const refs = this.pureChildren.map((child) => child.ref)
-    this.pureChildren.length = 0
-    const renderer = this.getRenderer()
-    if (renderer) {
-      renderer.removeElement(refs)
-    }
-  }
-}
-
-function moveBefore(node, before, children) {
-  const targetIndex = children.indexOf(node)
-  const beforeIndex = children.indexOf(before)
-
-  /* istanbul ignore next */
-  if (targetIndex === beforeIndex || targetIndex + 1 === beforeIndex) {
-    return -1
-  }
-
-  const newIndex = targetIndex < beforeIndex ? beforeIndex - 1 : beforeIndex
-  children.splice(targetIndex, 1)
-  children.splice(newIndex, 0, node)
-
-  return beforeIndex
-}
-
-function movePureBefore(node, before, pureChildren) {
-  const pureTargetIndex = pureChildren.indexOf(node)
-  const pureBeforeIndex = getPureAfter(before, pureChildren)
-
-  /* istanbul ignore next */
-  if (pureTargetIndex === pureBeforeIndex ||
-    pureTargetIndex + 1 === pureBeforeIndex) {
-    return -1
-  }
-
-  const pureNewIndex = pureTargetIndex < pureBeforeIndex
-    ? pureBeforeIndex - 1
-    : pureBeforeIndex
-
-  pureChildren.splice(pureTargetIndex, 1)
-  pureChildren.splice(pureNewIndex, 0, node)
-
-  return pureBeforeIndex
-}
-
-function getPureAfter(node, pureChildren) {
-  let pureIndex = pureChildren.indexOf(node)
-  while (node && pureIndex < 0) {
-    node = node.next()
-    pureIndex = pureChildren.indexOf(node)
-  }
-  if (pureIndex < 0) {
-    pureIndex = pureChildren.length
-  }
-  return pureIndex
-}
-
-function moveAfter(node, after, children) {
-  const targetIndex = children.indexOf(node)
-  const afterIndex = children.indexOf(after)
-
-  /* istanbul ignore next */
-  if (targetIndex === afterIndex || targetIndex === afterIndex + 1) {
-    return -1
-  }
-
-  const newIndex = targetIndex < afterIndex ? afterIndex : afterIndex + 1
-  children.splice(targetIndex, 1)
-  children.splice(newIndex, 0, node)
-
-  return afterIndex
-}
-
-function movePureAfter(node, after, pureChildren) {
-  const pureTargetIndex = pureChildren.indexOf(node)
-  const pureAfterIndex = getPureBefore(after, pureChildren)
-
-  /* istanbul ignore next */
-  if (pureTargetIndex === pureAfterIndex ||
-    pureTargetIndex === pureAfterIndex + 1) {
-    return -1
-  }
-
-  const pureNewIndex = pureTargetIndex < pureAfterIndex
-    ? pureAfterIndex
-    : pureAfterIndex + 1
-
-  pureChildren.splice(pureTargetIndex, 1)
-  pureChildren.splice(pureNewIndex, 0, node)
-
-  return pureAfterIndex + 1
-}
-
-function getPureBefore(node, pureChildren) {
-  let pureIndex = pureChildren.indexOf(node)
-  while (node && pureIndex < 0) {
-    node = node.prev()
-    pureIndex = pureChildren.indexOf(node)
-  }
-  /* istanbul ignore next */
-  if (pureIndex < 0) {
-    pureIndex = -1
-  }
-  return pureIndex
-}
-
-function setAttached(node, depth) {
-  if (node.ref === '_root') {
-    depth = 1
-  }
-  else {
-    depth = depth > 0 ? depth + 1 : 0
-  }
-  node.attached = true
-  node.depth = depth
-  if (node.children) {
-    node.children.forEach((sub) => {
-      setAttached(sub, depth)
+  if (this.docId) {
+    const listener = instanceMap[this.docId].listener
+    this.pureChildren.forEach(node => {
+      listener.removeElement(node.ref)
     })
   }
+  this.children.forEach(node => {
+    node.destroy()
+  })
+  this.children.length = 0
+  this.pureChildren.length = 0
 }
 
-function setDetached(node) {
-  node.attached = false
-  node.depth = 0
-  if (node.children) {
-    node.children.forEach((sub) => {
-      setDetached(sub)
-    })
-  }
-}
-
-function removeIfExisted(node) {
-  const doc = instanceMap[node.instanceId]
-  if (doc) {
-    const existedNode = doc.getRef(node.ref)
-    if (existedNode) {
-      const existedParent = doc.getRef(existedNode.parentRef)
-      if (existedParent && existedParent.removeChild) {
-        existedParent.removeChild(existedNode, true)
-      }
+function nextElement(node) {
+  while (node) {
+    if (node.nodeType === 1) {
+      return node
     }
+    node = node.nextSibling
   }
+}
+
+function previousElement(node) {
+  while (node) {
+    if (node.nodeType === 1) {
+      return node
+    }
+    node = node.previousSibling
+  }
+}
+
+function linkParent(node, parent) {
+  node.parentRef = parent.ref
+  if (parent.docId) {
+    node.docId = parent.docId
+    node.depth = parent.depth + 1
+  }
+  node.children.forEach(child => {
+    linkParent(child, node)
+  })
+}
+
+function registerNode(docId, node) {
+  const doc = instanceMap[docId]
+  doc.nodeMap[node.ref] = node
+}
+
+function insertIndex(target, list, newIndex, changeSibling) {
+  if (newIndex < 0) {
+    newIndex = 0
+  }
+  const before = list[newIndex - 1]
+  const after = list[newIndex]
+  list.splice(newIndex, 0, target)
+  if (changeSibling) {
+    before && (before.nextSibling = target)
+    target.previousSibling = before
+    target.nextSibling = after
+    after && (after.previousSibling = target)
+  }
+  return newIndex
+}
+
+function moveIndex(target, list, newIndex, changeSibling) {
+  // console.log(target.type, list.map(node=>node.type), newIndex, changeSibling)
+  const index = list.indexOf(target)
+  if (index < 0) {
+    return -1
+  }
+  if (changeSibling) {
+    const before = list[index - 1]
+    const after = list[index + 1]
+    before && (before.nextSibling = after)
+    after && (after.previousSibling = before)
+  }
+  list.splice(index, 1)
+  let newIndexAfter = newIndex
+  if (index <= newIndex) {
+    newIndexAfter = newIndex - 1
+  }
+  const beforeNew = list[newIndexAfter - 1]
+  const afterNew = list[newIndexAfter]
+  list.splice(newIndexAfter, 0, target)
+  if (changeSibling) {
+    beforeNew && (beforeNew.nextSibling = target)
+    target.previousSibling = beforeNew
+    target.nextSibling = afterNew
+    afterNew && (afterNew.previousSibling = target)
+  }
+  // console.log(target.type, list.map(node=>node.type), newIndex, newIndexAfter)
+  if (index === newIndexAfter) {
+    return -1
+  }
+  return newIndex
+}
+
+function removeIndex(target, list, changeSibling) {
+  const index = list.indexOf(target)
+  if (index < 0) {
+    return
+  }
+  if (changeSibling) {
+    const before = list[index - 1]
+    const after = list[index + 1]
+    before && (before.nextSibling = after)
+    after && (after.previousSibling = before)
+  }
+  list.splice(index, 1)
 }
 
 Element.prototype.setAttr = function (key, value, silent) {
@@ -496,83 +387,53 @@ Element.prototype.setAttr = function (key, value, silent) {
     return
   }
   this.attr[key] = value
-  if (!silent && this.attached) {
-    const renderer = this.getRenderer()
-    if (renderer) {
-      renderer.setAttr(this.ref, key, value)
-    }
+  if (!silent && this.docId) {
+    const listener = instanceMap[this.docId].listener
+    listener.setAttr(this.ref, key, value)
   }
 }
 
 Element.prototype.setStyle = function (key, value, silent) {
-  /* istanbul ignore if */
   if (this.style[key] === value) {
     return
   }
   this.style[key] = value
-  if (!silent && this.attached) {
-    const renderer = this.getRenderer()
-    if (renderer) {
-      renderer.setStyle(this.ref, key, value)
-    }
+  if (!silent && this.docId) {
+    const listener = instanceMap[this.docId].listener
+    listener.setStyle(this.ref, key, value)
   }
 }
 
 Element.prototype.setClassStyle = function (classStyle) {
   this.classStyle = classStyle
-  if (this.attached) {
-    const renderer = this.getRenderer()
-    if (renderer) {
-      renderer.setStyles(this.ref, this.toStyle())
-    }
+  if (this.docId) {
+    const listener = instanceMap[this.docId].listener
+    listener.setStyles(this.ref, this.toStyle())
   }
 }
 
 Element.prototype.addEvent = function (type, handler) {
-  const index = this.event.indexOf(type)
-
-  if (index < 0) {
-    this.event.push(type)
-    let eventManager = this.ownerDocument.eventManager
-    eventManager.add(this, type, handler)
-
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        renderer.addEvent(this.ref, type)
-      }
+  if (!this.event[type]) {
+    this.event[type] = handler
+    if (this.docId) {
+      const listener = instanceMap[this.docId].listener
+      listener.addEvent(this.ref, type)
     }
   }
 }
 
 Element.prototype.removeEvent = function (type) {
-  const index = this.event.indexOf(type)
-
-  if (index >= 0) {
-    this.event.splice(index, 1)
-    let eventManager = this.ownerDocument.eventManager
-    eventManager.remove(this, type)
-
-    if (this.attached) {
-      const renderer = this.getRenderer()
-      if (renderer) {
-        renderer.removeEvent(this.ref, type)
-      }
+  if (this.event[type]) {
+    delete this.event[type]
+    if (this.docId) {
+      const listener = instanceMap[this.docId].listener
+      listener.removeEvent(this.ref, type)
     }
   }
 }
 
 Element.prototype.toStyle = function () {
-  const result = {}
-  const classStyle = this.classStyle
-  const style = this.style
-  for (const name in classStyle) {
-    result[name] = classStyle[name]
-  }
-  for (const name in style) {
-    result[name] = style[name]
-  }
-  return result
+  return Object.assign({}, this.classStyle, this.style)
 }
 
 Element.prototype.toJSON = function () {
@@ -580,16 +441,12 @@ Element.prototype.toJSON = function () {
     ref: this.ref.toString(),
     type: this.type,
     attr: this.attr,
-    style: this.toStyle()
+    style: this.toStyle(),
+    event: Object.keys(this.event)
   }
-
-  if (this.event && this.event.length) {
-    result.event = this.event
-  }
-  if (this.pureChildren && this.pureChildren.length) {
+  if (this.pureChildren.length) {
     result.children = this.pureChildren.map((child) => child.toJSON())
   }
-
   return result
 }
 
@@ -602,9 +459,12 @@ Element.prototype.toString = function () {
 }
 
 export function Comment(value, ownerDocument) {
-  this.create(ownerDocument.id)
+  this.nodeType = 8
+  this.ref = (nextNodeRef++).toString()
   this.type = 'comment'
   this.value = value
+  this.children = []
+  this.pureChildren = []
 }
 
 Comment.prototype = new Node()
