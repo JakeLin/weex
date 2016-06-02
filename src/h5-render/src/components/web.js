@@ -2,6 +2,8 @@
 
 var Atomic = require('./atomic')
 var utils = require('../utils')
+var logger = require('../logger')
+var receiver = require('../bridge/receiver')
 
 // A component to import web pages, which works like
 // a iframe element or a webview.
@@ -30,7 +32,47 @@ Web.prototype.create = function () {
   this.web.classList.add('weex-element')
   this.web.style.width = '100%'
   this.web.style.height = '100%'
+  this.web.style.border = 'none'
   return node
+}
+
+Web.prototype.bindEvents = function (evts) {
+  Atomic.prototype.bindEvents.call(this, evts)
+  var that = this
+  this.web.addEventListener('load', function (e) {
+    that.dispatchEvent('pagefinish', utils.extend({
+      url: that.web.src
+    }))
+  })
+  window.addEventListener('message', this.msgHandler.bind(this))
+}
+
+Web.prototype.msgHandler = function (evt) {
+  var msg = evt.data
+  if (typeof msg === 'string') {
+    try {
+      msg = JSON.parse(msg)
+    } catch (e) {}
+  }
+  if (!msg) {
+    return
+  }
+  if (msg.type === 'weex') {
+    if (!utils.isArray(msg.content)) {
+      return logger.error('weex msg received by web component. msg.content'
+        + ' should be a array:', msg.content)
+    }
+    callNative(this.getComponentManager().instanceId, msg.content)
+  }
+}
+
+Web.prototype.attr = {
+  src: function (val) {
+    this.web.src = val
+    setTimeout(function () {
+      this.dispatchEvent('pagestart', { url: val })
+    }.bind(this), 0)
+  }
 }
 
 Web.prototype.goBack = function () {
@@ -43,25 +85,6 @@ Web.prototype.goForward = function () {
 
 Web.prototype.reload = function () {
   this.web.contentWindow.location.reload()
-}
-
-Web.prototype.attr = {
-  src: function (val) {
-    this.web.src = val
-    setTimeout(function () {
-      this.dispatchEvent('pagestart', { url: val })
-    }.bind(this), 0)
-  }
-}
-
-Web.prototype.bindEvents = function (evts) {
-  Atomic.prototype.bindEvents.call(this, evts)
-  var that = this
-  this.web.addEventListener('load', function (e) {
-    that.dispatchEvent('pagefinish', utils.extend({
-      url: that.web.src
-    }))
-  })
 }
 
 module.exports = Web

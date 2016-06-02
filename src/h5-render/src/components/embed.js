@@ -26,7 +26,6 @@ Embed.prototype.create = function () {
   var node = document.createElement('div')
   node.id = this.id
   node.style.overflow = 'scroll'
-  // node.classList.add('weex-container')
   return node
 }
 
