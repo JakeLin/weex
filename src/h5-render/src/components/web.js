@@ -3,7 +3,6 @@
 var Atomic = require('./atomic')
 var utils = require('../utils')
 var logger = require('../logger')
-var receiver = require('../bridge/receiver')
 
 // A component to import web pages, which works like
 // a iframe element or a webview.
