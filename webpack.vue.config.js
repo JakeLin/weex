@@ -12,9 +12,11 @@ function walk(dir, root) {
       var stat = fs.statSync(fullpath);
       var extname = path.extname(fullpath);
       if (stat.isFile() && extname === '.vue') {
-        var name = path.join('dist', dir, path.basename(file, extname));
+        var name = path.join(root, 'build', dir, path.basename(file, extname));
         entry[name] = fullpath + '?entry=true';
-      } else if (stat.isDirectory() && file !== 'include') {
+      } else if (stat.isDirectory() &&
+          file !== 'include' &&
+          file !== 'build') {
         var subdir = path.join(dir, file);
         walk(subdir, root);
       }
