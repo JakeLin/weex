@@ -8,6 +8,7 @@ import * as directive from '../directive.js'
 
 import * as state from '../core/state.js'
 import EventManager from '../../app/event'
+import {nativeComponentMap} from '../../config'
 
 function extendVm(vm, methodNames) {
   Object.assign(vm, state)
@@ -123,20 +124,49 @@ describe('apply component options', () => {
     vm = null
   })
 
-  it('apply "append tree" to slider', () => {
+  it('apply top prop', () => {
+    nativeComponentMap['test-apply'] = {
+      type: 'test-apply1',
+      append: 'tree'
+    }
     const template = {
-      type: 'slider'
+      type: 'test-apply'
     }
     vm._applyNaitveComponentOptions(template)
+    expect(template.type).to.be.equal('test-apply')
     expect(template.append).to.be.equal('tree')
+
+    delete nativeComponentMap['test-apply']
   })
 
-  it('apply "append tree" to cell', () => {
+  it('apply a object', () => {
+    nativeComponentMap['test-apply'] = {
+      classList: ['c'],
+      attr: {
+        a: 'a',
+        b: 'b'
+      }
+    }
+    const spy = sinon.spy()
     const template = {
-      type: 'cell'
+      type: 'test-apply',
+      classList: spy,
+      attr: {
+        b: '2'
+      }
     }
     vm._applyNaitveComponentOptions(template)
-    expect(template.append).to.be.equal('tree')
+
+    expect(template).to.deep.equal({
+      type: 'test-apply',
+      classList: spy,
+      attr: {
+        a: 'a',
+        b: '2'
+      }
+    })
+
+    delete nativeComponentMap['test-apply']
   })
 })
 
