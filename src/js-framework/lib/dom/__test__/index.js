@@ -73,11 +73,9 @@ describe('document methods', () => {
     expect(ele).have.a.property('insertBefore')
     expect(ele).have.a.property('setStyle')
 
-    const ref = ele.ref
-
-    expect(doc.nodeMap[ref]).is.undefined
+    expect(doc.nodeMap[ele.ref]).is.undefined
     doc.documentElement.appendChild(ele)
-    expect(doc.nodeMap[ref]).equal(ele)
+    expect(doc.nodeMap[ele.ref]).equal(ele)
   })
 
   it('create comment', () => {
@@ -103,17 +101,17 @@ describe('Element in document methods', () => {
       attr: {a: 11, b: 12},
       style: {c: 13, d: 14},
       classStyle: {a: 211, c: 213}
-    }, doc)
+    })
     el2 = new Element('baz', {
       attr: {a: 21, b: 22},
       style: {c: 23, d: 24},
       classStyle: {a: 221, c: 223}
-    }, doc)
+    })
     el3 = new Element('qux', {
       attr: {a: 31, b: 32},
       style: {c: 33, d: 34},
       classStyle: {a: 231, c: 233}
-    }, doc)
+    })
   })
 
   afterEach(() => {
@@ -136,7 +134,7 @@ describe('Element in document methods', () => {
     el2.appendChild(el3)
     expect(Object.keys(doc.nodeMap)).eql([
       doc.documentElement.ref,
-      el.ref, el2.ref, el3.ref
+      el.ref
     ])
   })
 
@@ -155,6 +153,7 @@ describe('Element in document methods', () => {
 
   it('createBody', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     expect(doc.body).is.an.object
     expect(doc.body.role).eql('body')
     expect(doc.body.type).eql('r')
@@ -171,6 +170,7 @@ describe('Element in document methods', () => {
     expect(el2.docId).is.not.ok
 
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     expect(doc.body.children.length).eql(1)
     expect(el.parentRef).eql(doc.body.ref)
@@ -193,6 +193,7 @@ describe('Element in document methods', () => {
 
   it('insertBefore', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     expect(el.parentRef).eql(doc.body.ref)
 
@@ -233,6 +234,7 @@ describe('Element in document methods', () => {
 
   it('insertAfter', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     expect(el.parentRef).eql(doc.body.ref)
 
@@ -266,6 +268,7 @@ describe('Element in document methods', () => {
 
   it('removeChild', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     doc.body.appendChild(el2)
     el2.appendChild(el3)
@@ -288,6 +291,7 @@ describe('Element in document methods', () => {
 
   it('clear', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     doc.body.appendChild(el2)
     doc.body.appendChild(el3)
@@ -305,6 +309,7 @@ describe('Element in document methods', () => {
 
   it('modify attr, style, event', () => {
     doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
 
     el.setAttr('a', 21)

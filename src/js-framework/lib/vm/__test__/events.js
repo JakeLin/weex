@@ -59,22 +59,14 @@ describe('bind and fire events', () => {
 
       doc.close()
 
-      expect(doc.eventManager.targets.length).equal(1)
+      expect(doc.body.event.click).a('function')
 
-      const target = doc.eventManager.targets[0]
       const el = doc.body
-      expect(target).a('object')
-      expect(target.el).equal(el)
-      expect(target.events).a('object')
-      expect(target.events.click).a('function')
-      expect(el.event.length).equal(1)
-      expect(el.event[0]).equal('click')
-
       expect(el.attr.a).eql(1)
       expect(spy.args.length).eql(1)
       expect(doc.listener.updates.length).eql(0)
 
-      doc.eventManager.fire(el, 'click', {xxx: 1})
+      el.event.click({xxx: 1})
 
       expect(el.attr.a).eql(2)
       expect(spy.args.length).eql(1)

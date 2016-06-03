@@ -135,9 +135,7 @@ export function _moveTarget(target, after) {
  * @param  {object} before
  */
 export function _moveElement(element, after) {
-  const doc = this._app.doc
-  const parent = doc.getRef(after.parentRef)
-
+  const parent = after.parentNode
   if (parent) {
     parent.insertAfter(element, after)
   }
@@ -150,8 +148,7 @@ export function _moveElement(element, after) {
  * @param  {object} before
  */
 export function _moveBlock(fragBlock, after) {
-  const doc = this._app.doc
-  const parent = doc.getRef(after.parentRef)
+  const parent = after.parentNode
 
   if (parent) {
     let el = fragBlock.start
@@ -193,8 +190,7 @@ export function _removeTarget(target) {
  * @param  {object} target
  */
 export function _removeElement(target) {
-  const doc = this._app.doc
-  const parent = doc.getRef(target.parentRef)
+  const parent = target.parentNode
 
   if (parent) {
     parent.removeChild(target)

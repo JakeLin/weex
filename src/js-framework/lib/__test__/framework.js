@@ -90,7 +90,8 @@ describe('framework entry', () => {
             ref: '_root',
             type: 'container',
             attr: {},
-            style: {}
+            style: {},
+            event: {}
           }]
       }])
       // expect(callNativeSpy.firstCall.args[2]).to.not.equal('-1')
@@ -136,13 +137,15 @@ describe('framework entry', () => {
         type: 'container',
         attr: {},
         style: {},
+        event: {},
         children: [{
           ref: '5',
           type: 'text',
           attr: {
             value: 'Hello World'
           },
-          style: {}
+          style: {},
+          event: {}
         }]
       }
       expect(json).to.be.deep.equal(expectJSON)

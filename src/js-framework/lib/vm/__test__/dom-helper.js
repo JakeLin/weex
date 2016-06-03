@@ -27,7 +27,7 @@ describe('help create body', () => {
     expect(result).is.an.object
     expect(result.type).eql('bar')
     expect(result.ref).eql('_root')
-    expect(result.instanceId).eql('foo')
+    expect(result.docId).is.not.ok
   })
 })
 
@@ -50,7 +50,7 @@ describe('help create element', () => {
     var result = vm._createElement('bar')
     expect(result).is.an.object
     expect(result.type).eql('bar')
-    expect(result.instanceId).eql('foo')
+    expect(result.docId).is.not.ok
   })
 })
 
@@ -125,7 +125,9 @@ describe('help attach target', () => {
     var target = vm._createBlock(parent)
     var dest = vm._createElement('baz')
     vm._attachTarget(target, dest)
-    expect(dest.children).eql([target.start, target.end])
+    // block can't attach to another element
+    expect(dest.children).eql([])
+    expect(parent.children).eql([target.start, target.end])
   })
 
   it('attach element to block', () => {
@@ -142,8 +144,9 @@ describe('help attach target', () => {
     var parent = vm._createElement('baz')
     var dest = vm._createBlock(parent)
     vm._attachTarget(target, dest)
-    expect(parent.children).eql([
-      dest.start, target.start, target.end, dest.end])
+    // block can't attach to another element
+    expect(parent.children).eql([dest.start, dest.end])
+    expect(element.children).eql([target.start, target.end])
   })
 
   it('attach element to block with an update mark', () => {
@@ -171,14 +174,15 @@ describe('help attach target', () => {
 
     vm._attachTarget(target, dest)
     vm._attachTarget(mark, dest)
-    expect(parent.children).eql([
-      dest.start, target.start, target.end, mark, dest.end])
+    // block can't attach to another element
+    expect(parent.children).eql([dest.start, mark, dest.end])
+    expect(element.children).eql([target.start, target.end])
 
     dest.updateMark = mark
     vm._attachTarget(target, dest)
-    expect(parent.children).eql([
-      dest.start, mark, target.start, target.end, dest.end])
-    expect(dest.updateMark).eql(target.end)
+    // block can't attach to another element
+    expect(parent.children).eql([dest.start, mark, dest.end])
+    expect(element.children).eql([target.start, target.end])
   })
 })
 

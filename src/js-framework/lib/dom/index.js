@@ -39,6 +39,7 @@ Document.prototype.destroy = function () {
 Document.prototype.open = function () {
   this.listener.batched = false
 }
+
 Document.prototype.close = function () {
   this.listener.batched = true
 }
@@ -48,21 +49,63 @@ Document.prototype.createDocumentElement = function () {
     const el = new Element('document')
     el.docId = this.id
     el.role = 'documentElement'
-    this.nodeMap[el.ref] = el
+    el.depth = 0
+    el.ref = '_documentElement'
+    this.nodeMap._documentElement = el
     this.documentElement = el
+    el.appendChild = (node) => {
+      appendBody(this, node)
+    }
   }
 
   return this.documentElement
 }
 
+function appendBody(doc, node) {
+  const { documentElement } = doc
+
+  if (documentElement.pureChildren.length > 0 || node.parentRef) {
+    return
+  }
+
+  documentElement.children.push(node)
+
+  if (node.nodeType === 1) {
+    if (node.role === 'body') {
+      node.docId = doc.id
+      node.parentRef = documentElement.ref
+      node.parentNode = documentElement
+    }
+    else {
+      node.children.forEach(child => {
+        child.parentRef = '_root'
+        child.parentNode = node
+      })
+      setBody(doc, node)
+      node.docId = doc.id
+      linkParent(node, documentElement)
+    }
+    documentElement.pureChildren.push(node)
+    doc.listener.createBody(node)
+  }
+  else {
+    doc.nodeMap[node.ref] = node
+  }
+}
+
+function setBody(doc, el) {
+  el.role = 'body'
+  el.depth = 1
+  delete doc.nodeMap[el.nodeId]
+  el.ref = '_root'
+  doc.nodeMap._root = el
+  doc.body = el
+}
+
 Document.prototype.createBody = function (type, props) {
   if (!this.body) {
     const el = new Element(type, props)
-    el.docId = this.id
-    el.role = 'body'
-    el.depth = 1
-    this.nodeMap[el.ref] = el
-    this.body = el
+    setBody(this, el)
   }
 
   return this.body
@@ -94,6 +137,10 @@ Document.prototype.fireEvent = function (ref, type, e, domChanges) {
   }
 }
 
+Document.prototype.getRef = function (ref) {
+  return this.nodeMap[ref]
+}
+
 function updateElement(el, changes) {
   const attrs = changes.attrs || {}
   for (const name in attrs) {
@@ -106,7 +153,8 @@ function updateElement(el, changes) {
 }
 
 export function Node() {
-  this.ref = (nextNodeRef++).toString()
+  this.nodeId = (nextNodeRef++).toString()
+  this.ref = this.nodeId
   this.children = []
   this.pureChildren = []
 }
@@ -115,17 +163,26 @@ Node.prototype.destroy = function () {
   const doc = instanceMap[this.docId]
   if (doc) {
     delete this.docId
-    delete doc.nodeMap[this.ref]
+    delete doc.nodeMap[this.nodeId]
   }
   this.children.forEach(child => {
     child.destroy()
   })
 }
 
+Node.prototype.next = function () {
+  return this.nextSibling
+}
+
+Node.prototype.prev = function () {
+  return this.previousSibling
+}
+
 export function Element(type=DEFAULT_TAG_NAME, props) {
   props = props || {}
   this.nodeType = 1
-  this.ref = (nextNodeRef++).toString()
+  this.nodeId = (nextNodeRef++).toString()
+  this.ref = this.nodeId
   this.type = type
   this.attr = props.attr || {}
   this.classStyle = props.classStyle || {}
@@ -305,6 +362,7 @@ function previousElement(node) {
 
 function linkParent(node, parent) {
   node.parentRef = parent.ref
+  node.parentNode = parent
   if (parent.docId) {
     node.docId = parent.docId
     node.depth = parent.depth + 1
@@ -316,7 +374,7 @@ function linkParent(node, parent) {
 
 function registerNode(docId, node) {
   const doc = instanceMap[docId]
-  doc.nodeMap[node.ref] = node
+  doc.nodeMap[node.nodeId] = node
 }
 
 function insertIndex(target, list, newIndex, changeSibling) {
@@ -460,7 +518,8 @@ Element.prototype.toString = function () {
 
 export function Comment(value, ownerDocument) {
   this.nodeType = 8
-  this.ref = (nextNodeRef++).toString()
+  this.nodeId = (nextNodeRef++).toString()
+  this.ref = this.nodeId
   this.type = 'comment'
   this.value = value
   this.children = []

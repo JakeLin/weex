@@ -111,13 +111,15 @@ describe('generate virtual dom for a single vm', () => {
         append: 'tree'
       },
       style: {},
+      event: [],
       children: [{
-        ref: '3',
+        ref: spy.firstCall.args[2].children[0].ref,
         type: 'text',
         attr: {
           value: '<some text content>'
         },
-        style: {}
+        style: {},
+        event: []
       }]
     })
 
@@ -981,7 +983,7 @@ describe('generate virtual dom for sub vm', () => {
   })
 })
 
-describe('generate dom actions', () => {
+describe.skip('generate dom actions', () => {
   var doc, app, listener, spy, customComponentMap, differ
 
   function checkReady(vm, handler) {
