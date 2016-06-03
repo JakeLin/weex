@@ -87,14 +87,7 @@ Scroller.prototype.appendChild = function (data) {
   var child = componentManager.createElement(data)
   this.scrollElement.appendChild(child.node)
 
-  var childWidth = child.node.getBoundingClientRect().width
-  this.totalWidth += childWidth
-  // if direction is horizontal then the width of scrollElement
-  // should be set manually due to flexbox's rule (child elements
-  // will not exceed box's width but to shrink to adapt).
-  if (this.scrollDirection === 'horizontal') {
-    this.scrollElement.style.width = this.totalWidth + 'px'
-  }
+  this.scroller.refresh()
 
   // update this.data.children
   if (!children || !children.length) {
@@ -131,10 +124,16 @@ Scroller.prototype.insertBefore = function (child, before) {
     children.push(child.data)
     this.items.push(child)
   } else {
-    this.scrollElement.insertBefore(child.node, before.node)
+    if (before.fixedPlaceholder) {
+      this.scrollElement.insertBefore(child.node, before.fixedPlaceholder)
+    } else {
+      this.scrollElement.insertBefore(child.node, before.node)
+    }
     children.splice(i, 0, child.data)
     this.items.splice(i, 0, child)
   }
+
+  this.scroller.refresh()
 }
 
 Scroller.prototype.removeChild = function (child) {
@@ -155,7 +154,10 @@ Scroller.prototype.removeChild = function (child) {
   }
   // remove from componentMap recursively
   componentManager.removeElementByRef(child.data.ref)
-  this.scrollElement.removeChild(child.node)
+  if (child.fixedPlaceholder) {
+    this.scrollElement.removeChild(child.fixedPlaceholder)
+  }
+  child.node.parentNode.removeChild(child.node)
 }
 
 module.exports = Scroller
