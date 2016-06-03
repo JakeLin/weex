@@ -6,15 +6,15 @@ chai.use(sinonChai)
 
 import * as directive from '../directive.js'
 
-import scope from '../instance/scope'
+import * as state from '../core/state.js'
 import EventManager from '../../app/event'
 
 function extendVm(vm, methodNames) {
-  Object.assign(vm, scope)
+  Object.assign(vm, state)
   methodNames.forEach((name) => {
     vm[name] = directive[name]
   })
-  vm._initScope()
+  vm._initState()
 }
 
 function initElement(el) {
@@ -151,6 +151,21 @@ describe('set props', () => {
     '_watch', '_bindKey', '_bindDir',
     '_setId', '_setAttr', '_setClass', '_setStyle',
     '_setEvent', '_bindEvents', '_bindElement']
+
+  before(() => {
+    sinon.stub(console, 'log')
+    sinon.stub(console, 'info')
+    sinon.stub(console, 'warn')
+    sinon.stub(console, 'error')
+  })
+
+  after(() => {
+    console.log.restore()
+    console.info.restore()
+    console.warn.restore()
+    console.error.restore()
+  })
+
   beforeEach(() => {
     el = {
       attr: {}, style: {}

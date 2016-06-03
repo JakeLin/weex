@@ -163,7 +163,7 @@ export function bootstrap(name, config, data) {
     return new Error(`Downgrade: ${config.downgrade}`)
   }
 
-  this.vm = new Vm(cleanName, {_app: this}, null, data)
+  this.vm = new Vm(cleanName, null, {_app: this}, null, data)
 }
 
 /**

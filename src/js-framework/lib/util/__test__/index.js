@@ -194,27 +194,20 @@ describe('Util', () => {
         })
     })
 
-    describe('define', () => {
+    describe('def', () => {
         it('should be define a non-enumerable property', () => {
             let obj = {}
-            util.define(obj, 'a', 1, true)
+            util.def(obj, 'a', 1, true)
             expect(obj).eql({a:1})
 
-            util.define(obj, 'b', 1, false)
+            util.def(obj, 'b', 1, false)
             expect(obj).eql({a:1})
 
-            util.define(obj, 'c', 1, true)
+            util.def(obj, 'c', 1, true)
             expect(obj).eql({a:1, c:1})
 
-            util.define(obj, 'd', 1)
+            util.def(obj, 'd', 1)
             expect(obj).eql({a:1, c:1})
-        })
-    })
-
-    describe('indexOf', () => {
-        it('should be manual indexOf because it\'s slightly faster than native', () => {
-            let array = [1,2,3,4,5,6];
-            expect(util.indexOf(array, 3)).eql(2)
         })
     })
 

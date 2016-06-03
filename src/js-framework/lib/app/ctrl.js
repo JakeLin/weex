@@ -26,7 +26,7 @@ export function updateActions() {
 }
 
 export function init(code, data) {
-  _.debug('Intialize an instance with', code, data)
+  _.debug('Intialize an instance with:\n', code, data)
 
   var result
   // @see: lib/app/bundle.js
@@ -142,7 +142,7 @@ export function callback(callbackId, data, ifKeepAlive) {
   const callback = this.callbacks[callbackId]
 
   if (typeof callback === 'function') {
-    callback(data) // data is already a object, @see: lib/framework.js
+    callback(data) // data is already a object, @see: lib/runtime/index.js
 
     if (typeof ifKeepAlive === 'undefined' || ifKeepAlive === false) {
       this.callbacks[callbackId] = undefined
@@ -179,11 +179,11 @@ export function refreshData(data) {
 function updateElement(el, changes) {
   const attrs = changes.attrs || {}
   for (const name in attrs) {
-    el.setAttr(name, attrs)
+    el.setAttr(name, attrs[name], true)
   }
   const style = changes.style || {}
   for (const name in style) {
-    el.setStyle(name, style[name])
+    el.setStyle(name, style[name], true)
   }
 }
 

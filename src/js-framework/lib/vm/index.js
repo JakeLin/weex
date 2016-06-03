@@ -3,8 +3,8 @@
  * ViewModel Constructor & definition
  */
 
-import * as _ from '../util'
-import * as scope from './instance/scope'
+import * as _ from '../util/index'
+import * as state from './core/state'
 import * as compiler from './compiler'
 import * as directive from './directive'
 import * as domHelper from './dom-helper'
@@ -25,6 +25,7 @@ function callOldReadyEntry(vm, component) {
  * ViewModel constructor
  *
  * @param {string} type
+ * @param {object} options    component options
  * @param {object} parentVm   which contains _app
  * @param {object} parentEl   root element or frag block
  * @param {object} mergedData external data
@@ -32,6 +33,7 @@ function callOldReadyEntry(vm, component) {
  */
 export default function Vm(
   type,
+  options,
   parentVm,
   parentEl,
   mergedData,
@@ -41,15 +43,16 @@ export default function Vm(
   this._app = parentVm._app
   parentVm._childrenVms && parentVm._childrenVms.push(this)
 
-  const component = this._app.customComponentMap[type] || {}
-  const data = component.data || {}
+  if (!options) {
+    options = this._app.customComponentMap[type] || {}
+  }
+  const data = options.data || {}
 
-  this._options = component
-  this._methods = component.methods || {}
-  this._computed = component.computed || {}
-  this._css = component.style || {}
+  this._options = options
+  this._methods = options.methods || {}
+  this._computed = options.computed || {}
+  this._css = options.style || {}
   this._ids = {}
-  this._watchers = []
   this._vmEvents = {}
   this._childrenVms = []
   this._type = type
@@ -66,20 +69,20 @@ export default function Vm(
   if (mergedData) {
     _.extend(this._data, mergedData)
   }
-  this._initScope()
+  this._initState()
 
   _.debug(`"created" lifecycle in Vm(${this._type})`)
   this.$emit('hook:created')
   this._created = true
   // backward old ready entry
-  callOldReadyEntry(this, component)
+  callOldReadyEntry(this, options)
 
   // if no parentElement then specify the documentElement
   this._parentEl = parentEl || this._app.doc.documentElement
   this._build()
 }
 
-_.extend(Vm.prototype, scope, compiler, directive, domHelper, events)
+_.extend(Vm.prototype, state, compiler, directive, domHelper, events)
 _.extend(Vm, {
   registerModules,
   registerMethods

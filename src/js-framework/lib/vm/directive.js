@@ -3,9 +3,9 @@
  * Directive Parser
  */
 
-import * as _ from '../util'
+import * as _ from '../util/index'
 
-import Watcher from './watcher'
+import Watcher from './core/watcher'
 import {nativeComponentMap} from '../config'
 
 const SETTERS = {

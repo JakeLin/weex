@@ -296,6 +296,36 @@ describe('Element', () => {
     expect(el2.attached).is.false
     expect(el3.attached).is.false
   })
+
+  it('modify attr, style, event', () => {
+    doc.createBody('r')
+    doc.documentElement.appendChild(doc.body)
+    doc.body.appendChild(el)
+
+    el.setAttr('a', 21)
+    expect(el.toJSON().attr).eql({a: 21, b: 12})
+    el.setAttr('a', 22, true)
+    expect(el.toJSON().attr).eql({a: 22, b: 12})
+
+    el.setStyle('c', 21)
+    expect(el.toJSON().style).eql({a: 211, c: 21, d: 14})
+    el.setStyle('c', 22, true)
+    expect(el.toJSON().style).eql({a: 211, c: 22, d: 14})
+
+    el.setClassStyle({a: 311, c: 313})
+    expect(el.toJSON().style).eql({a: 311, c: 22, d: 14})
+
+    const eventManager = new EventManager()
+    doc.setEventManager(eventManager)
+
+    const handler = function () {}
+    el.addEvent('click', handler)
+    expect(el.toJSON().event).eql(['click'])
+    expect(eventManager._get(el).events.click).equal(handler)
+    el.removeEvent('click')
+    expect(el.toJSON().event).is.undefined
+    expect(eventManager._get(el).events.click).is.undefined
+  })
 })
 
 describe('Node', () => {
