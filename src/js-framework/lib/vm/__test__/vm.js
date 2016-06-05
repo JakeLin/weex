@@ -981,7 +981,7 @@ describe('generate virtual dom for sub vm', () => {
   })
 })
 
-describe.skip('generate dom actions', () => {
+describe('generate dom actions', () => {
   var doc, app, listener, spy, customComponentMap, differ
 
   function checkReady(vm, handler) {
@@ -1001,7 +1001,6 @@ describe.skip('generate dom actions', () => {
       })
     })
     differ = new Differ('foo')
-    doc.eventManager.add = sinon.spy()
     customComponentMap = {}
     app = {doc, customComponentMap, differ}
   })
@@ -1047,14 +1046,9 @@ describe.skip('generate dom actions', () => {
 
     expect(spy.args.length).eql(1)
     expect(spy.args[0]).eql(['bar', 'createBody', el])
-
-    expect(doc.eventManager.add.args.length).eql(1)
-    expect(doc.eventManager.add.args[0][0].ref).eql('_root')
-    expect(doc.eventManager.add.args[0][1]).eql('click')
-    expect(doc.eventManager.add.args[0][2]).is.a.function
-
+    expect(doc.body.event.click).is.a.function
     expect(handler.args.length).eql(0)
-    doc.eventManager.add.args[0][2]()
+    doc.body.fireEvent('click')
     expect(handler.args.length).eql(1)
   })
 
@@ -1083,10 +1077,21 @@ describe.skip('generate dom actions', () => {
     }
 
     var vm = new Vm('foo', customComponentMap.foo, {_app: app})
+
+    var pureChildren = doc.body.pureChildren
     var el = {ref: '_root', type: 'container', attr: {}, style: {}}
-    var prev = {ref: '3', type: 'prev', attr: {}, style: {}}
-    var img = {ref: '10', type: 'image', attr: { src: 2 }, style: {}}
-    var next = {ref: '13', type: 'next', attr: {}, style: {}}
+    var prev = {
+      ref: pureChildren[0].ref,
+      type: 'prev', attr: {}, style: {}
+    }
+    var img = {
+      ref: pureChildren[1].ref,
+      type: 'image', attr: { src: 2 }, style: {}
+    }
+    var next = {
+      ref: pureChildren[2].ref,
+      type: 'next', attr: {}, style: {}
+    }
 
     expect(spy.args.length).eql(4)
     expect(spy.args[0]).eql(['bar', 'createBody', el])
@@ -1099,14 +1104,14 @@ describe.skip('generate dom actions', () => {
 
     // [1, 3, undefined]
     expect(spy.args.length).eql(5)
-    expect(spy.args[4]).eql(['bar', 'removeElement', '10'])
+    expect(spy.args[4]).eql(['bar', 'removeElement', img.ref])
 
     vm.list[1].x = 12
     differ.flush()
 
     // [1, !12, undefined]
     expect(spy.args.length).eql(6)
-    img.ref = '14'
+    img.ref = pureChildren[1].ref
     img.attr.src = 12
     expect(spy.args[5]).eql(['bar', 'addElement', '_root', img, 1])
 
@@ -1120,8 +1125,14 @@ describe.skip('generate dom actions', () => {
     differ.flush()
 
     // [1, !12, undefined, !4, undefined, !6]
-    var img2 = {ref: '17', type: 'image', attr: { src: 4 }, style: {}}
-    var img3 = {ref: '22', type: 'image', attr: { src: 6 }, style: {}}
+    var img2 = {
+      ref: pureChildren[2].ref,
+      type: 'image', attr: { src: 4 }, style: {}
+    }
+    var img3 = {
+      ref: pureChildren[3].ref,
+      type: 'image', attr: { src: 6 }, style: {}
+    }
     expect(spy.args.length).eql(8)
     expect(spy.args[6]).eql(['bar', 'addElement', '_root', img2, 2])
     expect(spy.args[7]).eql(['bar', 'addElement', '_root', img3, 3])
@@ -1135,8 +1146,8 @@ describe.skip('generate dom actions', () => {
 
     // [!6, 7, !12]
     expect(spy.args.length).eql(10)
-    expect(spy.args[8]).eql(['bar', 'removeElement', '17'])
-    expect(spy.args[9]).eql(['bar', 'moveElement', '22', '_root', 1])
+    expect(spy.args[8]).eql(['bar', 'removeElement', img2.ref])
+    expect(spy.args[9]).eql(['bar', 'moveElement', img3.ref, '_root', 1])
   })
 
   it('received actions for element updates', () => {
@@ -1155,6 +1166,7 @@ describe.skip('generate dom actions', () => {
     }
 
     var vm = new Vm('foo', customComponentMap.foo, {_app: app})
+    var pureChildren = doc.body.pureChildren
     var length = spy.args.length
 
     vm.x = '<some image url>'
@@ -1163,7 +1175,11 @@ describe.skip('generate dom actions', () => {
 
     vm.x = 'other string value'
     differ.flush()
-    var change = ['bar', 'updateAttrs', '3', {src: 'other string value'}]
+    var change = [
+      'bar', 'updateAttrs',
+      pureChildren[0].ref,
+      {src: 'other string value'}
+    ]
     expect(spy.args.length - length).eql(1)
     expect(spy.args[length]).eql(change)
   })
@@ -1235,15 +1251,19 @@ describe.skip('generate dom actions', () => {
     }
 
     var vm = new Vm('foo', customComponentMap.foo, {_app: app})
+    var pureChildren = doc.body.pureChildren
+    var first = pureChildren[0]
+    var second = first.pureChildren[0]
+    var third = first.pureChildren[1]
     expect(spy.args.length).eql(4)
     var el = {ref: '_root', type: 'container', attr: {}, style: {}}
     expect(spy.args[0]).eql(['bar', 'createBody', el])
-    el = {ref: '3', type: 'container', attr: {}, style: {}}
+    el = {ref: first.ref, type: 'container', attr: {}, style: {}}
     expect(spy.args[1]).eql(['bar', 'addElement', '_root', el, -1])
-    el = {ref: '4', type: 'aaa', attr: {}, style: {}}
-    expect(spy.args[2]).eql(['bar', 'addElement', '3', el, -1])
-    el = {ref: '5', type: 'bbb', attr: {}, style: {}}
-    expect(spy.args[3]).eql(['bar', 'addElement', '3', el, -1])
+    el = {ref: second.ref, type: 'aaa', attr: {}, style: {}}
+    expect(spy.args[2]).eql(['bar', 'addElement', first.ref, el, -1])
+    el = {ref: third.ref, type: 'bbb', attr: {}, style: {}}
+    expect(spy.args[3]).eql(['bar', 'addElement', first.ref, el, -1])
   })
 
   it('received actions for complicated components', () => {
@@ -1275,19 +1295,23 @@ describe.skip('generate dom actions', () => {
     }
 
     var vm = new Vm('foo', customComponentMap.foo, {_app: app})
+    var pureChildren = doc.body.pureChildren
+    var first = pureChildren[0]
+    var second = pureChildren[1]
+    var third = pureChildren[2]
 
     // jscs:disable
     // expect(spy.args[0]).eql([ 'bar', 'createBody', 'container' ])
     expect(spy.args[0]).eql([ 'bar', 'createBody', { ref: '_root', type: 'container', attr: {}, style: {} }])
-      expect(spy.args[1]).eql([ 'bar', 'addElement', '_root', { ref: '5', type: 'container', attr: {}, style: {} }, 0 ])
-        expect(spy.args[2]).eql([ 'bar', 'addElement', '5', { ref: '6', type: 'aaa', attr: {a: 1}, style: {} }, -1 ])
-        expect(spy.args[3]).eql([ 'bar', 'addElement', '5', { ref: '7', type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
-      expect(spy.args[4]).eql([ 'bar', 'addElement', '_root', { ref: '8', type: 'container', attr: {}, style: {} }, 1 ])
-        expect(spy.args[5]).eql([ 'bar', 'addElement', '8', { ref: '9', type: 'aaa', attr: {a: 2}, style: {} }, -1 ])
-        expect(spy.args[6]).eql([ 'bar', 'addElement', '8', { ref: '10', type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
-      expect(spy.args[7]).eql([ 'bar', 'addElement', '_root', { ref: '11', type: 'container', attr: {}, style: {} }, 2 ])
-        expect(spy.args[8]).eql([ 'bar', 'addElement', '11', { ref: '12', type: 'aaa', attr: {a: 3}, style: {} }, -1 ])
-        expect(spy.args[9]).eql([ 'bar', 'addElement', '11', { ref: '13', type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
+      expect(spy.args[1]).eql([ 'bar', 'addElement', '_root', { ref: first.ref, type: 'container', attr: {}, style: {} }, 0 ])
+        expect(spy.args[2]).eql([ 'bar', 'addElement', first.ref, { ref: first.pureChildren[0].ref, type: 'aaa', attr: {a: 1}, style: {} }, -1 ])
+        expect(spy.args[3]).eql([ 'bar', 'addElement', first.ref, { ref: first.pureChildren[1].ref, type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
+      expect(spy.args[4]).eql([ 'bar', 'addElement', '_root', { ref: second.ref, type: 'container', attr: {}, style: {} }, 1 ])
+        expect(spy.args[5]).eql([ 'bar', 'addElement', second.ref, { ref: second.pureChildren[0].ref, type: 'aaa', attr: {a: 2}, style: {} }, -1 ])
+        expect(spy.args[6]).eql([ 'bar', 'addElement', second.ref, { ref: second.pureChildren[1].ref, type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
+      expect(spy.args[7]).eql([ 'bar', 'addElement', '_root', { ref: third.ref, type: 'container', attr: {}, style: {} }, 2 ])
+        expect(spy.args[8]).eql([ 'bar', 'addElement', third.ref, { ref: third.pureChildren[0].ref, type: 'aaa', attr: {a: 3}, style: {} }, -1 ])
+        expect(spy.args[9]).eql([ 'bar', 'addElement', third.ref, { ref: third.pureChildren[1].ref, type: 'bbb', attr: {b: 2}, style: {} }, -1 ])
     // jscs:enable
   })
 
@@ -1307,6 +1331,7 @@ describe.skip('generate dom actions', () => {
     }
 
     var vm = new Vm('foo', customComponentMap.foo, {_app: app})
+    var pureChildren = doc.body.pureChildren
 
     expect(spy.args.length).eql(7)
     // body, r, r.a, r.b, r.b.d, r.b.e(tree), r.b.f, r.c
@@ -1314,36 +1339,37 @@ describe.skip('generate dom actions', () => {
     expect(spy.args[0][2].ref).eql('_root')
     expect(spy.args[0][2].type).eql('r')
 
-    expect(spy.args[1][3].ref).eql('3')
+    expect(spy.args[1][3].ref).eql(pureChildren[0].ref)
     expect(spy.args[1][3].type).eql('a')
     expect(spy.args[1][2]).eql('_root')
     expect(spy.args[1][4]).eql(-1)
 
-    expect(spy.args[2][3].ref).eql('4')
+    expect(spy.args[2][3].ref).eql(pureChildren[1].ref)
     expect(spy.args[2][3].type).eql('b')
     expect(spy.args[2][2]).eql('_root')
     expect(spy.args[2][4]).eql(-1)
 
-    expect(spy.args[3][3].ref).eql('5')
+    expect(spy.args[3][3].ref).eql(pureChildren[1].pureChildren[0].ref)
     expect(spy.args[3][3].type).eql('d')
-    expect(spy.args[3][2]).eql('4')
+    expect(spy.args[3][2]).eql(pureChildren[1].ref)
     expect(spy.args[3][4]).eql(-1)
 
-    expect(spy.args[4][3].ref).eql('6')
+    var tree = pureChildren[1].pureChildren[1]
+    expect(spy.args[4][3].ref).eql(tree.ref)
     expect(spy.args[4][3].type).eql('e')
-    expect(spy.args[4][2]).eql('4')
+    expect(spy.args[4][2]).eql(pureChildren[1].ref)
     expect(spy.args[4][4]).eql(-1)
     expect(spy.args[4][3].children).eql([
-      {ref: '7', type: 'g', attr: {}, style: {}},
-      {ref: '8', type: 'h', attr: {}, style: {}},
-      {ref: '9', type: 'i', attr: {}, style: {}}])
+      {ref: tree.pureChildren[0].ref, type: 'g', attr: {}, style: {}},
+      {ref: tree.pureChildren[1].ref, type: 'h', attr: {}, style: {}},
+      {ref: tree.pureChildren[2].ref, type: 'i', attr: {}, style: {}}])
 
-    expect(spy.args[5][3].ref).eql('10')
+    expect(spy.args[5][3].ref).eql(pureChildren[1].pureChildren[2].ref)
     expect(spy.args[5][3].type).eql('f')
-    expect(spy.args[5][2]).eql('4')
+    expect(spy.args[5][2]).eql(pureChildren[1].ref)
     expect(spy.args[5][4]).eql(-1)
 
-    expect(spy.args[6][3].ref).eql('11')
+    expect(spy.args[6][3].ref).eql(pureChildren[2].ref)
     expect(spy.args[6][3].type).eql('c')
     expect(spy.args[6][2]).eql('_root')
     expect(spy.args[6][4]).eql(-1)

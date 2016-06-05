@@ -130,10 +130,7 @@ Document.prototype.fireEvent = function (el, type, e, domChanges) {
   if (domChanges) {
     updateElement(el, domChanges)
   }
-  const handler = el.event[type]
-  if (handler) {
-    return handler.call(el, e)
-  }
+  return el.fireEvent(type, e)
 }
 
 Document.prototype.getRef = function (ref) {
@@ -486,6 +483,13 @@ Element.prototype.removeEvent = function (type) {
       const listener = instanceMap[this.docId].listener
       listener.removeEvent(this.ref, type)
     }
+  }
+}
+
+Element.prototype.fireEvent = function (type, e) {
+  const handler = this.event[type]
+  if (handler) {
+    return handler.call(this, e)
   }
 }
 
