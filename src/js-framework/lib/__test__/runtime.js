@@ -6,7 +6,7 @@ const {
 } = chai
 chai.use(sinonChai)
 
-import * as framework from '../framework'
+import framework from '../runtime'
 import * as config from '../config'
 import Vm from '../vm'
 
@@ -174,7 +174,7 @@ describe('framework entry', () => {
         method: 'fireEvent',
         args: []
       }])
-      expect(result[0]).to.be.an.instanceof(Error)
+      expect(result).to.be.an.instanceof(Error)
     })
 
     it('with a non-array tasks', () => {
@@ -182,7 +182,7 @@ describe('framework entry', () => {
         method: 'fireEvent',
         args: []
       })
-      expect(result[0]).to.be.an.instanceof(Error)
+      expect(result).to.be.an.instanceof(Error)
     })
   })
 
