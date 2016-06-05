@@ -1,5 +1,5 @@
 import Weex from './default'
-import Vue from 'vue/dist/weex.common'
+import Vue from 'vue-weex/dist/weex.common'
 
 export default {
   Weex,

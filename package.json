@@ -53,7 +53,10 @@
     "ci:js-framework": "cd ./src/js-framework && npm run ci && cd ../../",
     "ci:h5-render": "cd ./src/h5-render && npm run ci && cd ../../",
     "ci": "npm run ci:js-framework && npm run ci:h5-render",
-    "vue": "bash ./bin/vue-postinstall.sh"
+    "vue": "bash ./bin/vue-postinstall.sh",
+    "vue:start": "npm run transform && npm run vue:transform && npm run build && npm run serve",
+    "vue:transform": "webpack --config webpack.vue.config.js",
+    "vue:watch": "webpack --watch --config webpack.vue.config.js"
   },
   "dependencies": {},
   "devDependencies": {
