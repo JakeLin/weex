@@ -37,7 +37,7 @@ Component.prototype = {
     return this.getComponentManager().componentMap[this.parentRef]
   },
 
-  getParentScoller: function () {
+  getParentScroller: function () {
     if (this.isInScrollable()) {
       return this._parentScroller
     }

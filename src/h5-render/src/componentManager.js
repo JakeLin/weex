@@ -11,7 +11,14 @@ var RENDERING_INDENT = 800
 
 var _instanceMap = {}
 var typeMap = {}
-var scrollableTypes = ['scroller', 'list']
+var scrollableTypes = [
+  'scroller',
+  'hscroller',
+  'vscroller',
+  'list',
+  'hlist',
+  'vlist'
+]
 
 function ComponentManager(instance) {
   this.instanceId = instance.instanceId

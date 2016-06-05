@@ -1,7 +1,7 @@
 'use strict'
 
 require('../styles/list.css')
-require('scrolljs')
+require('../scroll')
 
 var Component = require('./component')
 var LazyLoad = require('../lazyLoad')
@@ -51,6 +51,7 @@ List.prototype.create = function (nodeType) {
     , direction: this.direction === 'h' ? 'x' : 'y'
   })
   this.scroller.init()
+  this.offset = 0
   return node
 }
 
@@ -59,13 +60,26 @@ List.prototype.bindEvents = function (evts) {
   // to enable lazyload for Images.
   this.scroller.addEventListener('scrolling', function (e) {
     var so = e.scrollObj
+    var scrollTop = so.getScrollTop()
+    var scrollLeft = so.getScrollLeft()
+    var offset = this.direction === 'v' ? scrollTop : scrollLeft
+    var diff = offset - this.offset
+    var dir
+    if (diff >= 0) {
+      dir = this.direction === 'v' ? 'up' : 'left'
+    } else {
+      dir = this.direction === 'v' ? 'down' : 'right'
+    }
     this.dispatchEvent('scroll', {
       originalType: 'scrolling',
       scrollTop: so.getScrollTop(),
-      scrollLeft: so.getScrollLeft()
+      scrollLeft: so.getScrollLeft(),
+      offset: offset,
+      direction: direction
     }, {
       bubbles: true
     })
+    this.offset = offset
   }.bind(this))
 
   var pullendEvent = 'pull' + ({ v: 'up', h: 'left' })[this.direction] + 'end'
@@ -74,13 +88,44 @@ List.prototype.bindEvents = function (evts) {
   }.bind(this))
 }
 
+List.prototype.createChildren = function () {
+  var children = this.data.children
+  var parentRef = this.data.ref
+  var componentManager = this.getComponentManager()
+  if (children && children.length) {
+    var fragment = document.createDocumentFragment()
+    var isFlex = false
+    for (var i = 0; i < children.length; i++) {
+      children[i].instanceId = this.data.instanceId
+      children[i].scale = this.data.scale
+      var child = componentManager.createElement(children[i])
+      fragment.appendChild(child.node)
+      child.parentRef = parentRef
+      if (!isFlex
+          && child.data.style
+          && child.data.style.hasOwnProperty('flex')
+        ) {
+        isFlex = true
+      }
+    }
+    this.listElement.appendChild(fragment)
+  }
+  // wait for fragment to appended on listElement on UI thread.
+  setTimeout(function () {
+    this.scroller.refresh()
+  }.bind(this), 0)
+}
+
 List.prototype.appendChild = function (data) {
   var children = this.data.children
   var componentManager = this.getComponentManager()
   var child = componentManager.createElement(data)
   this.listElement.appendChild(child.node)
 
-  this.scroller.refresh()
+  // wait for UI thread to update.
+  setTimeout(function () {
+    this.scroller.refresh()
+  }.bind(this), 0)
 
   // update this.data.children
   if (!children || !children.length) {
@@ -123,7 +168,10 @@ List.prototype.insertBefore = function (child, before) {
     children.splice(i, 0, child.data)
   }
 
-  this.scroller.refresh()
+  // wait for UI thread to update.
+  setTimeout(function () {
+    this.scroller.refresh()
+  }.bind(this), 0)
 }
 
 List.prototype.removeChild = function (child) {
@@ -147,6 +195,11 @@ List.prototype.removeChild = function (child) {
     this.listElement.removeChild(child.fixedPlaceholder)
   }
   child.node.parentNode.removeChild(child.node)
+
+  // wait for UI thread to update.
+  setTimeout(function () {
+    this.scroller.refresh()
+  }.bind(this), 0)
 }
 
 module.exports = List
