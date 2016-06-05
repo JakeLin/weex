@@ -163,7 +163,7 @@ describe('Element in document methods', () => {
     el.appendChild(el2)
     expect(el.children.length).eql(1)
     expect(el.children[0]).equal(el2)
-    expect(el2.parentRef).eql(el.ref)
+    expect(el2.parentNode.ref).eql(el.ref)
 
     expect(el.docId).is.not.ok
     expect(el2.docId).is.not.ok
@@ -172,7 +172,7 @@ describe('Element in document methods', () => {
     doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
     expect(doc.body.children.length).eql(1)
-    expect(el.parentRef).eql(doc.body.ref)
+    expect(el.parentNode.ref).eql(doc.body.ref)
     expect(el.docId).is.ok
     expect(el2.docId).is.ok
 
@@ -181,7 +181,7 @@ describe('Element in document methods', () => {
     expect(el.children.length).eql(2)
     expect(el.children[0]).equal(el2)
     expect(el.children[1]).equal(el3)
-    expect(el3.parentRef).eql(el.ref)
+    expect(el3.parentNode.ref).eql(el.ref)
     expect(el3.docId).is.ok
 
     expect(el2.previousSibling).is.not.ok
@@ -194,10 +194,10 @@ describe('Element in document methods', () => {
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
-    expect(el.parentRef).eql(doc.body.ref)
+    expect(el.parentNode.ref).eql(doc.body.ref)
 
     el.appendChild(el2)
-    expect(el2.parentRef).eql(el.ref)
+    expect(el2.parentNode.ref).eql(el.ref)
     expect(el.children.length).eql(1)
     expect(el.children[0]).equal(el2)
 
@@ -205,7 +205,7 @@ describe('Element in document methods', () => {
     expect(el.children.length).eql(2)
     expect(el.children[0]).equal(el3)
     expect(el.children[1]).equal(el2)
-    expect(el3.parentRef).eql(el.ref)
+    expect(el3.parentNode.ref).eql(el.ref)
 
     expect(el.docId).eql('foo')
     expect(el2.docId).eql('foo')
@@ -235,15 +235,15 @@ describe('Element in document methods', () => {
     doc.createBody('r')
     doc.documentElement.appendChild(doc.body)
     doc.body.appendChild(el)
-    expect(el.parentRef).eql(doc.body.ref)
+    expect(el.parentNode.ref).eql(doc.body.ref)
 
     el.appendChild(el2)
     el.insertAfter(el3, el2)
     expect(el.children.length).eql(2)
     expect(el.children[0]).equal(el2)
     expect(el.children[1]).equal(el3)
-    expect(el2.parentRef).eql(el.ref)
-    expect(el3.parentRef).eql(el.ref)
+    expect(el2.parentNode.ref).eql(el.ref)
+    expect(el3.parentNode.ref).eql(el.ref)
 
     expect(el.docId).eql('foo')
     expect(el2.docId).eql('foo')

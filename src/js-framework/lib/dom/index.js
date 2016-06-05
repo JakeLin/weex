@@ -64,7 +64,7 @@ Document.prototype.createDocumentElement = function () {
 function appendBody(doc, node) {
   const { documentElement } = doc
 
-  if (documentElement.pureChildren.length > 0 || node.parentRef) {
+  if (documentElement.pureChildren.length > 0 || node.parentNode) {
     return
   }
 
@@ -73,12 +73,10 @@ function appendBody(doc, node) {
   if (node.nodeType === 1) {
     if (node.role === 'body') {
       node.docId = doc.id
-      node.parentRef = documentElement.ref
       node.parentNode = documentElement
     }
     else {
       node.children.forEach(child => {
-        child.parentRef = '_root'
         child.parentNode = node
       })
       setBody(doc, node)
@@ -191,10 +189,10 @@ export function Element(type=DEFAULT_TAG_NAME, props) {
 Element.prototype = new Node()
 
 Element.prototype.appendChild = function (node) {
-  if (node.parentRef && node.parentRef !== this.ref) {
+  if (node.parentNode && node.parentNode !== this) {
     return
   }
-  if (!node.parentRef) {
+  if (!node.parentNode) {
     linkParent(node, this)
     insertIndex(node, this.children, this.children.length, true)
     if (this.docId) {
@@ -221,13 +219,13 @@ Element.prototype.appendChild = function (node) {
 }
 
 Element.prototype.insertBefore = function (node, before) {
-  if (node.parentRef && node.parentRef !== this.ref) {
+  if (node.parentNode && node.parentNode !== this) {
     return
   }
   if (node === before || node.nextSibling === before) {
     return
   }
-  if (!node.parentRef) {
+  if (!node.parentNode) {
     linkParent(node, this)
     insertIndex(node, this.children, this.children.indexOf(before), true)
     if (this.docId) {
@@ -268,13 +266,13 @@ Element.prototype.insertBefore = function (node, before) {
 }
 
 Element.prototype.insertAfter = function (node, after) {
-  if (node.parentRef && node.parentRef !== this.ref) {
+  if (node.parentNode && node.parentNode !== this) {
     return
   }
   if (node === after || node.previousSibling === after) {
     return
   }
-  if (!node.parentRef) {
+  if (!node.parentNode) {
     linkParent(node, this)
     insertIndex(node, this.children, this.children.indexOf(after) + 1, true)
     if (this.docId) {
@@ -309,7 +307,7 @@ Element.prototype.insertAfter = function (node, after) {
 }
 
 Element.prototype.removeChild = function (node, preserved) {
-  if (node.parentRef) {
+  if (node.parentNode) {
     removeIndex(node, this.children, true)
     if (node.nodeType === 1) {
       const index = removeIndex(node, this.pureChildren)
@@ -357,7 +355,6 @@ function previousElement(node) {
 }
 
 function linkParent(node, parent) {
-  node.parentRef = parent.ref
   node.parentNode = parent
   if (parent.docId) {
     node.docId = parent.docId
