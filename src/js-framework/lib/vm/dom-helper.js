@@ -155,7 +155,7 @@ export function _moveBlock(fragBlock, after) {
     const group = [el]
 
     while (el && el !== fragBlock.end) {
-      el = el.next()
+      el = el.nextSibling
       group.push(el)
     }
 
@@ -206,11 +206,11 @@ export function _removeElement(target) {
  */
 export function _removeBlock(fragBlock, preserveBlock = false) {
   const result = []
-  let el = fragBlock.start.next()
+  let el = fragBlock.start.nextSibling
 
   while (el && el !== fragBlock.end) {
     result.push(el)
-    el = el.next()
+    el = el.nextSibling
   }
 
   if (!preserveBlock) {

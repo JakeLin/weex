@@ -164,14 +164,6 @@ Node.prototype.destroy = function () {
   })
 }
 
-Node.prototype.next = function () {
-  return this.nextSibling
-}
-
-Node.prototype.prev = function () {
-  return this.previousSibling
-}
-
 export function Element(type=DEFAULT_TAG_NAME, props) {
   props = props || {}
   this.nodeType = 1
