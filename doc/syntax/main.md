@@ -1,4 +1,5 @@
 # Syntax
+<span class="weex-version">0.4</span>
 
 A simple Weex page sample is just a piece of `<template>` code, a piece of `<style>` code and a piece of `<script>` code. The three parts together describe a whole Weex page.
 
@@ -69,6 +70,10 @@ First we could write inline `style` attribute in `<template>` element. Second we
 Both the two `text` components above have the same `font-size`, which is `64` pixel.
 
 * [See common styles in Weex](../references/common-style.md)
+
+
+### Notes!
+weex is basically following [HTML attribute](https://en.wikipedia.org/wiki/HTML_attribute) naming rule , so please **do not use CamelCase** in your attribute , **long-name** with “-” as delimiter is much better.
 
 ## `<script>`
 

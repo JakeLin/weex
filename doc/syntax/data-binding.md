@@ -1,10 +1,11 @@
 # Data-Binding
+<span class="weex-version">0.4</span>
 
 In Weex, we use the *mustache* syntax `{{...}}` to bind data in `<template>` which are defined in `<script>`. Once data and template is bound, the data changes will influence the corresponding template content immediately and automatically.
 
 ## Binding data path
 
-```
+```html
 <template>
   <container>
     <text style="font-size: {{size}}">{{title}}</text>
@@ -25,7 +26,7 @@ The code above will bind the `title` and `size` data field to `template`.
 
 We can also use `.` syntax to bind cascading data structure. Let's look at the following code snippet:
 
-```
+```html
 <template>
   <container>
     <text style="font-size: {{title.size}}">{{title.value}}</text>
@@ -48,7 +49,7 @@ We can also use `.` syntax to bind cascading data structure. Let's look at the f
 
 Inside data bindings, Weex supports simply javascript expressions, e.g.
 
-```
+```html
 <template>
   <container style="flex-direction: row;">
     <text>{{firstName + ' ' + lastName}}</text>
@@ -69,12 +70,13 @@ The expression will be evaluated in the data scope of current context.
 
 **NOTE: EACH BINDING CAN ONLY CONTAIN ONE SINGLE EXPRESSION**
 
-## Computed Properties
+## Computed Properties 
+<span class="weex-version">0.5</span>
 
 According to simple operations, in-template expressions are very convenient. But if you want to put more logic into the template, you should use a computed property.
 
 e.g.
-```
+```html
 <template>
   <container style="flex-direction: row;">
     <text>{{fullName}}</text>
@@ -122,7 +124,7 @@ Otherwise when you call `changeName` after click, the setter will be invoked and
 
 the style of a component can be bind using the `style` attribute:
 
-```
+```html
 <template>
   <text style="font-size: {{size}}; color: {{color}}; ...">...</text>
 </template>
@@ -130,7 +132,7 @@ the style of a component can be bind using the `style` attribute:
 
 while style can also get bound with `class` attribute, multiple classnames can be split by spaces:
 
-```
+```html
 <template>
   <container>
     <text class="{{size}}"></text>
@@ -147,7 +149,7 @@ here if `{{size}}` and `{{status}}` have empty value, then only `class="title"` 
 
 The event handler is an attribute which name has a prefix `on...`. The other part of attribute name is event type and the value is event handler name. We don't need to add mustache around the method name or add parentheses to call it.
 
-```
+```html
 <template>
   <text onclick="toggle">Toggle</text>
 </template>
@@ -167,7 +169,7 @@ The event handler is an attribute which name has a prefix `on...`. The other par
 
 `if` attribute can control the display of a component by a truthy/falsy value.
 
-```
+```html
 <template>
   <container style="flex-direction: column;">
     <text onclick="toggle">Toggle</text>

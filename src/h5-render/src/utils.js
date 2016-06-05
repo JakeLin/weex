@@ -87,6 +87,52 @@ function getRandom(num) {
   return Math.floor(Date.now() + Math.random() * _max) % _max
 }
 
+function getRgb(color) {
+  var match
+  color = color + ''
+  if (match = color.match(/#(\d{2})(\d{2})(\d{2})/)) {
+    return {
+      r: parseInt(match[1], 16),
+      g: parseInt(match[2], 16),
+      b: parseInt(match[3], 16)
+    }
+  }
+  if (match = color.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/)) {
+    return {
+      r: parseInt(match[1]),
+      g: parseInt(match[2]),
+      b: parseInt(match[3])
+    }
+  }
+}
+
+// direction: 'l' | 'r', default is 'r'
+// num: how many times to loop, should be a positive integer
+function loopArray(arr, num, direction) {
+  if (!isArray(arr)) {
+    return
+  }
+  var isLeft = (direction + '').toLowerCase() === 'l'
+  var len = arr.length
+  num = num % len
+  if (num < 0) {
+    num = -num
+    isLeft = !isLeft
+  }
+  if (num === 0) {
+    return arr
+  }
+  var res, lp, rp
+  if (isLeft) {
+    lp = arr.slice(0, num)
+    rp = arr.slice(num)
+  } else {
+    lp = arr.slice(0, len - num)
+    rp = arr.slice(len - num)
+  }
+  return rp.concat(lp)
+}
+
 module.exports = {
   extend: extend,
   isArray: isArray,
@@ -94,5 +140,7 @@ module.exports = {
   getUniqueFromArray: getUniqueFromArray,
   transitionize: transitionize,
   detectWebp: detectWebp,
-  getRandom: getRandom
+  getRandom: getRandom,
+  getRgb: getRgb,
+  loopArray: loopArray
 }

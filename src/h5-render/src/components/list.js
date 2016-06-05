@@ -8,9 +8,18 @@ var LazyLoad = require('../lazyLoad')
 
 var DEFAULT_LOAD_MORE_OFFSET = 500
 
+var directionMap = {
+  h: ['row', 'horizontal', 'h', 'x'],
+  v: ['column', 'vertical', 'v', 'y']
+}
+
+// direction: 'v' or 'h', default is 'v'
 function List(data, nodeType) {
   // this.loadmoreOffset = Number(data.attr.loadmoreoffset)
   // this.isAvailableToFireloadmore = true
+  this.direction = directionMap.h.indexOf(data.attr.direction) === -1
+    ? 'v'
+    : 'h'
   Component.call(this, data, nodeType)
 }
 
@@ -24,11 +33,22 @@ List.prototype.create = function (nodeType) {
   this.listElement.classList.add(
     'weex-container'
     , 'list-element'
+    , this.direction + '-list'
   )
+
+  // Flex will cause a bug to rescale children's size if their total
+  // size exceed the limit of their parent. So to use box instead.
+  this.listElement.style.display = '-webkit-box'
+  this.listElement.style.display = 'box'
+  this.listElement.style.webkitBoxOrient = this.direction === 'h'
+    ? 'horizontal'
+    : 'vertical'
+  this.listElement.style.boxOrient = this.listElement.style.webkitBoxOrient
+
   node.appendChild(this.listElement)
   this.scroller = new Scroll({
     scrollElement: this.listElement
-    , direction: 'y'
+    , direction: this.direction === 'h' ? 'x' : 'y'
   })
   this.scroller.init()
   return node
@@ -48,7 +68,8 @@ List.prototype.bindEvents = function (evts) {
     })
   }.bind(this))
 
-  this.scroller.addEventListener('pullupend', function (e) {
+  var pullendEvent = 'pull' + ({ v: 'up', h: 'left' })[this.direction] + 'end'
+  this.scroller.addEventListener(pullendEvent, function (e) {
     this.dispatchEvent('loadmore')
   }.bind(this))
 }
@@ -58,6 +79,8 @@ List.prototype.appendChild = function (data) {
   var componentManager = this.getComponentManager()
   var child = componentManager.createElement(data)
   this.listElement.appendChild(child.node)
+
+  this.scroller.refresh()
 
   // update this.data.children
   if (!children || !children.length) {
@@ -92,9 +115,15 @@ List.prototype.insertBefore = function (child, before) {
     this.listElement.appendChild(child.node)
     children.push(child.data)
   } else {
-    this.listElement.insertBefore(child.node, before.node)
+    if (before.fixedPlaceholder) {
+      this.listElement.insertBefore(child.node, before.fixedPlaceholder)
+    } else {
+      this.listElement.insertBefore(child.node, before.node)
+    }
     children.splice(i, 0, child.data)
   }
+
+  this.scroller.refresh()
 }
 
 List.prototype.removeChild = function (child) {
@@ -114,7 +143,10 @@ List.prototype.removeChild = function (child) {
   }
   // remove from componentMap recursively
   componentManager.removeElementByRef(child.data.ref)
-  this.listElement.removeChild(child.node)
+  if (child.fixedPlaceholder) {
+    this.listElement.removeChild(child.fixedPlaceholder)
+  }
+  child.node.parentNode.removeChild(child.node)
 }
 
 module.exports = List
