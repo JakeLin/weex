@@ -44,7 +44,7 @@ describe('dom listener details', () => {
     expect(spy.args.length).eql(1)
     expect(spy.args[0]).eql([[{
       module: 'dom', method: 'createBody',
-      args: [{type: 'r', ref: '_root', attr: {a: 1}, style: {b: 2}, event: []}]
+      args: [{type: 'r', ref: '_root', attr: {a: 1}, style: {b: 2}}]
     }]])
     done()
   })

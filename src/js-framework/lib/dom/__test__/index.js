@@ -144,8 +144,7 @@ describe('Element in document methods', () => {
     expect(finalStyle).eql({a: 211, c: 13, d: 14})
     expect(el.toJSON()).eql({
       ref: ref, type: 'bar',
-      attr: el.attr, style: finalStyle,
-      event: []
+      attr: el.attr, style: finalStyle
     })
     expect(el.toString()).eql(
       '<bar attr={"a":11,"b":12} style={"a":211,"c":13,"d":14}></bar>')
@@ -330,7 +329,6 @@ describe('Element in document methods', () => {
     expect(el.toJSON().event).eql(['click'])
     expect(el.event.click).equal(handler)
     el.removeEvent('click')
-    expect(el.toJSON().event).eql([])
     expect(el.event.click).is.undefined
   })
 })
@@ -342,12 +340,13 @@ describe('Node', () => {
     spy = sinon.spy()
     doc = new Document('foo', '', spy)
     doc.createBody('r')
-    el = new Element('bar', null, doc)
-    el2 = new Element('baz', null, doc)
-    el3 = new Element('qux', null, doc)
-    c = new Comment('aaa', doc)
-    c2 = new Comment('bbb', doc)
-    c3 = new Comment('ccc', doc)
+    doc.documentElement.appendChild(doc.body)
+    el = new Element('bar')
+    el2 = new Element('baz')
+    el3 = new Element('qux')
+    c = new Comment('aaa')
+    c2 = new Comment('bbb')
+    c3 = new Comment('ccc')
   })
 
   afterEach(() => {
@@ -385,28 +384,28 @@ describe('Node', () => {
     el.appendChild(el2)
     el.appendChild(el3)
 
-    expect(spy.args.length).eql(3)
-    el.insertBefore(el3, el2) // [el3, el2]
     expect(spy.args.length).eql(4)
-    expect(spy.args[3][0]).eql([{
+    el.insertBefore(el3, el2) // [el3, el2]
+    expect(spy.args.length).eql(5)
+    expect(spy.args[4][0]).eql([{
       module: 'dom', method: 'moveElement',
       args: [el3.ref, el.ref, 0]
     }])
     el.insertAfter(el3, el2) // [el2, el3]
-    expect(spy.args.length).eql(5)
-    expect(spy.args[4][0]).eql([{
+    expect(spy.args.length).eql(6)
+    expect(spy.args[5][0]).eql([{
       module: 'dom', method: 'moveElement',
       args: [el3.ref, el.ref, 2]
     }])
     el.removeChild(el2) // [el3]
-    expect(spy.args.length).eql(6)
-    expect(spy.args[5][0]).eql([{
+    expect(spy.args.length).eql(7)
+    expect(spy.args[6][0]).eql([{
       module: 'dom', method: 'removeElement',
       args: [el2.ref]
     }])
     el.clear() // []
-    expect(spy.args.length).eql(7)
-    expect(spy.args[6][0]).eql([{
+    expect(spy.args.length).eql(8)
+    expect(spy.args[7][0]).eql([{
       module: 'dom', method: 'removeElement',
       args: [el3.ref]
     }])

@@ -111,15 +111,13 @@ describe('generate virtual dom for a single vm', () => {
         append: 'tree'
       },
       style: {},
-      event: [],
       children: [{
         ref: spy.firstCall.args[2].children[0].ref,
         type: 'text',
         attr: {
           value: '<some text content>'
         },
-        style: {},
-        event: []
+        style: {}
       }]
     })
 

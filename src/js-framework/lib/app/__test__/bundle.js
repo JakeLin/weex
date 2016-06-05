@@ -228,7 +228,7 @@ describe('parsing a bundle file', () => {
         expect(task2.method).to.be.equal('addElement')
         expect(task2.args[1]).to.deep.equal({
           type: 'text',
-          ref: '3',
+          ref: app.doc.body.children[0].ref,
           attr: {
             value: 'Hello World'
           },
@@ -393,7 +393,7 @@ describe('parsing a bundle file', () => {
           method: 'addElement',
           args: ['_root', {
             type: 'text',
-            ref: '3',
+            ref: app.doc.body.children[0].ref,
             attr: {
               value: 'Hello World'
             },
@@ -407,7 +407,7 @@ describe('parsing a bundle file', () => {
           method: 'addElement',
           args: ['_root', {
             type: 'container',
-            ref: '4',
+            ref: app.doc.body.children[1].ref,
             attr: {},
             style: {}
           }, -1]
@@ -417,9 +417,9 @@ describe('parsing a bundle file', () => {
         expect(task4).to.deep.equal({
           module: 'dom',
           method: 'addElement',
-          args: ['4', {
+          args: [app.doc.body.children[1].ref, {
             type: 'text',
-            ref: '5',
+            ref: app.doc.body.children[1].children[0].ref,
             attr: {
               value: 'Hello World'
             },
@@ -510,7 +510,7 @@ describe('parsing a bundle file', () => {
         expect(task2.method).to.be.equal('addElement')
         expect(task2.args[1]).to.deep.equal({
           type: 'text',
-          ref: '3',
+          ref: app.doc.body.children[0].ref,
           attr: {
             value: 'Hello World'
           },

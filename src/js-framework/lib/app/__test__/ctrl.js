@@ -32,7 +32,6 @@ describe('the api of app', () => {
 
     app.doc = new Document(id, '', spy1)
     app.doc.createBody('div')
-    sinon.spy(app.doc.eventManager, 'fire')
     app.bootstrap.returns()
 
     Object.assign(app, ctrl)
@@ -67,7 +66,7 @@ describe('the api of app', () => {
           "children": [{
             "type": "text",
             "attr": {
-                "value": "Hello World"
+              "value": "Hello World"
             }
           }]
         })
@@ -75,8 +74,7 @@ describe('the api of app', () => {
         bootstrap('main')
       `)
 
-      expect(app.doc.closed).to.be.true
-
+      expect(app.doc.listener.batched).to.be.true
       expect(app.define.calledOnce).to.be.true
       expect(app.bootstrap.calledOnce).to.be.true
 
@@ -102,9 +100,6 @@ describe('the api of app', () => {
   describe('fireEvent', () => {
     it('click on root', () => {
       app.fireEvent('_root', 'click')
-      expect(app.doc.eventManager.fire.calledOnce).to.be.true
-      expect(app.doc.eventManager.fire.args[0][1]).to.be.equal('click')
-
       const task = spy1.firstCall.args[0][0]
       expect(task.module).to.be.equal('dom')
       expect(task.method).to.be.equal('updateFinish')

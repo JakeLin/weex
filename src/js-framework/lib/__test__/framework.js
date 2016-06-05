@@ -10,6 +10,13 @@ import * as framework from '../framework'
 import * as config from '../config'
 import Vm from '../vm'
 
+function clearRefs(json) {
+  delete json.ref
+  if (json.children) {
+    json.children.forEach(clearRefs)
+  }
+}
+
 describe('framework entry', () => {
   const oriCallNative = global.callNative
   const callNativeSpy = sinon.spy()
@@ -90,18 +97,17 @@ describe('framework entry', () => {
             ref: '_root',
             type: 'container',
             attr: {},
-            style: {},
-            event: {}
+            style: {}
           }]
       }])
       // expect(callNativeSpy.firstCall.args[2]).to.not.equal('-1')
 
       expect(callNativeSpy.secondCall.args[0]).to.be.equal(instanceId)
+      delete callNativeSpy.secondCall.args[1][0].args[1].ref
       expect(callNativeSpy.secondCall.args[1]).to.deep.equal([{
         module: 'dom',
         method: 'addElement',
         args: ['_root', {
-            ref: '5',
             type: 'text',
             attr: {
               value: 'Hello World'
@@ -132,20 +138,18 @@ describe('framework entry', () => {
   describe('getRoot', () => {
     it('with a exist instanceId', () => {
       const json = framework.getRoot(instanceId)
+      expect(json.ref).eql('_root')
+      clearRefs(json)
       const expectJSON = {
-        ref: '_root',
         type: 'container',
         attr: {},
         style: {},
-        event: {},
         children: [{
-          ref: '5',
           type: 'text',
           attr: {
             value: 'Hello World'
           },
-          style: {},
-          event: {}
+          style: {}
         }]
       }
       expect(json).to.be.deep.equal(expectJSON)
@@ -191,6 +195,8 @@ describe('framework entry', () => {
 
   describe('refreshInstance', () => {
     it('modify showText to false', () => {
+      const json = framework.getRoot(instanceId)
+      const textRef = json.children[0].ref
       framework.refreshInstance(instanceId, {showText: false})
       expect(callNativeSpy.callCount).to.be.equal(2)
 
@@ -198,7 +204,7 @@ describe('framework entry', () => {
       expect(callNativeSpy.firstCall.args[1]).to.deep.equal([{
         module: 'dom',
         method: 'removeElement',
-        args: ['5']
+        args: [textRef]
       }])
       expect(callNativeSpy.firstCall.args[2]).to.be.equal('-1')
 

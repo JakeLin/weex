@@ -119,8 +119,7 @@ Document.prototype.createComment = function (text) {
   return new Comment(text)
 }
 
-Document.prototype.fireEvent = function (ref, type, e, domChanges) {
-  const el = this.nodeMap[ref]
+Document.prototype.fireEvent = function (el, type, e, domChanges) {
   if (!el) {
     return
   }
@@ -499,8 +498,11 @@ Element.prototype.toJSON = function () {
     ref: this.ref.toString(),
     type: this.type,
     attr: this.attr,
-    style: this.toStyle(),
-    event: Object.keys(this.event)
+    style: this.toStyle()
+  }
+  const event = Object.keys(this.event)
+  if (event.length) {
+    result.event = event
   }
   if (this.pureChildren.length) {
     result.children = this.pureChildren.map((child) => child.toJSON())
