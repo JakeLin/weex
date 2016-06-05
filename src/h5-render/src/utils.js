@@ -133,6 +133,31 @@ function loopArray(arr, num, direction) {
   return rp.concat(lp)
 }
 
+// pad a integer number with zeros on the left.
+// example: fillInt(12, 3) -> '012'
+// - num: the number to pad
+// - len: the specified length
+function leftPad(num, len) {
+  if (len <= 0) {
+    return num
+  }
+  var numLen = (num + '').length
+  if (numLen >= len) {
+    return num
+  }
+  return new Array(len - numLen + 1).join('0') + num
+}
+
+// get DateStr with specified separator like '2016-06-03'
+// - separator: 
+function getDateStr(separator) {
+  var dt = new Date()
+  var y = dt.getFullYear()
+  var m = leftPad(dt.getMonth() + 1, 2)
+  var d = leftPad(dt.getDate(), 2)
+  return [y, m, d].join(separator || '')
+}
+
 module.exports = {
   extend: extend,
   isArray: isArray,
@@ -142,5 +167,7 @@ module.exports = {
   detectWebp: detectWebp,
   getRandom: getRandom,
   getRgb: getRgb,
-  loopArray: loopArray
+  loopArray: loopArray,
+  leftPad: leftPad,
+  getDateStr: getDateStr
 }

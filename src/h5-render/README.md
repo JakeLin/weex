@@ -188,3 +188,15 @@ casperjs test style.js
 
   * fix removing & inserting before fixed child
 
+* 0.2.10
+
+  * add `logger` and `debug` flag.
+  * add `stream.fetch` API.
+  * fix height of downgraded scrollable root.
+  * add warnings for scrollable root.
+  * add promise polyfill.
+  * add `vlist` and `hlist` components.
+  * fix moving elements inside the same parent.
+  * stop propagation by default and fix `<a>` component's behaviour.
+  * fix default border style of image.
+
