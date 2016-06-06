@@ -75,7 +75,7 @@ List.prototype.bindEvents = function (evts) {
       scrollTop: so.getScrollTop(),
       scrollLeft: so.getScrollLeft(),
       offset: offset,
-      direction: direction
+      direction: dir
     }, {
       bubbles: true
     })
