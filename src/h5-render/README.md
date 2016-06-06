@@ -200,3 +200,12 @@ casperjs test style.js
   * stop propagation by default and fix `<a>` component's behaviour.
   * fix default border style of image.
 
+* 0.2.12
+
+  * fix `<list>`'s direction.
+  * fix updating src of `<embed>`.
+
+* 0.2.13
+
+  * fix `<embed>`'s updating src.
+
