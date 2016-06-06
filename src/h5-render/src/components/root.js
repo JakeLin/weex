@@ -49,8 +49,8 @@ function RootComponent(data, nodeType) {
         + '\' in the \'weex.init\' function. This will downgrade the root \''
         + nodeType + '\' to a \'div\', and may elevate the level of '
         + 'performance, although it has some other issues.')
-      !this.data.style.height && (this.data.style.height = '100%')
     }
+    !this.data.style.height && (this.data.style.height = '100%')
   }
 
   data.type = nodeType

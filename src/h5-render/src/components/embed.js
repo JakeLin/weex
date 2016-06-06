@@ -17,7 +17,6 @@ function Embed (data, nodeType) {
     this.jsonpCallback = attr.jsonpCallback
   }
   Component.call(this, data, nodeType)
-  this.initWeex()
 }
 
 Embed.prototype = Object.create(Component.prototype)
@@ -52,7 +51,12 @@ Embed.prototype.destroyWeex = function () {
 }
 
 Embed.prototype.reloadWeex = function () {
-  this.destroyWeex()
+  if (this.id) {
+    this.destroyWeex()
+    this.id = null
+    this.node.id = null
+    this.node.innerHTML = ''
+  }
   this.initWeex()
 }
 
