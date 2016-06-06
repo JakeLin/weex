@@ -40,15 +40,17 @@ function RootComponent(data, nodeType) {
         this.detectRootHeight()
       }.bind(this))
     }
-    logger.warn('the root component type \'' + nodeType + '\' may have '
-      + 'some performance issue on some of the android devices when there '
-      + 'is a huge amount of dom elements. Try to add downgrade '
-      + 'flags by adding param \'downgrade_' + nodeType + '=true\' in the '
-      + 'url or setting downgrade config to a array contains \'' + nodeType
-      + '\' in the \'weex.init\' function. This will downgrade the root \''
-      + nodeType + '\' to a \'div\', and may elevate the level of '
-      + 'performance, although it has some other issues.')
-    !this.data.style.height && (this.data.style.height = '100%')
+    if (nodeType !== 'div') {
+      logger.warn('the root component type \'' + nodeType + '\' may have '
+        + 'some performance issue on some of the android devices when there '
+        + 'is a huge amount of dom elements. Try to add downgrade '
+        + 'flags by adding param \'downgrade_' + nodeType + '=true\' in the '
+        + 'url or setting downgrade config to a array contains \'' + nodeType
+        + '\' in the \'weex.init\' function. This will downgrade the root \''
+        + nodeType + '\' to a \'div\', and may elevate the level of '
+        + 'performance, although it has some other issues.')
+      !this.data.style.height && (this.data.style.height = '100%')
+    }
   }
 
   data.type = nodeType
