@@ -149,7 +149,6 @@ function leftPad(num, len) {
 }
 
 // get DateStr with specified separator like '2016-06-03'
-// - separator: 
 function getDateStr(separator) {
   var dt = new Date()
   var y = dt.getFullYear()

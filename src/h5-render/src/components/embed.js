@@ -59,7 +59,7 @@ Embed.prototype.reloadWeex = function () {
 // not recommended, because of the leak of memory.
 Embed.prototype.attr = {
   src: function (value) {
-    this.src = value
+    this.source = value
     this.reloadWeex()
   }
 }
