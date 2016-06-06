@@ -1,18 +1,18 @@
+const OriginPromise = global.Promise ||
+                        function () {}
 const MSG = 'Using "Promise" is unexpected'
 
-const UnexpectedPromise = function () {
+const UnexpectedPromise = function (...args) {
   console.warn(MSG)
-
-  this.then = () => {
-    console.warn(MSG)
-  }
+  return new OriginPromise(...args)
 }
 
-UnexpectedPromise.all =
-  UnexpectedPromise.race =
-  UnexpectedPromise.resolve =
-  UnexpectedPromise.reject = function () {
+const fn = ['all', 'race', 'resolve', 'reject']
+fn.forEach(n => {
+  UnexpectedPromise[n] = function (...args) {
     console.warn(MSG)
+    return OriginPromise[n] && OriginPromise[n](...args)
   }
+})
 
 global.Promise = UnexpectedPromise

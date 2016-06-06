@@ -9,6 +9,7 @@ const {
 
 describe('a polyfill of', () => {
   it('Promise', () => {
+    sinon.spy(global, 'Promise')
     sinon.stub(console, 'warn')
     expect(typeof Promise).to.be.equal('function')
     new Promise(sinon.spy()).then(sinon.spy())
@@ -16,8 +17,10 @@ describe('a polyfill of', () => {
     Promise.race()
     Promise.resolve()
     Promise.reject()
-    expect(console.warn.callCount).to.be.equal(6)
+    expect(global.Promise.callCount).to.be.equal(1)
+    expect(console.warn.callCount).to.be.equal(5)
     console.warn.restore()
+    global.Promise.restore()
   })
 
   it('Object.assign', () => {
