@@ -414,32 +414,6 @@
             
         </li>
     
-        <li class="chapter " data-level="1.2.4.5" data-path="../advanced/integrate-to-html5.html">
-            
-                <a href="../advanced/integrate-to-html5.html">
-            
-                    
-                    Integrate to HTML5
-            
-                </a>
-            
-
-            
-        </li>
-    
-        <li class="chapter " data-level="1.2.4.6" data-path="../advanced/extend-to-html5.html">
-            
-                <a href="../advanced/extend-to-html5.html">
-            
-                    
-                    Extend to HTML5
-            
-                </a>
-            
-
-            
-        </li>
-    
 
             </ul>
             
@@ -1174,7 +1148,7 @@
 <p><span class="weex-version">0.4</span></p>
 <p>All of weex tags share some common style rules</p>
 <h2 id="box-model">Box Model</h2>
-<p><img src="http://www.codeproject.com/KB/HTML/567385/boxmodel-image.png" alt="box model"></p>
+<p><img src="../images/css-boxmodel.png" alt="box model"></p>
 <p>Weex box model based on the CSS box model, all of weex elements can be considered as boxes.  The term &quot;box model&quot; is used when talking about design and layout. The box model is essentially a box that wraps around every HTML element. It consists of margins, borders, paddings, and the actual content.</p>
 <p>you can use the definition below in weex box model.</p>
 <ul>
@@ -1243,12 +1217,12 @@
 <li><code>justify-content</code>: <code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>space-between</code></li>
 </ul>
 <p>The justify-content property horizontally aligns the flexible container&apos;s items when the items do not use all available space on the main-axis. <code>flex-start</code> is the default value, meaning the flex items are positioned at the beginning of the container. <code>flex-end`` means the items are positioned at the end of the container.</code>center<code>means the items are positioned at the center of the container.</code>space-between` means the items are positioned with space between the lines.</p>
-<p><img src="http://www.w3.org/TR/css3-flexbox/images/flex-pack.svg" alt="justify-content"></p>
+<p><img src="../images/css-flexbox-justify.svg" alt="justify-content"></p>
 <ul>
 <li><code>align-items</code>: <code>stretch</code> | <code>flex-start</code> | <code>center</code> | <code>flex-end</code></li>
 </ul>
 <p>The align-items property vertically aligns the flexible container&apos;s items when the items do not use all available space on the cross-axis. <code>stretch</code> is  the default value, meaning the items are stretched to fit the container. <code>flex-start</code> means the items are positioned at the top of the container; <code>flex-end</code> means the items are positioned at the bottom of the container; <code>center</code> means items are positioned at the center of the container (vertically).</p>
-<p><img src="http://gtms02.alicdn.com/tps/i2/TB1VnHKMXXXXXcEaXXXDldN_pXX-1018-502.jpg" alt="align-items"></p>
+<p><img src="../images/css-flexbox-align.jpg" alt="align-items"></p>
 <h3 id="flex-item">Flex item</h3>
 <ul>
 <li>flex : &lt;number&gt;</li>
@@ -1281,6 +1255,15 @@
       <span class="hljs-tag">&lt;<span class="hljs-name">text</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;flex: 1; font-size: 16;&quot;</span>&gt;</span>$100<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+</code></pre>
+<p>one text align left , the other float right:</p>
+<p><img src="../images/css-flexbox-sample.png" alt="one text align left , the other float right"></p>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;flex-direction: row; justify-content: space-between;&quot;</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>WEEX<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+   <span class="hljs-tag">&lt;<span class="hljs-name">text</span>&gt;</span>2016-05-08<span class="hljs-tag">&lt;/<span class="hljs-name">text</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
 </code></pre>
 <h2 id="position">Position</h2>
@@ -1357,7 +1340,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-        gitbook.page.hasChanged({"page":{"title":"Common Style","level":"1.3.4.2","depth":3,"next":{"title":"Text Style","level":"1.3.4.2.1","depth":4,"path":"references/text-style.md","ref":"references/text-style.md","articles":[]},"previous":{"title":"Common Attributes","level":"1.3.4.1","depth":3,"path":"references/common-attrs.md","ref":"references/common-attrs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.0.3","theme":"default","variables":{},"plugins":["theme-default"],"pluginsConfig":{"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"references/common-style.md","mtime":"2016-06-02T10:37:24.830Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-06-03T03:24:00.610Z"},"basePath":"..","book":{"language":""}});
+        gitbook.page.hasChanged({"page":{"title":"Common Style","level":"1.3.4.2","depth":3,"next":{"title":"Text Style","level":"1.3.4.2.1","depth":4,"path":"references/text-style.md","ref":"references/text-style.md","articles":[]},"previous":{"title":"Common Attributes","level":"1.3.4.1","depth":3,"path":"references/common-attrs.md","ref":"references/common-attrs.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"3.0.3","theme":"default","variables":{},"plugins":["theme-default"],"pluginsConfig":{"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"references/common-style.md","mtime":"2016-06-07T02:48:00.000Z","type":"markdown"},"gitbook":{"version":"3.0.3","time":"2016-06-07T03:42:47.958Z"},"basePath":"..","book":{"language":""}});
         setTimeout(function(){
            window._rePostionVersion()
         },100);
