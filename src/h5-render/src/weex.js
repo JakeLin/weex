@@ -134,7 +134,7 @@ logger.log('define Weex.init')
 Weex.init = function (options) {
 
   logger.log('call Weex.init')
-  
+
   if (utils.isArray(options)) {
     options.forEach(function (config) {
       new Weex(config)
