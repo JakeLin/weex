@@ -15,9 +15,6 @@ casper.test.begin('animation-test', 2, {
     casper.start(config.url)
 
     .then(function () {
-      this.echo('page title: '  + this.evaluate(function () {
-        return document.title
-      }))
       return this.evaluate(function (src) {
         init(src)
       }, source)

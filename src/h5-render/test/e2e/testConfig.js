@@ -9,7 +9,7 @@ var examples = [
   'animation',
   // 'calculator',
   // 'common',
-  'hello',
+  'hello'
   // 'image-demo',
   // 'list-basic',
   // 'list-demo',
