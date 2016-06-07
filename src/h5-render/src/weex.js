@@ -42,11 +42,8 @@ var _downgrades = {}
 
 var downgradable = ['list', 'scroller']
 
-console.log('call initializeWithUrlParams')
-
 ; (function initializeWithUrlParams() {
 
-  console.log('location.protocol ' + location.protocol)
   // in casperjs the protocol is file.
   if (location.protocol.match(/file/)) {
     return
@@ -76,25 +73,14 @@ console.log('call initializeWithUrlParams')
 
 })()
 
-console.log('after initializeWithUrlParams')
-if (location.protocol.match(/file/)) {
-  config.debug = true
-}
-
-console.log('before initing logger')
-
 var logger = require('./logger')
 logger.init()
-
-logger.log('define constructor Weex')
 
 function Weex(options) {
 
   if (!(this instanceof Weex)) {
     return new Weex(options)
   }
-
-  logger.log('set attributes and configs of Weex')
 
   // Width of the root container. Default is window.innerWidth.
   this.width = options.width || window.innerWidth
@@ -108,8 +94,6 @@ function Weex(options) {
   this.embed = options.embed ? true : false
 
   this.data = options.data
-
-  logger.log('start to init weex')
 
   this.initDowngrades(options.downgrade)
   this.initScale()
@@ -129,11 +113,7 @@ function Weex(options) {
 
 }
 
-logger.log('define Weex.init')
-
 Weex.init = function (options) {
-
-  logger.log('call Weex.init')
 
   if (utils.isArray(options)) {
     options.forEach(function (config) {
@@ -157,7 +137,6 @@ Weex.getInstance = function (instanceId) {
 Weex.prototype = {
 
   initDowngrades: function (dg) {
-    logger.log('call Weex.initDowngrades')
     this.downgrades = utils.extend({}, _downgrades)
     // Get downgrade component type from user's specification
     // in weex's init options.
@@ -173,13 +152,11 @@ Weex.prototype = {
   },
 
   initBridge: function () {
-    logger.log('call Weex.initBridge')
     receiver.init(this)
     this.sender = new Sender(this)
   },
 
   loadBundle: function (cb) {
-    logger.log('call Weex.loadBundle')
     Loader.load({
       jsonpCallback: this.jsonpCallback,
       source: this.source,
@@ -188,7 +165,6 @@ Weex.prototype = {
   },
 
   createApp: function (config, appCode) {
-    logger.log('call Weex.createApp')
     var root = document.querySelector('#' + this.rootId)
     if (!root) {
       root = document.createElement('div')
@@ -225,12 +201,10 @@ Weex.prototype = {
   },
 
   initScale: function () {
-    logger.log('call Weex.initScale')
     this.scale = this.width / this.designWidth
   },
 
   initComponentManager: function () {
-    logger.log('call Weex.initComponentManager')
     this._componentManager = new ComponentManager(this)
   },
 
@@ -314,8 +288,6 @@ Weex.stopTheWorld = function () {
   }
 }
 
-logger.log('startRefreshController')
-
 ; (function startRefreshController() {
   if (location.protocol.match(/file/)) {
     return
@@ -343,13 +315,9 @@ logger.log('startRefreshController')
   }
 }())
 
-logger.log('start to install components and APIs')
-
 // Weex.install(require('weex-components'))
 Weex.install(components)
 Weex.install(api)
-
-logger.log('finish installing components and APIs.')
 
 Weex.Component = Component
 Weex.ComponentManager = ComponentManager

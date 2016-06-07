@@ -6,7 +6,7 @@ var getDemoSource = function (name) {
 }
 
 var examples = [
-  // 'animation',
+  'animation',
   // 'calculator',
   // 'common',
   'hello',
@@ -19,7 +19,8 @@ var examples = [
 ]
 
 var config = {
-  source: {}
+  source: {},
+  timeout: 5000
 }
 
 ; (function initConfig() {

@@ -1,10 +1,10 @@
 var config = require('../testConfig.js')
 var lib = require('../testLib.js')
-var source = config.source['hello'].toString()
+var source = config.source['animation'].toString()
 
-var DIV_LENGTH = 3
+var DIV_LENGTH = 24
 
-casper.test.begin('hello-test', 3, {
+casper.test.begin('animation-test', 2, {
 
   setUp: function () {
     lib.globalInit(casper)
@@ -44,11 +44,16 @@ casper.test.begin('hello-test', 3, {
       }, DIV_LENGTH, 'there are ' + DIV_LENGTH + ' divs.')
 
       // text content should be 'hello world'.
-      test.assertTruthy(function () {
-        return document.querySelector('#weex-root').textContent === 'Hello World.'
-      })
+      // test.assertTruthy(function () {
+      //   return document.querySelector('#weex-root').textContent === 'Hello World.'
+      // })
 
     })
+
+    // click transform
+    // .then(function () {
+
+    // })
 
     .run(function () {
       test.done()
